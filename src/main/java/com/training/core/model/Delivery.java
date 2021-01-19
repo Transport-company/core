@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -22,6 +23,18 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Information about the client's desire to receive notifications
+     */
+    @Column(name = "enabled_notifications")
+    private Boolean enabledNotifications;
+
+    /**
+     * Cost of delivery
+     */
+    @Column(name = "sum")
+    private BigDecimal sum;
 
     /**
      * Tracking number of the cargo

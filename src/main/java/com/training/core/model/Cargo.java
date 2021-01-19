@@ -33,8 +33,8 @@ public class Cargo {
     /**
      * Price of the cargo
      */
-    @Column(name = "sum")
-    private BigDecimal sum;
+    @Column(name = "declareitedValue")
+    private BigDecimal declareitedValue;
 
     /**
      * Cargo packing length
