@@ -9,3 +9,7 @@
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
+
+server:
+  servlet:
+    context-path: /api/v1/core
