@@ -24,8 +24,8 @@ public class Cheque {
     /**
      * Cost of delivery
      */
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "sum")
+    private BigDecimal sum;
 
     /**
      * Information on delivery
