@@ -52,21 +52,21 @@ public class Delivery {
     /**
      * Information about the client
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
     /**
      * Sending address
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sending_address_id", referencedColumnName = "id")
     private Address sendingAddress;
 
     /**
      * Shipping address
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
     private Address shippingAddress;
 

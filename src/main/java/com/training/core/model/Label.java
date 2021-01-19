@@ -27,7 +27,7 @@ public class Label {
     /**
      * Information on delivery
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     private Delivery delivery;
 
