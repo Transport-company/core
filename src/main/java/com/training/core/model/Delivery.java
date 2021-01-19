@@ -1,6 +1,9 @@
 package com.training.core.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -70,12 +73,14 @@ public class Delivery {
     /**
      * Time of object creation
      */
-    @Column(name = "creation_time")
-    private LocalDateTime creationTime;
+    @CreationTimestamp
+    @Column(name = "created")
+    private LocalDateTime created;
 
     /**
      * Update time
      */
-    @Column(name = "update_time")
-    private LocalDateTime updateTime;
+    @UpdateTimestamp
+    @Column(name = "updated")
+    private LocalDateTime updated;
 }
