@@ -1,0 +1,54 @@
+package com.training.core.model;
+
+import lombok.Data;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+/**
+ * Entity for a delivery cheque
+ */
+
+@Entity
+@Table(name = "cheque")
+@Data
+public class Cheque {
+
+    /**
+     * Unique identifier of the cheque
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /**
+     * Cost of delivery
+     */
+    @Column(name = "price")
+    private BigDecimal price;
+
+    /**
+     * Information on delivery
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
+    private Delivery delivery;
+
+    /**
+     * File with the delivery payment cheque
+     */
+    @Column(name = "cheque_file")
+    private byte[] chequeFile;
+
+    /**
+     * Time of object creation
+     */
+    @Column(name = "creation_time")
+    private LocalDateTime creationTime;
+
+    /**
+     * Update time
+     */
+    @Column(name = "update_time")
+    private LocalDateTime updateTime;
+}
