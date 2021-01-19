@@ -24,12 +24,6 @@ public class Tracking {
     private Long id;
 
     /**
-     * Date and time of cargo registration at the sorting point
-     */
-    @Column(name = "registration_time")
-    private LocalDateTime registrationTime;
-
-    /**
      * City where the cargo is located
      */
     @Column(name = "city")

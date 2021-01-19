@@ -50,8 +50,8 @@ public class Address {
     /**
      * Flat number of sending or delivery
      */
-    @Column(name = "flat")
-    private String flat;
+    @Column(name = "apartment ")
+    private String apartment;
 
     /**
      * Time of object creation
