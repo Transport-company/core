@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 /**
  * Entity for return of cargo
  */
-
 @Entity
 @Table(name = "returns")
 @Data
@@ -34,7 +33,7 @@ public class Returns {
      * Reason for return of cargo
      */
     @Column(name = "reason")
-    private String reason;
+    private ReturnReason reason;
 
     /**
      * Time of object creation

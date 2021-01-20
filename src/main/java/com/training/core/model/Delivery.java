@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * Entity for delivery of cargo
  */
-
 @Entity
 @Table(name = "delivery")
 @Data

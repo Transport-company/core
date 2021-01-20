@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 /**
  * Entity to feedback on the delivery
  */
-
 @Entity
 @Table(name = "feedback")
 @Data

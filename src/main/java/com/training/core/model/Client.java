@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 /**
  * Entity for the client
  */
-
 @Entity
 @Table(name = "client")
 @Data

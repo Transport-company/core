@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 /**
  * Entity for cargo
  */
-
 @Entity
 @Table(name = "саrgo")
 @Data

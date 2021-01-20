@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 /**
  * Entity for the label
  */
-
 @Entity
 @Table(name = "label")
 @Data

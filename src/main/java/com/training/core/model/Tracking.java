@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 /**
  * Entity for cargo tracking
  */
-
 @Entity
 @Table(name = "tracking")
 @Data
@@ -27,7 +26,7 @@ public class Tracking {
      * Unique delivery number
      */
     @Column(name = "trackingNumber")
-    private Integer trackingNumber;
+    private String trackingNumber;
 
     /**
      * Information on delivery
