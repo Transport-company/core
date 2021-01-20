@@ -50,7 +50,7 @@ public class Address {
     /**
      * Flat number of sending or delivery
      */
-    @Column(name = "apartment ")
+    @Column(name = "apartment")
     private String apartment;
 
     /**
