@@ -24,6 +24,19 @@ public class Tracking {
     private Long id;
 
     /**
+     * Unique delivery number
+     */
+    @Column(name = "trackingNumber")
+    private Integer trackingNumber;
+
+    /**
+     * Information on delivery
+     */
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
+
+    /**
      * City where the cargo is located
      */
     @Column(name = "city")

@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * Entity for delivery of cargo
@@ -39,9 +40,8 @@ public class Delivery {
     /**
      * Tracking number of the cargo
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tracking_id", referencedColumnName = "id")
-    private Tracking trackingNumber;
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL,  orphanRemoval=true, fetch = FetchType.LAZY)
+    private Set<Tracking> tracking;
 
     /**
      * Information about payment for cargo transit
@@ -53,7 +53,8 @@ public class Delivery {
      * Information about the delivery stage (cargo status)
      */
     @Column(name = "status")
-    private Enum status;
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status;
 
     /**
      *  Cargo information
@@ -65,8 +66,8 @@ public class Delivery {
     /**
      * Information about the client
      */
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     /**

@@ -26,7 +26,7 @@ public class Returns {
     /**
      * Information on delivery
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "delivery-id", referencedColumnName = "id")
     private Delivery delivery;
 

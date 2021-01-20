@@ -34,8 +34,8 @@ public class Label {
     /**
      * File with label
      */
-    @Column(name = "label")
-    private byte[] label;
+    @Column(name = "labelFile")
+    private byte[] labelFile;
 
     /**
      * Time of object creation
