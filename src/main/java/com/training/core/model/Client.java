@@ -23,10 +23,22 @@ public class Client {
     private Long id;
 
     /**
+     * The surname of the client
+     */
+    @Column(name = "surname")
+    private String surname;
+
+    /**
      * The name of the client
      */
     @Column(name = "name")
     private String name;
+
+    /**
+     * The patronymic of the client
+     */
+    @Column(name = "patronymic")
+    private String patronymic;
 
     /**
      * The email of the client
