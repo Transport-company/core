@@ -33,8 +33,8 @@ public class Feedback {
     /**
      * Contents of the feedback
      */
-    @Column(name = "content")
-    private String content;
+    @Column(name = "message")
+    private String message;
 
     /**
      * Time of object creation
