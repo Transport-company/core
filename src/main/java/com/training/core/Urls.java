@@ -3,27 +3,27 @@ package com.training.core;
 public interface Urls {
     String ROOT = "/";
 
-    interface OrderController {
+    interface Orders {
         String PART = "orders";
         String FULL = ROOT + "/" + PART;
     }
 
-    interface PaymentController {
+    interface Payments {
         String PART = "payments";
         String FULL = ROOT + "/" + PART;
     }
 
-    interface TrackingController {
+    interface Tracking {
         String PART = "traking";
         String FULL = ROOT + "/" + PART;
     }
 
-    interface ReturnController {
+    interface Returns {
         String PART = "returns";
         String FULL = ROOT + "/" + PART;
     }
 
-    interface FeedbackController {
+    interface Feedbacks {
         String PART = "feedbacks";
         String FULL = ROOT + "/" + PART;
     }
