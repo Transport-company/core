@@ -37,6 +37,12 @@ public class Delivery {
     private BigDecimal sum;
 
     /**
+     * Unique delivery number
+     */
+    @Column(name = "tracking_number")
+    private String trackingNumber;
+
+    /**
      * Tracking number of the cargo
      */
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL,  orphanRemoval=true, fetch = FetchType.LAZY)

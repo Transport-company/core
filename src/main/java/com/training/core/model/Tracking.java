@@ -25,7 +25,7 @@ public class Tracking {
     /**
      * Unique delivery number
      */
-    @Column(name = "trackingNumber")
+    @Column(name = "tracking_number")
     private String trackingNumber;
 
     /**

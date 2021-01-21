@@ -32,7 +32,7 @@ public class Cargo {
     /**
      * Price of the cargo
      */
-    @Column(name = "declaredValue")
+    @Column(name = "declared_value")
     private BigDecimal declaredValue;
 
     /**

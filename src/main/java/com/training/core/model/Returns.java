@@ -26,13 +26,14 @@ public class Returns {
      * Information on delivery
      */
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "delivery-id", referencedColumnName = "id")
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     private Delivery delivery;
 
     /**
      * Reason for return of cargo
      */
     @Column(name = "reason")
+    @Enumerated(EnumType.STRING)
     private ReturnReason reason;
 
     /**
