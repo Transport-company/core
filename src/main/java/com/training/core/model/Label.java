@@ -33,7 +33,7 @@ public class Label {
     /**
      * File with label
      */
-    @Column(name = "labelFile")
+    @Column(name = "label_file")
     private byte[] labelFile;
 
     /**
