@@ -1,9 +1,9 @@
-package com.training.core.control;
+package com.training.core.controller;
 
 import com.training.core.Urls;
-import com.training.core.dto.request.TrackingRequest;
-import com.training.core.dto.response.TrackingPageResponse;
-import com.training.core.dto.response.TrackingResponse;
+import com.training.core.dto.request.OrderRequest;
+import com.training.core.dto.response.OrderPageResponse;
+import com.training.core.dto.response.OrderResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-@Tag(name = "Tracking of cargo")
-@RequestMapping(Urls.Tracking.FULL)
-public interface TrackingController {
+@Tag(name = "Ordering delivery")
+@RequestMapping(Urls.Orders.FULL)
+public interface OrderController {
     String ID_PATH_VARIABLE = "/{id}";
 
-    @Operation(summary = "get a page of tracking")
+    @Operation(summary = "get a page of orders")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingPageResponse.class)))
+                            schema = @Schema(implementation = OrderPageResponse.class)))
     })
     @GetMapping
-    ResponseEntity<TrackingPageResponse> getList(
+    ResponseEntity<OrderPageResponse> getList(
             @Parameter(
                     name = "pageable",
                     description = "parameters of the page. Cannot be null",
@@ -44,59 +44,59 @@ public interface TrackingController {
                     schema = @Schema(implementation = Pageable.class))
                     Pageable pageable);
 
-    @Operation(summary = "get a tracking by id")
+    @Operation(summary = "get an order by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingResponse.class))),
+                            schema = @Schema(implementation = OrderResponse.class))),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
-    ResponseEntity<TrackingResponse> getById(
+    ResponseEntity<OrderResponse> getById(
             @Parameter(
                     name = "id",
-                    description = "id  of the tracking to be obtained. Cannot be null",
+                    description = "id  of the order to be obtained. Cannot be null",
                     required = true)
             @PathVariable Long id);
 
-    @Operation(summary = "add a new tracking")
+    @Operation(summary = "add a new order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "an order created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingResponse.class)))
+                            schema = @Schema(implementation = OrderResponse.class)))
     })
     @PostMapping
-    ResponseEntity<TrackingResponse> create(
+    ResponseEntity<OrderResponse> create(
             @Parameter(
-                    description = "the tracking to add. Cannot be null",
+                    description = "the order to add. Cannot be null",
                     required = true,
-                    schema = @Schema(implementation = TrackingRequest.class))
-            @Valid @RequestBody TrackingRequest trackingRequest);
+                    schema = @Schema(implementation = OrderRequest.class))
+            @Valid @RequestBody OrderRequest orderRequest);
 
-    @Operation(summary = "update an existing tracking")
+    @Operation(summary = "update an existing order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingResponse.class))),
+                            schema = @Schema(implementation = OrderResponse.class))),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
-    ResponseEntity<TrackingResponse> update(
+    ResponseEntity<OrderResponse> update(
             @Parameter(
                     name = "id",
-                    description = "id of the tracking to be updated. Cannot be null.",
+                    description = "id of the order to be updated. Cannot be null.",
                     required = true)
             @PathVariable Long id,
             @Parameter(
-                    description = "the tracking to be updated. Cannot be null.",
+                    description = "the order to be updated. Cannot be null.",
                     required = true,
-                    schema = @Schema(implementation = TrackingRequest.class))
-            @Valid @RequestBody TrackingRequest trackingRequest);
+                    schema = @Schema(implementation = OrderRequest.class))
+            @Valid @RequestBody OrderRequest orderRequest);
 
-    @Operation(summary = "deletes a tracking")
+    @Operation(summary = "deletes an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
@@ -105,7 +105,7 @@ public interface TrackingController {
     ResponseEntity<String> delete(
             @Parameter(
                     name = "id",
-                    description = "id of the tracking to be deleted. Cannot be null",
+                    description = "id of the order to be deleted. Cannot be null",
                     required = true)
             @PathVariable Long id);
 }

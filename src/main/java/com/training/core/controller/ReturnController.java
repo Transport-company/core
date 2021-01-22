@@ -1,9 +1,9 @@
-package com.training.core.control;
+package com.training.core.controller;
 
 import com.training.core.Urls;
-import com.training.core.dto.request.PaymentRequest;
-import com.training.core.dto.response.PaymentPageResponse;
-import com.training.core.dto.response.PaymentResponse;
+import com.training.core.dto.request.ReturnRequest;
+import com.training.core.dto.response.ReturnPageResponse;
+import com.training.core.dto.response.ReturnResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-@Tag(name = "Paying for delivery")
-@RequestMapping(Urls.Payments.FULL)
-public interface PaymentController {
+@Tag(name = "Accepting refund and returning to sender")
+@RequestMapping(Urls.Returns.FULL)
+public interface ReturnController {
     String ID_PATH_VARIABLE = "/{id}";
 
-    @Operation(summary = "get a page of payments")
+    @Operation(summary = "get a page of returns")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentPageResponse.class)))
+                            schema = @Schema(implementation = ReturnPageResponse.class)))
     })
     @GetMapping
-    ResponseEntity<PaymentPageResponse> getList(
+    ResponseEntity<ReturnPageResponse> getList(
             @Parameter(
                     name = "pageable",
                     description = "parameters of the page. Cannot be null",
@@ -44,59 +44,59 @@ public interface PaymentController {
                     schema = @Schema(implementation = Pageable.class))
                     Pageable pageable);
 
-    @Operation(summary = "get a payment by id")
+    @Operation(summary = "get a return by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentResponse.class))),
+                            schema = @Schema(implementation = ReturnResponse.class))),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
-    ResponseEntity<PaymentResponse> getById(
+    ResponseEntity<ReturnResponse> getById(
             @Parameter(
                     name = "id",
-                    description = "id  of the payment to be obtained. Cannot be null",
+                    description = "id  of the return to be obtained. Cannot be null",
                     required = true)
             @PathVariable Long id);
 
-    @Operation(summary = "add a new payment")
+    @Operation(summary = "add a new return")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "a payment created",
+            @ApiResponse(responseCode = "201", description = "a return created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentResponse.class)))
+                            schema = @Schema(implementation = ReturnResponse.class)))
     })
     @PostMapping
-    ResponseEntity<PaymentResponse> create(
+    ResponseEntity<ReturnResponse> create(
             @Parameter(
-                    description = "the payment to add. Cannot be null",
+                    description = "the return to add. Cannot be null",
                     required = true,
-                    schema = @Schema(implementation = PaymentRequest.class))
-            @Valid @RequestBody PaymentRequest paymentRequest);
+                    schema = @Schema(implementation = ReturnRequest.class))
+            @Valid @RequestBody ReturnRequest returnRequest);
 
-    @Operation(summary = "update an existing payment")
+    @Operation(summary = "update an existing return")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentResponse.class))),
+                            schema = @Schema(implementation = ReturnResponse.class))),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
-    ResponseEntity<PaymentResponse> update(
+    ResponseEntity<ReturnResponse> update(
             @Parameter(
                     name = "id",
-                    description = "id of the payment to be updated. Cannot be null.",
+                    description = "id of the return to be updated. Cannot be null.",
                     required = true)
             @PathVariable Long id,
             @Parameter(
-                    description = "the payment to be updated. Cannot be null.",
+                    description = "the return to be updated. Cannot be null.",
                     required = true,
-                    schema = @Schema(implementation = PaymentRequest.class))
-            @Valid @RequestBody PaymentRequest paymentRequest);
+                    schema = @Schema(implementation = ReturnRequest.class))
+            @Valid @RequestBody ReturnRequest returnRequest);
 
-    @Operation(summary = "deletes a payment")
+    @Operation(summary = "deletes a return")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content)
@@ -105,7 +105,7 @@ public interface PaymentController {
     ResponseEntity<String> delete(
             @Parameter(
                     name = "id",
-                    description = "id of the payment to be deleted. Cannot be null",
+                    description = "id of the return to be deleted. Cannot be null",
                     required = true)
             @PathVariable Long id);
 }

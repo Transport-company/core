@@ -1,4 +1,4 @@
-package com.training.core.control;
+package com.training.core.controller;
 
 import com.training.core.Urls;
 import com.training.core.dto.request.FeedbackRequest;
