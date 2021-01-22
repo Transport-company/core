@@ -33,7 +33,9 @@ public interface OrderController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = OrderPageResponse.class)))
+                            schema = @Schema(implementation = OrderPageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping
     ResponseEntity<OrderPageResponse> getList(
@@ -50,7 +52,9 @@ public interface OrderController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = OrderResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
     ResponseEntity<OrderResponse> getById(
@@ -65,7 +69,9 @@ public interface OrderController {
             @ApiResponse(responseCode = "201", description = "an order created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = OrderResponse.class)))
+                            schema = @Schema(implementation = OrderResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PostMapping
     ResponseEntity<OrderResponse> create(
@@ -81,7 +87,9 @@ public interface OrderController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = OrderResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<OrderResponse> update(
@@ -99,7 +107,9 @@ public interface OrderController {
     @Operation(summary = "deletes an order")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(

@@ -33,7 +33,9 @@ public interface TrackingController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingPageResponse.class)))
+                            schema = @Schema(implementation = TrackingPageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping
     ResponseEntity<TrackingPageResponse> getList(
@@ -50,7 +52,9 @@ public interface TrackingController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = TrackingResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
     ResponseEntity<TrackingResponse> getById(
@@ -65,7 +69,9 @@ public interface TrackingController {
             @ApiResponse(responseCode = "201", description = "an order created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TrackingResponse.class)))
+                            schema = @Schema(implementation = TrackingResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PostMapping
     ResponseEntity<TrackingResponse> create(
@@ -81,7 +87,9 @@ public interface TrackingController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = TrackingResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<TrackingResponse> update(
@@ -99,7 +107,9 @@ public interface TrackingController {
     @Operation(summary = "deletes a tracking")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(

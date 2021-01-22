@@ -33,7 +33,9 @@ public interface PaymentController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentPageResponse.class)))
+                            schema = @Schema(implementation = PaymentPageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping
     ResponseEntity<PaymentPageResponse> getList(
@@ -50,7 +52,9 @@ public interface PaymentController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = PaymentResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
     ResponseEntity<PaymentResponse> getById(
@@ -65,7 +69,9 @@ public interface PaymentController {
             @ApiResponse(responseCode = "201", description = "a payment created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = PaymentResponse.class)))
+                            schema = @Schema(implementation = PaymentResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PostMapping
     ResponseEntity<PaymentResponse> create(
@@ -81,7 +87,9 @@ public interface PaymentController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = PaymentResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<PaymentResponse> update(
@@ -99,7 +107,9 @@ public interface PaymentController {
     @Operation(summary = "deletes a payment")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(

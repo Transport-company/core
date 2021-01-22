@@ -33,7 +33,9 @@ public interface ReturnController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ReturnPageResponse.class)))
+                            schema = @Schema(implementation = ReturnPageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping
     ResponseEntity<ReturnPageResponse> getList(
@@ -50,7 +52,9 @@ public interface ReturnController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ReturnResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
     ResponseEntity<ReturnResponse> getById(
@@ -65,7 +69,9 @@ public interface ReturnController {
             @ApiResponse(responseCode = "201", description = "a return created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ReturnResponse.class)))
+                            schema = @Schema(implementation = ReturnResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PostMapping
     ResponseEntity<ReturnResponse> create(
@@ -81,7 +87,9 @@ public interface ReturnController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ReturnResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<ReturnResponse> update(
@@ -99,7 +107,9 @@ public interface ReturnController {
     @Operation(summary = "deletes a return")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(

@@ -33,7 +33,9 @@ public interface FeedbackController {
             @ApiResponse(responseCode = "200", description = "successful operation",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = FeedbackPageResponse.class)))
+                            schema = @Schema(implementation = FeedbackPageResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping
     ResponseEntity<FeedbackPageResponse> getList(
@@ -50,7 +52,9 @@ public interface FeedbackController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = FeedbackResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @GetMapping(ID_PATH_VARIABLE)
     ResponseEntity<FeedbackResponse> getById(
@@ -65,7 +69,9 @@ public interface FeedbackController {
             @ApiResponse(responseCode = "201", description = "an order created",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = FeedbackResponse.class)))
+                            schema = @Schema(implementation = FeedbackResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PostMapping
     ResponseEntity<FeedbackResponse> create(
@@ -81,7 +87,9 @@ public interface FeedbackController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = FeedbackResponse.class))),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<FeedbackResponse> update(
@@ -99,7 +107,9 @@ public interface FeedbackController {
     @Operation(summary = "deletes a feedback")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
-            @ApiResponse(responseCode = "404", description = "not found", content = @Content)
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(
