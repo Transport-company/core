@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS address
     region       varchar(128)       NOT NULL,
     city         varchar(128)       NOT NULL,
     street       varchar(255)       ,
-    house        varchar(32)        NOT NULL,
-    apartment    varchar(32)        ,
+    house        varchar(16)        NOT NULL,
+    apartment    varchar(16)        ,
     created      timestamp          NOT NULL,
     updated      timestamp          NOT NULL
 );
