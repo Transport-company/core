@@ -14,7 +14,7 @@ public interface Urls {
     }
 
     interface Tracking {
-        String PART = "traking";
+        String PART = "tracking";
         String FULL = ROOT + "/" + PART;
     }
 
