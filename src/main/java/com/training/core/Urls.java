@@ -1,7 +1,7 @@
 package com.training.core;
 
 public interface Urls {
-    String ROOT = "/";
+    String ROOT = "";
 
     interface Orders {
         String PART = "orders";
