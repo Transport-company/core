@@ -1,13 +1,14 @@
-#spring:
-#  datasource:
-#    initialization-mode: always
-#    platform: postgresql
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5433/transportcompany
-#    username: postgres
-#    password: postgres
-#  jpa:
-#    show-sql: false
+spring:
+  datasource:
+    initialization-mode: always
+    platform: postgresql
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/core
+    username: postgres
+    password: 12345
+  jpa:
+    show-sql: false
+
 springdoc:
   swagger-ui:
     path: core/doc/swagger-ui.html
