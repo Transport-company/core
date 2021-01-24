@@ -8,6 +8,20 @@ public interface Urls {
         String FULL = ROOT + "/" + PART;
     }
 
+    interface Deliveries {
+        String PART = "deliveries";
+        String FULL = ROOT + "/" + PART;
+
+        interface Filter {
+            String PART = "filter";
+            String FULL = ROOT + "/" + PART;
+        }
+
+        interface Status {
+            String PART = "status";
+        }
+    }
+
     interface Payments {
         String PART = "payments";
         String FULL = ROOT + "/" + PART;
