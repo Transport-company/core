@@ -70,6 +70,9 @@ public class DeliveryServiceImpl implements DeliveryService {
         Assert.notNull(id, "Id can not be null");
         Assert.notNull(delivery, "Delivery can not be null");
 
+        Delivery fetched = getById(id);
+        delivery.setId(fetched.getId());
+        delivery.setCreated(fetched.getCreated());
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
         return updated;
