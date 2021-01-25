@@ -84,15 +84,15 @@ public class Delivery {
     /**
      * Sending address
      */
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "sending_address_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sending_address_id")
     private Address sendingAddress;
 
     /**
      * Shipping address
      */
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
     /**

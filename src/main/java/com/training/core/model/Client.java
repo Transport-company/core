@@ -50,7 +50,7 @@ public class Client {
     /**
      * The phone number of the client
      */
-    @Column(name = "phone")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
