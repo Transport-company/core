@@ -1,4 +1,7 @@
 package com.training.core.service;
 
-public class TrackingNumberGeneratingService {
+/**
+ * Generats a tracking number of a delivery.
+ */
+public interface TrackingNumberGeneratingService {
 }
