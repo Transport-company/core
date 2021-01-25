@@ -81,7 +81,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public void delete(@NonNull Long id) {
         Assert.notNull(id, "Id can not be null");
 
-        Delivery delivery = getById(id);
+        getById(id);
         deliveryRepository.deleteById(id);
         log.info("Deleted the delivery with id: {}", id);
     }
