@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Entity for the label
  */
 @Entity
-@Table(name = "label")
+@Table
 @Data
 public class Label {
 

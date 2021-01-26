@@ -1,6 +1,6 @@
 package com.training.core.model;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,8 +12,11 @@ import java.time.LocalDateTime;
  * Entity for cargo
  */
 @Entity
-@Table(name = "саrgo")
+@Table
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cargo {
 
     /**
@@ -66,5 +69,4 @@ public class Cargo {
     @UpdateTimestamp
     @Column(name = "updated")
     private LocalDateTime updated;
-
 }

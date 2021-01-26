@@ -1,6 +1,9 @@
 package com.training.core.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
@@ -12,8 +15,11 @@ import java.util.Set;
  * Entity for delivery of cargo
  */
 @Entity
-@Table(name = "delivery")
+@Table
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Delivery {
 
     /**
@@ -24,7 +30,7 @@ public class Delivery {
     private Long id;
 
     /**
-     * Information about the client's desire to receive notifications
+     * Information about the client's desire to enable notifications
      */
     @Column(name = "enabled_notifications")
     private Boolean enabledNotifications;

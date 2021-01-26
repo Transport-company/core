@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * Entity for cargo tracking
  */
 @Entity
-@Table(name = "tracking")
+@Table
 @Data
 public class Tracking {
 

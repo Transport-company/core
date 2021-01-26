@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javassist.NotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,7 +63,7 @@ public interface OrderController {
                     name = "id",
                     description = "id  of the order to be obtained. Cannot be null",
                     required = true)
-            @PathVariable Long id);
+            @PathVariable Long id) throws NotFoundException;
 
     @Operation(summary = "add a new order")
     @ApiResponses(value = {
