@@ -1,4 +1,4 @@
-package com.training.core.mapper;
+package com.training.core.mapper.model;
 
 
 import com.training.core.dto.response.OrderResponse;

@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
         return deliveryService.getById(id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     @NonNull
     public Delivery create(Delivery delivery) {
@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         return deliveryService.save(delivery);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     @NonNull
     public Delivery update(Long id, Delivery delivery) {
@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
         return deliveryService.update(id, delivery);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     @NonNull
     public void delete(Long id) {
