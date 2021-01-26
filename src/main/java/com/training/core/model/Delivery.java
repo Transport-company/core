@@ -3,7 +3,6 @@ package com.training.core.model;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -64,29 +63,36 @@ public class Delivery {
     /**
      *  Cargo information
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
     private Cargo cargo;
 
     /**
-     * Information about the client
+     * Information about the sender
      */
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @JoinColumn(name = "sender_id")
+    private Client sender;
+
+    /**
+     * Information about the recipient
+     */
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "recipient_id")
+    private Client recipient;
 
     /**
      * Sending address
      */
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "sending_address_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sending_address_id")
     private Address sendingAddress;
 
     /**
      * Shipping address
      */
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
     /**

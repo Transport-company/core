@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -23,22 +24,34 @@ public class Client {
     private Long id;
 
     /**
-     * The surname of the client
+     * The last name of the client
      */
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "last_name")
+    private String lastName;
 
     /**
-     * The name of the client
+     * The first name of the client
      */
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     /**
      * The patronymic of the client
      */
-    @Column(name = "patronymic")
-    private String patronymic;
+    @Column(name = "middle_name")
+    private String middleName;
+
+    /**
+     * Date of birth
+     */
+    @Column(name = "birthday", nullable = false)
+    private LocalDate birthday;
+
+    /**
+     * The phone number of the client
+     */
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     /**
      * The email of the client
