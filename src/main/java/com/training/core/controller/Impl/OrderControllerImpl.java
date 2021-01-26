@@ -44,7 +44,6 @@ public class OrderControllerImpl  implements OrderController {
     @Override
     public ResponseEntity<OrderResponse> create(OrderRequest orderRequest) {
         if(isEmpty(orderRequest)){
-            System.out.println(orderRequest.getClass());
             return ResponseEntity.badRequest().build();
         }
 
