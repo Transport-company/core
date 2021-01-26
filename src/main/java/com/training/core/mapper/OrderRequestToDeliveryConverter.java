@@ -10,7 +10,7 @@ public class OrderRequestToDeliveryConverter implements Converter<OrderRequest, 
     @Override
     public Delivery convert(OrderRequest orderRequest) {
         return Delivery.builder()
-                .cargo(orderRequest.getCargo())
+//                .cargo(orderRequest.getCargo())
 //                .sender(orderRequest.getSender())
 //                .recipient(orderRequest.getRecipient())
 //                .sendingAddress(orderRequest.getSendingAddress())

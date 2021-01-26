@@ -44,7 +44,6 @@ public class OrderControllerImpl  implements OrderController {
     @Override
     public ResponseEntity<OrderResponse> create(OrderRequest orderRequest) {
         if(isEmpty(orderRequest)){
-            System.out.println(orderRequest.getClass());
             return ResponseEntity.badRequest().build();
         }
 
@@ -62,6 +61,10 @@ public class OrderControllerImpl  implements OrderController {
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        return null;
+        if(isEmpty(id)){
+            return ResponseEntity.badRequest().build();
+        }
+        orderService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

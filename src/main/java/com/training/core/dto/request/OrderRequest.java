@@ -12,11 +12,11 @@ import lombok.Data;
 @Builder
 public class OrderRequest {
 
-    /**
-     *  Cargo information
-     */
-    @Schema(description = "Cargo information")
-    private Cargo cargo;
+//    /**
+//     *  Cargo information
+//     */
+//    @Schema(description = "Cargo information")
+//    private Cargo cargo;
 
 //    /**
 //     * Information about the sender
