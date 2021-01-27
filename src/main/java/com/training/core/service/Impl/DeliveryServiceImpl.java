@@ -2,9 +2,11 @@ package com.training.core.service.Impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
-import com.training.core.model.Delivery;
-import com.training.core.model.DeliveryStatus;
+import com.training.core.model.*;
 import com.training.core.repository.DeliveryRepository;
+import com.training.core.service.AddressService;
+import com.training.core.service.CargoService;
+import com.training.core.service.ClientService;
 import com.training.core.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
+    private final AddressService addressService;
+    private final ClientService clientService;
+    private final CargoService cargoService;
 
     @Transactional(readOnly = true)
     @Override
@@ -88,6 +93,22 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery fetched = getById(id);
         delivery.setId(fetched.getId());
         delivery.setCreated(fetched.getCreated());
+
+        Cargo cargo = cargoService.update(getById(id).getCargo().getId(), delivery.getCargo());
+        delivery.setCargo(cargo);
+
+        Client sender =  clientService.update(getById(id).getSender().getId(), delivery.getSender());
+        delivery.setSender(sender);
+        Client recipient = clientService.update(getById(id).getRecipient().getId(), delivery.getRecipient());
+        delivery.setRecipient(recipient);
+
+        Address sendingAddress =  addressService.update(getById(id).getSendingAddress().getId(), delivery.getSendingAddress());
+        delivery.setSendingAddress(sendingAddress);
+        Address shippingAddress = addressService.update(getById(id).getShippingAddress().getId(), delivery.getShippingAddress());
+        delivery.setShippingAddress(shippingAddress);
+
+        delivery.setTracking(getById(id).getTracking());
+
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
         return updated;

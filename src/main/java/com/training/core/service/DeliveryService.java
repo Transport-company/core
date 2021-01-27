@@ -57,7 +57,7 @@ public interface DeliveryService {
      Boolean isPaid(@NonNull Long id);
 
     /**
-     * Method for saving a {@link NotFoundException} in a repository.
+     * Method for saving a  {@link Delivery delivery} in a repository.
      * Input arguments should not be null,
      * otherwise will be thrown IllegalArgumentException.
      *

@@ -56,7 +56,11 @@ public class OrderControllerImpl  implements OrderController {
 
     @Override
     public ResponseEntity<OrderResponse> update(Long id, @Valid OrderRequest orderRequest) {
-        return null;
+
+        Delivery delivery = orderService.update(id, Objects.requireNonNull(conversionService.convert(
+                orderRequest, Delivery.class)));
+        return ResponseEntity.ok()
+                .body(conversionService.convert(delivery, OrderResponse.class));
     }
 
     @Override

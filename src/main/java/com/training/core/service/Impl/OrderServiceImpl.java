@@ -1,10 +1,10 @@
 package com.training.core.service.Impl;
 
 import com.training.core.exception.NotUpdateException;
+import com.training.core.model.Address;
+import com.training.core.model.Client;
 import com.training.core.model.Delivery;
-import com.training.core.service.DeliveryService;
-import com.training.core.service.DeliverySumCalculatingService;
-import com.training.core.service.OrderService;
+import com.training.core.service.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,16 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final DeliveryService deliveryService;
-    private final DeliverySumCalculatingService deliverySumCalculatingService;
-
 
     @Transactional(readOnly = true)
     @Override
@@ -45,8 +41,6 @@ public class OrderServiceImpl implements OrderService {
     public Delivery create(Delivery delivery) {
         log.info("A new delivery is creating ...");
 
-        BigDecimal sum = deliverySumCalculatingService.getSum();
-        delivery.setSum(sum);
         return deliveryService.save(delivery);
     }
 
@@ -59,10 +53,6 @@ public class OrderServiceImpl implements OrderService {
             new NotUpdateException(String.format("Delivery with id %s can't be updated, because the delivery is paid", id));
             return null;
         }
-
-        BigDecimal sum = deliverySumCalculatingService.getSum();
-        delivery.setSum(sum);
-
         log.info("Delivery with id {} is updated", id);
         return deliveryService.update(id, delivery);
     }
