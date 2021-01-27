@@ -15,7 +15,7 @@ import java.util.Set;
  * Entity for delivery of cargo
  */
 @Entity
-@Table
+@Table(name = "delivery")
 @Data
 @Builder
 @NoArgsConstructor

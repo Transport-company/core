@@ -22,7 +22,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @NonNull
     public Page<Delivery> getList(Pageable pageable) {
-        return null;
+        Page<Delivery>  pagedResult = deliveryService.getList(pageable);
+        return pagedResult;
     }
 
     @Transactional(readOnly = true)

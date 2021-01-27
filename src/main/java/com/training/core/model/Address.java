@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * Entity for the address
  */
 @Entity
-@Table
+@Table(name = "address")
 @Data
 public class Address {
 

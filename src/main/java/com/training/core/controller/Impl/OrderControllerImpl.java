@@ -27,7 +27,12 @@ public class OrderControllerImpl  implements OrderController {
 
     @Override
     public ResponseEntity<OrderPageResponse> getList(Pageable pageable) {
-        return null;
+        System.out.println(orderService.getList(pageable));
+
+        return ResponseEntity.ok(Objects.requireNonNull(conversionService.convert(
+                orderService.getList(pageable).stream()
+                        .map(e -> conversionService.convert(
+                                e, OrderResponse.class)), OrderPageResponse.class)));
     }
 
     @Override

@@ -38,7 +38,7 @@ public interface OrderController {
             @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
             @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
-    @GetMapping
+    @GetMapping(params = { "page", "size" })
     ResponseEntity<OrderPageResponse> getList(
             @Parameter(
                     name = "pageable",

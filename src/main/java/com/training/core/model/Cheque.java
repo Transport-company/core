@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Entity for a delivery cheque
  */
 @Entity
-@Table
+@Table(name = "cheque")
 @Data
 public class Cheque {
 

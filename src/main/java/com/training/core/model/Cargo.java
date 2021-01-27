@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Entity for cargo
  */
 @Entity
-@Table
+@Table(name = "cargo")
 @Data
 @Builder
 @NoArgsConstructor

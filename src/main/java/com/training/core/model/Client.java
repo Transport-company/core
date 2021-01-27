@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Entity for the client
  */
 @Entity
-@Table
+@Table(name = "client")
 @Data
 public class Client {
 

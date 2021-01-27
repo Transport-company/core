@@ -1,5 +1,6 @@
 package com.training.core.config;
 
+import com.training.core.mapper.OrderResponseStreamToOrderPageResponseConverter;
 import com.training.core.mapper.model.DeliveryToOrderResponseConverter;
 import com.training.core.mapper.dto.OrderRequestToDeliveryConverter;
 import com.training.core.service.DeliverySumCalculatingService;
@@ -22,6 +23,7 @@ public class ConversionConfig {
         Set<Converter<?, ?>> converters = new HashSet<>();
         converters.add(new DeliveryToOrderResponseConverter());
         converters.add(new OrderRequestToDeliveryConverter(deliverySumCalculatingService));
+        converters.add(new OrderResponseStreamToOrderPageResponseConverter());
         factory.setConverters(converters);
         return factory;
         }

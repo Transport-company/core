@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * Entity for return of cargo
  */
 @Entity
-@Table
+@Table(name = "returns")
 @Data
 public class Returns {
 
