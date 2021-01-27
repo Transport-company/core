@@ -1,5 +1,6 @@
 package com.training.core.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "delivery")
 @Data
+@Builder
 public class Delivery {
 
     /**

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,6 +86,23 @@ public interface DeliveryController {
                     required = true,
                     schema = @Schema(implementation = DeliveryStatus.class))
             @PathVariable DeliveryStatus status);
+
+    @Operation(summary = "create a new delivery")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "a delivery created",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DeliveryResponse.class))),
+            @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
+    })
+    @PostMapping
+    ResponseEntity<DeliveryResponse> create(
+            @Parameter(
+                    description = "the delivery to add. Cannot be null.",
+                    required = true,
+                    schema = @Schema(implementation = DeliveryRequest.class))
+            @Valid @RequestBody DeliveryRequest deliveryRequest);
 
     @Operation(summary = "update an existing delivery")
     @ApiResponses(value = {

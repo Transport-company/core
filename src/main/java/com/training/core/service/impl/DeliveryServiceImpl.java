@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -52,6 +53,17 @@ public class DeliveryServiceImpl implements DeliveryService {
         return deliveryRepository.findByStatus(status);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    @NonNull
+    public boolean existsTrackNumber(@NonNull String trackingNumber) {
+        Assert.notNull(trackingNumber, "Tracking number can not be null");
+
+        log.info("Requested a check for the tracking number: {}", trackingNumber);
+        Optional<Delivery> deliveryOptional = deliveryRepository.findByTrackingNumber(trackingNumber);
+        return deliveryOptional.isPresent();
+    }
+
     @Transactional
     @Override
     @NonNull
@@ -76,6 +88,17 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
         return updated;
+    }
+
+    @Override
+    public void changeStatus(@NonNull Long id, @NonNull DeliveryStatus status) {
+        Assert.notNull(id, "Id can not be null");
+        Assert.notNull(status, "Status can not be null");
+
+        Delivery fetched = getById(id);
+        fetched.setStatus(status);
+        deliveryRepository.save(fetched);
+        log.info("The status '{}' for the delivery with id {} is set", status, id);
     }
 
     @Transactional
