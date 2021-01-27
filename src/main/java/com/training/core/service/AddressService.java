@@ -1,8 +1,6 @@
 package com.training.core.service;
 
 import com.training.core.model.Address;
-import com.training.core.model.Delivery;
-import javassist.NotFoundException;
 
 public interface AddressService {
 

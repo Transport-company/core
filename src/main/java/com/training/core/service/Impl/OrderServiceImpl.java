@@ -1,8 +1,6 @@
 package com.training.core.service.Impl;
 
 import com.training.core.exception.NotUpdateException;
-import com.training.core.model.Address;
-import com.training.core.model.Client;
 import com.training.core.model.Delivery;
 import com.training.core.service.*;
 import lombok.NonNull;

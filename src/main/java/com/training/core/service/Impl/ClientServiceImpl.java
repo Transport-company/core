@@ -2,11 +2,8 @@ package com.training.core.service.Impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
-import com.training.core.model.Address;
 import com.training.core.model.Client;
-import com.training.core.repository.AddressRepository;
 import com.training.core.repository.ClientRepository;
-import com.training.core.service.AddressService;
 import com.training.core.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
