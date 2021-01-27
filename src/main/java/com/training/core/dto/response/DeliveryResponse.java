@@ -1,8 +1,5 @@
 package com.training.core.dto.response;
 
-import com.training.core.model.Address;
-import com.training.core.model.Cargo;
-import com.training.core.model.Client;
 import com.training.core.model.DeliveryStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -67,31 +64,31 @@ public class DeliveryResponse {
      * Cargo information
      */
     @Schema(description = "a cargo to send")
-    private final Cargo cargo;
+    private final CargoResponse cargo;
 
     /**
      * Information about the sender
      */
     @Schema(description = "the sender of the cargo")
-    private final Client sender;
+    private final ClientResponse sender;
 
     /**
      * Information about the recipient
      */
     @Schema(description = "the recipient of the cargo")
-    private final Client recipient;
+    private final ClientResponse recipient;
 
     /**
      * Sending address
      */
     @Schema(description = "an adress from which the cargo is sent")
-    private final Address sendingAddress;
+    private final AddressResponse sendingAddress;
 
     /**
      * Shipping address
      */
     @Schema(description = "an adress of receipt of the cargo")
-    private final Address shippingAddress;
+    private final AddressResponse shippingAddress;
 
     /**
      * Time of object creation
@@ -104,4 +101,5 @@ public class DeliveryResponse {
      */
     @Schema(description = "a date of delivery update (filled in automatically)")
     private final LocalDateTime updated;
+
 }

@@ -1,6 +1,9 @@
 package com.training.core.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,8 +15,11 @@ import java.time.LocalDateTime;
  * Entity for cargo
  */
 @Entity
-@Table(name = "саrgo")
+@Table(name = "cargo")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Cargo {
 
     /**
@@ -52,6 +58,12 @@ public class Cargo {
      */
     @Column(name = "height")
     private Float height;
+
+    /**
+     * The delivery for this cargo
+     */
+    @OneToOne(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Delivery delivery;
 
     /**
      * Time of object creation

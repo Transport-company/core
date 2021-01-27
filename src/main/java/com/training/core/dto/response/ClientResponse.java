@@ -1,77 +1,70 @@
-package com.training.core.model;
+package com.training.core.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Entity for the client
+ * An object for trancferring data from a controller to a response about a client.
  */
-@Entity
-@Table(name = "client")
 @Data
 @Builder
-public class Client {
+public class ClientResponse {
 
     /**
      * Unique identifier of client
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "an unique identifier")
     private Long id;
 
     /**
      * The last name of the client
      */
-    @Column(name = "last_name")
+    @Schema(description = "The last name of the client")
     private String lastName;
 
     /**
      * The first name of the client
      */
-    @Column(name = "first_name")
+    @Schema(description = "The first name of the client")
     private String firstName;
 
     /**
-     * The patronymic of the client
+     * The middle name of the client
      */
-    @Column(name = "middle_name")
+    @Schema(description = "The middle name of the client")
     private String middleName;
 
     /**
      * Date of birth
      */
-    @Column(name = "birthday", nullable = false)
+    @Schema(description = "Date of birth")
     private LocalDate birthday;
 
     /**
      * The phone number of the client
      */
-    @Column(name = "phone_number")
+    @Schema(description = "The phone number of the client")
     private String phoneNumber;
 
     /**
      * The email of the client
      */
-    @Column(name = "email")
+    @Schema(description = "The email of the clientt")
     private String email;
 
     /**
      * Time of object creation
      */
-    @CreationTimestamp
-    @Column(name = "created")
+    @Schema(description = "time of creation")
     private LocalDateTime created;
 
     /**
      * Update time
      */
-    @UpdateTimestamp
-    @Column(name = "updated")
+    @Schema(description = "update time")
     private LocalDateTime updated;
 }

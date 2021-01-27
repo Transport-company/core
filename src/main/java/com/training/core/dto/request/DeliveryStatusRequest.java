@@ -21,4 +21,5 @@ public class DeliveryStatusRequest {
             example = "DELIVERED")
     @NotBlank(message = "The field is required")
     private final DeliveryStatus status;
+
 }

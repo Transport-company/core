@@ -1,8 +1,5 @@
 package com.training.core.dto.request;
 
-import com.training.core.model.Address;
-import com.training.core.model.Cargo;
-import com.training.core.model.Client;
 import com.training.core.model.DeliveryStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -59,29 +56,30 @@ public class DeliveryRequest {
      * Cargo information
      */
     @Schema(description = "a cargo to send")
-    private final Cargo cargo;
+    private final CargoRequest cargo;
 
     /**
      * Information about the sender
      */
     @Schema(description = "the sender of the cargo")
-    private final Client sender;
+    private final ClientRequest sender;
 
     /**
      * Information about the recipient
      */
     @Schema(description = "the recipient of the cargo")
-    private final Client recipient;
+    private final ClientRequest recipient;
 
     /**
      * Sending address
      */
     @Schema(description = "an adress from which the cargo is sent")
-    private final Address sendingAddress;
+    private final AddressRequest sendingAddress;
 
     /**
      * Shipping address
      */
     @Schema(description = "an adress of receipt of the cargo")
-    private final Address shippingAddress;
+    private final AddressRequest shippingAddress;
+
 }
