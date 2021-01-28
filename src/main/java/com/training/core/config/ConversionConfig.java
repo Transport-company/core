@@ -1,6 +1,6 @@
 package com.training.core.config;
 
-import com.training.core.mapper.OrderResponseStreamToOrderPageResponseConverter;
+import com.training.core.mapper.model.PageToOrderPageResponseConverter;
 import com.training.core.mapper.model.DeliveryToOrderResponseConverter;
 import com.training.core.mapper.dto.OrderRequestToDeliveryConverter;
 import com.training.core.service.DeliverySumCalculatingService;
@@ -16,14 +16,14 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ConversionConfig {
     private final DeliverySumCalculatingService deliverySumCalculatingService;
-
+    private final DeliveryToOrderResponseConverter deliveryToOrderResponseConverter;
     @Bean
     ConversionServiceFactoryBean conversionService() {
         ConversionServiceFactoryBean factory = new ConversionServiceFactoryBean();
         Set<Converter<?, ?>> converters = new HashSet<>();
         converters.add(new DeliveryToOrderResponseConverter());
         converters.add(new OrderRequestToDeliveryConverter(deliverySumCalculatingService));
-        converters.add(new OrderResponseStreamToOrderPageResponseConverter());
+        converters.add(new PageToOrderPageResponseConverter(deliveryToOrderResponseConverter));
         factory.setConverters(converters);
         return factory;
         }

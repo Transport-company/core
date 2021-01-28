@@ -9,12 +9,11 @@ import com.training.core.service.OrderService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.util.ObjectUtils.isEmpty;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -27,33 +26,24 @@ public class OrderControllerImpl  implements OrderController {
 
     @Override
     public ResponseEntity<OrderPageResponse> getList(Pageable pageable) {
-        System.out.println(orderService.getList(pageable));
-
-        return ResponseEntity.ok(Objects.requireNonNull(conversionService.convert(
-                orderService.getList(pageable).stream()
-                        .map(e -> conversionService.convert(
-                                e, OrderResponse.class)), OrderPageResponse.class)));
+        Page<Delivery> page = orderService.getList(pageable);
+        return ResponseEntity.ok(
+                Objects.requireNonNull(conversionService.convert(
+                        page, OrderPageResponse.class)));
     }
 
     @Override
     public ResponseEntity<OrderResponse> getById(Long id) throws NotFoundException {
-        if(isEmpty(id)){
-            return ResponseEntity.badRequest().build();
-        }
-
         return ResponseEntity.ok(
                 Objects.requireNonNull(conversionService.convert(
                         orderService.getById(id), OrderResponse.class)));
     }
 
     @Override
-    public ResponseEntity<OrderResponse> create(OrderRequest orderRequest) {
-        if(isEmpty(orderRequest)){
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<OrderResponse> create(@Valid OrderRequest orderRequest) {
         Delivery delivery = orderService.create(Objects.requireNonNull(conversionService.convert(
                 orderRequest, Delivery.class)));
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(conversionService.convert(delivery, OrderResponse.class));
@@ -61,18 +51,15 @@ public class OrderControllerImpl  implements OrderController {
 
     @Override
     public ResponseEntity<OrderResponse> update(Long id, @Valid OrderRequest orderRequest) {
-
         Delivery delivery = orderService.update(id, Objects.requireNonNull(conversionService.convert(
                 orderRequest, Delivery.class)));
+
         return ResponseEntity.ok()
                 .body(conversionService.convert(delivery, OrderResponse.class));
     }
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        if(isEmpty(id)){
-            return ResponseEntity.badRequest().build();
-        }
         orderService.delete(id);
         return ResponseEntity.ok().build();
     }

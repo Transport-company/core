@@ -1,6 +1,5 @@
 package com.training.core.dto.request;
 
-import com.training.core.model.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,29 +17,29 @@ public class OrderRequest {
      *  Cargo information
      */
     @Schema(description = "Cargo information")
-    private Cargo cargo;
+    private CargoRequest cargo;
 
     /**
      * Information about the sender
      */
     @Schema(description = "Information about the sender")
-    private Client sender;
+    private ClientRequest sender;
 
     /**
      * Information about the recipient
      */
     @Schema(description = "Information about the recipient")
-    private Client recipient;
+    private ClientRequest recipient;
 
     /**
      * Sending address
      */
     @Schema(description = "Sending address")
-    private Address sendingAddress;
+    private AddressRequest sendingAddress;
 
     /**
      * Shipping address
      */
     @Schema(description = "Shipping address")
-     private Address shippingAddress;
+     private AddressRequest shippingAddress;
 }
