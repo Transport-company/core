@@ -1,9 +1,13 @@
 package com.training.core.service.impl;
 
 import com.training.core.exception.NotFoundException;
+import com.training.core.model.Address;
+import com.training.core.model.Cargo;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.repository.DeliveryRepository;
+import com.training.core.service.AddressService;
+import com.training.core.service.CargoService;
 import com.training.core.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +26,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
+    private final AddressService addressService;
+    private final CargoService cargoService;
 
     @Transactional(readOnly = true)
     @Override
@@ -70,9 +76,21 @@ public class DeliveryServiceImpl implements DeliveryService {
     public Delivery save(@NonNull Delivery delivery) {
         Assert.notNull(delivery, "Delivery can not be null");
 
+        complementAggregated(delivery);
+
         Delivery saved = deliveryRepository.save(delivery);
         log.info("Saved a new delivery with id: {}", saved.getId());
         return saved;
+    }
+
+    private void complementAggregated(Delivery delivery) {
+        Address sendingAddress = delivery.getSendingAddress();
+        Optional<Long> optionalSending = addressService.getIdByAddress(sendingAddress);
+        optionalSending.ifPresent(sendingAddress::setId);
+
+        Address shippingAddress = delivery.getShippingAddress();
+        Optional<Long> optionalShipping = addressService.getIdByAddress(shippingAddress);
+        optionalShipping.ifPresent(shippingAddress::setId);
     }
 
     @Transactional
@@ -85,6 +103,12 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery fetched = getById(id);
         delivery.setId(fetched.getId());
         delivery.setCreated(fetched.getCreated());
+
+        Cargo fetchedCargo = cargoService.getById(fetched.getCargo().getId());
+        delivery.getCargo().setId(fetchedCargo.getId());
+
+        complementAggregated(delivery);
+
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
         return updated;

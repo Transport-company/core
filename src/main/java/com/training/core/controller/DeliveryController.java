@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -85,7 +86,7 @@ public interface DeliveryController {
                     description = "the delivery status to filter. Cannot be null",
                     required = true,
                     schema = @Schema(implementation = DeliveryStatus.class))
-            @PathVariable DeliveryStatus status);
+            @RequestParam DeliveryStatus status);
 
     @Operation(summary = "create a new delivery")
     @ApiResponses(value = {

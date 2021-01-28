@@ -7,12 +7,14 @@ import org.springframework.core.convert.converter.Converter;
 public class AddressRequestToAddressConverter implements Converter<AddressRequest, Address> {
     @Override
     public Address convert(AddressRequest addressRequest) {
-        return Address.builder()
+        Address address = Address.builder()
                 .region(addressRequest.getRegion())
                 .city(addressRequest.getCity())
                 .street(addressRequest.getStreet())
                 .house(addressRequest.getHouse())
                 .apartment(addressRequest.getApartment())
                 .build();
+        address.setCode(address.hashCode());
+        return address;
     }
 }
