@@ -25,7 +25,6 @@ public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryReq
                 .sendingAddress(toAddressConverter.convert(deliveryRequest.getSendingAddress()))
                 .shippingAddress(toAddressConverter.convert(deliveryRequest.getShippingAddress()))
                 .build();
-        delivery.getCargo().setDelivery(delivery);
         return delivery;
     }
 

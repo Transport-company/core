@@ -60,12 +60,6 @@ public class Cargo {
     private Float height;
 
     /**
-     * The delivery for this cargo
-     */
-    @OneToOne(mappedBy = "cargo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Delivery delivery;
-
-    /**
      * Time of object creation
      */
     @CreationTimestamp
