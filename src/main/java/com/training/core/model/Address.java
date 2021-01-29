@@ -1,18 +1,24 @@
 package com.training.core.model;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Entity for the address
  */
 @Entity
 @Table(name = "address")
-@Data
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Address {
 
     /**
@@ -53,6 +59,12 @@ public class Address {
     private String apartment;
 
     /**
+     * The code of address entity for quick search in the database.
+     */
+    @Column(name = "code")
+    private int code;
+
+    /**
      * Time of object creation
      */
     @CreationTimestamp
@@ -65,4 +77,21 @@ public class Address {
     @UpdateTimestamp
     @Column(name = "updated")
     private LocalDateTime updated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return getRegion().equals(address.getRegion())
+                && getCity().equals(address.getCity())
+                && Objects.equals(getStreet(), address.getStreet())
+                && getHouse().equals(address.getHouse())
+                && Objects.equals(getApartment(), address.getApartment());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRegion(), getCity(), getStreet(), getHouse(), getApartment());
+    }
 }

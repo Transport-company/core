@@ -1,4 +1,4 @@
-package com.training.core.service.Impl;
+package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -58,11 +59,24 @@ public class DeliveryServiceImpl implements DeliveryService {
         return deliveryRepository.findByStatus(status);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    @NonNull
+    public boolean existsTrackNumber(@NonNull String trackingNumber) {
+        Assert.notNull(trackingNumber, "Tracking number can not be null");
+
+        log.info("Requested a check for the tracking number: {}", trackingNumber);
+        Optional<Delivery> deliveryOptional = deliveryRepository.findByTrackingNumber(trackingNumber);
+        return deliveryOptional.isPresent();
+    }
+
     @Transactional
     @Override
     @NonNull
     public Delivery save(@NonNull Delivery delivery) {
         Assert.notNull(delivery, ErrorMessages.NULL_DELIVERY_OBJECT.getErrorMessage());
+
+        complementAggregated(delivery);
 
         Delivery saved = deliveryRepository.save(delivery);
         log.info("Saved a new delivery with id: {}", saved.getId());
@@ -82,6 +96,23 @@ public class DeliveryServiceImpl implements DeliveryService {
         return delivery.getIsPaid();
     }
 
+    private void complementAggregated(Delivery delivery) {
+        Client sender = delivery.getSender();
+        Optional<Client> optionalSender = clientService.getOptionalByEmail(sender.getEmail());
+        delivery.setSender(optionalSender.orElseGet(() -> clientService.save(sender)));
+
+        Client recipient = delivery.getRecipient();
+        Optional<Client> optionalRecipient = clientService.getOptionalByEmail(recipient.getEmail());
+        delivery.setRecipient(optionalRecipient.orElseGet(() -> clientService.save(recipient)));
+
+        Address sendingAddress = delivery.getSendingAddress();
+        Optional<Address> optionalSending = addressService.getOptionalByAddress(sendingAddress);
+        delivery.setSendingAddress(optionalSending.orElseGet(() -> addressService.save(sendingAddress)));
+
+        Address shippingAddress = delivery.getShippingAddress();
+        Optional<Address> optionalShipping = addressService.getOptionalByAddress(shippingAddress);
+        delivery.setShippingAddress(optionalShipping.orElseGet(() -> addressService.save(shippingAddress)));
+    }
 
     @Transactional
     @Override
@@ -94,24 +125,28 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setId(fetched.getId());
         delivery.setCreated(fetched.getCreated());
 
-        Cargo cargo = cargoService.update(getById(id).getCargo().getId(), delivery.getCargo());
-        delivery.setCargo(cargo);
+        Cargo fetchedCargo = cargoService.getById(fetched.getCargo().getId());
+        delivery.getCargo().setId(fetchedCargo.getId());
+        delivery.getCargo().setCreated(fetchedCargo.getCreated());
 
-        Client sender =  clientService.update(getById(id).getSender().getId(), delivery.getSender());
-        delivery.setSender(sender);
-        Client recipient = clientService.update(getById(id).getRecipient().getId(), delivery.getRecipient());
-        delivery.setRecipient(recipient);
-
-        Address sendingAddress =  addressService.update(getById(id).getSendingAddress().getId(), delivery.getSendingAddress());
-        delivery.setSendingAddress(sendingAddress);
-        Address shippingAddress = addressService.update(getById(id).getShippingAddress().getId(), delivery.getShippingAddress());
-        delivery.setShippingAddress(shippingAddress);
+        complementAggregated(delivery);
 
         delivery.setTracking(getById(id).getTracking());
 
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
         return updated;
+    }
+
+    @Override
+    public void changeStatus(@NonNull Long id, @NonNull DeliveryStatus status) {
+        Assert.notNull(id, "Id can not be null");
+        Assert.notNull(status, "Status can not be null");
+
+        Delivery fetched = getById(id);
+        fetched.setStatus(status);
+        deliveryRepository.save(fetched);
+        log.info("The status '{}' for the delivery with id {} is set", status, id);
     }
 
     @Transactional

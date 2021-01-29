@@ -1,4 +1,4 @@
-package com.training.core.service.Impl;
+package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
@@ -11,6 +11,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,6 +29,11 @@ public class ClientServiceImpl implements ClientService {
         log.info("Requested the client with id: {}", id);
         return clientRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found the client with id " + id));
+    }
+
+    @Override
+    public Optional<Client> getOptionalByEmail(String email) {
+        return clientRepository.findByEmail(email);
     }
 
     @Transactional

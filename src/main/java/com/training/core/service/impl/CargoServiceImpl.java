@@ -1,4 +1,4 @@
-package com.training.core.service.Impl;
+package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;

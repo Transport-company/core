@@ -1,6 +1,9 @@
 package com.training.core.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +17,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "client")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Client {
 
     /**

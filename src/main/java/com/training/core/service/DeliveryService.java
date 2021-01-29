@@ -57,6 +57,14 @@ public interface DeliveryService {
      Boolean isPaid(@NonNull Long id);
 
     /**
+     * Checks if a traking number already uses in the database.
+     *
+     * @param trackingNumber a delivery tracking number
+     * @return true if the tracking number already exists in the database, in the other case false
+     */
+    boolean existsTrackNumber(String trackingNumber);
+
+    /**
      * Method for saving a  {@link Delivery delivery} in a repository.
      * Input arguments should not be null,
      * otherwise will be thrown IllegalArgumentException.
@@ -81,6 +89,16 @@ public interface DeliveryService {
      *                                  is not found
      */
     Delivery update(Long id, Delivery delivery);
+
+    /**
+     * Method for changing a status of {@link Delivery delivery}.
+     * Input arguments should not be null,
+     * otherwise will be thrown IllegalArgumentException.
+     *
+     * @param id     unique identifier of {@link Delivery delivery} which change the status
+     * @param status a new {@link DeliveryStatus status}
+     */
+    void changeStatus(Long id, DeliveryStatus status);
 
     /**
      * Method for deleting a {@link Delivery delivery}.

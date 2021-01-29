@@ -1,4 +1,4 @@
-package com.training.core.service.Impl;
+package com.training.core.service.impl;
 
 import com.training.core.service.DeliverySumCalculatingService;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.training.core.service.Impl;
+package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
@@ -11,6 +11,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,6 +30,22 @@ public class AddressServiceImpl implements AddressService {
         log.info("Requested the address with id: {}", id);
         return addressRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found the address with id " + id));
+    }
+
+    @Transactional(readOnly = true)
+    @NonNull
+    @Override
+    public Optional<Address> getOptionalByAddress(@NonNull Address address) {
+        Assert.notNull(address, ErrorMessages.NULL_ADDRESS_OBJECT.getErrorMessage());
+
+        log.info("Requested id for the address: {}", address);
+        List<Address> list = addressRepository.findByCode(address.getCode());
+        if (list.isEmpty()) {
+            return Optional.empty();
+        }
+        return list.stream()
+                .filter(e -> e.equals(address))
+                .findFirst();
     }
 
     @Transactional
