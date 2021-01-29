@@ -19,13 +19,13 @@ public interface AddressService {
     Address getById(Long id);
 
     /**
-     * Method for determining the unique identifier by {@link Address address} object fields
+     * Method for geting an optional object of {@link Address address} by its fields
      * (search in the database).
      *
      * @param address {@link Address address} object to seek
-     * @return id {@link Address address} unique identifier
+     * @return an optional object of {@link Address address}
      */
-    Optional<Long> getIdByAddress(Address address);
+    Optional<Address> getOptionalByAddress(Address address);
 
     /**
      * Method for saving a {@link Address address}  in a repository.

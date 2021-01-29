@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(readOnly = true)
     @NonNull
     @Override
-    public Optional<Long> getIdByAddress(@NonNull Address address) {
+    public Optional<Address> getOptionalByAddress(@NonNull Address address) {
         Assert.notNull(address, ErrorMessages.NULL_ADDRESS_OBJECT.getErrorMessage());
 
         log.info("Requested id for the address: {}", address);
@@ -45,8 +45,7 @@ public class AddressServiceImpl implements AddressService {
         }
         return list.stream()
                 .filter(e -> e.equals(address))
-                .findFirst()
-                .map(Address::getId);
+                .findFirst();
     }
 
     @Transactional

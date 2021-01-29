@@ -145,7 +145,7 @@ public interface DeliveryController {
                     description = "status data. Cannot be null.",
                     required = true,
                     schema = @Schema(implementation = DeliveryStatusRequest.class))
-            @Valid @RequestBody DeliveryStatus status);
+            @Valid @RequestBody DeliveryStatusRequest status);
 
     @Operation(summary = "deletes a delivery")
     @ApiResponses(value = {

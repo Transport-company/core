@@ -2,6 +2,7 @@ package com.training.core.controller.impl;
 
 import com.training.core.controller.DeliveryController;
 import com.training.core.dto.request.DeliveryRequest;
+import com.training.core.dto.request.DeliveryStatusRequest;
 import com.training.core.dto.response.DeliveryPageResponse;
 import com.training.core.dto.response.DeliveryResponse;
 import com.training.core.model.Delivery;
@@ -64,8 +65,8 @@ public class DeliveryControllerImpl implements DeliveryController {
     }
 
     @Override
-    public ResponseEntity<String> changeStatus(Long id, @Valid DeliveryStatus status) {
-        deliveryService.changeStatus(id, status);
+    public ResponseEntity<String> changeStatus(Long id, @Valid DeliveryStatusRequest status) {
+        deliveryService.changeStatus(id, status.getStatus());
         return ResponseEntity.ok().build();
     }
 

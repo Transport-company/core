@@ -3,11 +3,13 @@ package com.training.core.service.impl;
 import com.training.core.exception.NotFoundException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
+import com.training.core.model.Client;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.repository.DeliveryRepository;
 import com.training.core.service.AddressService;
 import com.training.core.service.CargoService;
+import com.training.core.service.ClientService;
 import com.training.core.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final AddressService addressService;
     private final CargoService cargoService;
+    private final ClientService clientService;
 
     @Transactional(readOnly = true)
     @Override
@@ -84,13 +87,21 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     private void complementAggregated(Delivery delivery) {
+        Client sender = delivery.getSender();
+        Optional<Client> optionalSender = clientService.getOptionalByEmail(sender.getEmail());
+        delivery.setSender(optionalSender.orElseGet(() -> clientService.save(sender)));
+
+        Client recipient = delivery.getRecipient();
+        Optional<Client> optionalRecipient = clientService.getOptionalByEmail(recipient.getEmail());
+        delivery.setRecipient(optionalRecipient.orElseGet(() -> clientService.save(recipient)));
+
         Address sendingAddress = delivery.getSendingAddress();
-        Optional<Long> optionalSending = addressService.getIdByAddress(sendingAddress);
-        optionalSending.ifPresent(sendingAddress::setId);
+        Optional<Address> optionalSending = addressService.getOptionalByAddress(sendingAddress);
+        delivery.setSendingAddress(optionalSending.orElseGet(() -> addressService.save(sendingAddress)));
 
         Address shippingAddress = delivery.getShippingAddress();
-        Optional<Long> optionalShipping = addressService.getIdByAddress(shippingAddress);
-        optionalShipping.ifPresent(shippingAddress::setId);
+        Optional<Address> optionalShipping = addressService.getOptionalByAddress(shippingAddress);
+        delivery.setShippingAddress(optionalShipping.orElseGet(() -> addressService.save(shippingAddress)));
     }
 
     @Transactional
@@ -106,8 +117,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         Cargo fetchedCargo = cargoService.getById(fetched.getCargo().getId());
         delivery.getCargo().setId(fetchedCargo.getId());
+        delivery.getCargo().setCreated(fetchedCargo.getCreated());
 
         complementAggregated(delivery);
+
+        delivery.setTracking(fetched.getTracking());
 
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
