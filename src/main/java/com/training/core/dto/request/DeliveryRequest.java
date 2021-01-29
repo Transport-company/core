@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 /**
@@ -38,7 +39,7 @@ public class DeliveryRequest {
      */
     @Schema(description = "a generated unique string", required = true,
             example = "mdu4n286ndgTwGGspr8hw5D7sErW5Mgcz")
-    @NotNull(message = "The field is required")
+    @Size(max = 30, message = "Max length is 30")
     private final String trackingNumber;
 
     /**
