@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,11 +39,14 @@ public class AddressServiceImpl implements AddressService {
         Assert.notNull(address, ErrorMessages.NULL_ADDRESS_OBJECT.getErrorMessage());
 
         log.info("Requested id for the address: {}", address);
-        Optional<Address> optional = addressRepository.findByCode(address.getCode());
-        if (optional.isEmpty()) {
+        List<Address> list = addressRepository.findByCode(address.getCode());
+        if (list.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(address.getId());
+        return list.stream()
+                .filter(e -> e.equals(address))
+                .findFirst()
+                .map(Address::getId);
     }
 
     @Transactional
