@@ -1,5 +1,6 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
@@ -45,7 +46,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @NonNull
     public Delivery getById(@NonNull Long id) {
-        Assert.notNull(id, "Id can not be null");
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
 
         log.info("Requested the delivery with id: {}", id);
         return deliveryRepository.findById(id)
@@ -56,7 +57,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @NonNull
     public List<Delivery> getByStatus(@NonNull DeliveryStatus status) {
-        Assert.notNull(status, "Status can not be null");
+        Assert.notNull(status, ErrorMessages.NULL_STATUS.getErrorMessage());
 
         log.info("Requested a delivery list filtered with status: {}", status);
         return deliveryRepository.findByStatus(status);
@@ -65,8 +66,20 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional(readOnly = true)
     @Override
     @NonNull
+    public boolean isPaid(@NonNull Long id) {
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
+
+        Delivery delivery = getById(id);
+
+        log.info("Get information about the payment for delivery with id: {}", id);
+        return delivery.getIsPaid();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    @NonNull
     public boolean existsTrackNumber(@NonNull String trackingNumber) {
-        Assert.notNull(trackingNumber, "Tracking number can not be null");
+        Assert.notNull(trackingNumber, ErrorMessages.NULL_TRACKING_NUMBER.getErrorMessage());
 
         log.info("Requested a check for the tracking number: {}", trackingNumber);
         Optional<Delivery> deliveryOptional = deliveryRepository.findByTrackingNumber(trackingNumber);
@@ -77,7 +90,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @NonNull
     public Delivery save(@NonNull Delivery delivery) {
-        Assert.notNull(delivery, "Delivery can not be null");
+        Assert.notNull(delivery, ErrorMessages.NULL_DELIVERY_OBJECT.getErrorMessage());
 
         complementAggregated(delivery);
 
@@ -119,8 +132,8 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @NonNull
     public Delivery update(@NonNull Long id, @NonNull Delivery delivery) {
-        Assert.notNull(id, "Id can not be null");
-        Assert.notNull(delivery, "Delivery can not be null");
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
+        Assert.notNull(delivery, ErrorMessages.NULL_DELIVERY_OBJECT.getErrorMessage());
 
         Delivery fetched = getById(id);
         delivery.setId(fetched.getId());
@@ -141,8 +154,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public void changeStatus(@NonNull Long id, @NonNull DeliveryStatus status) {
-        Assert.notNull(id, "Id can not be null");
-        Assert.notNull(status, "Status can not be null");
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
+        Assert.notNull(status, ErrorMessages.NULL_STATUS.getErrorMessage());
 
         Delivery fetched = getById(id);
         fetched.setStatus(status);
@@ -154,7 +167,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @NonNull
     public void delete(@NonNull Long id) {
-        Assert.notNull(id, "Id can not be null");
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
 
         getById(id);
         deliveryRepository.deleteById(id);

@@ -44,6 +44,18 @@ public interface DeliveryService {
     List<Delivery> getByStatus(DeliveryStatus status);
 
     /**
+     * Method for getting information about payment for {@link Delivery delivery} object
+     *
+     * @param id {@link Delivery delivery} unique identifier
+     * @return information about payment of {@link Delivery delivery} object
+     * @throws IllegalArgumentException if an input id is null
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  with unique identifier like in the argument
+     *                                  is not found
+     */
+    boolean isPaid(Long id);
+
+    /**
      * Checks if a traking number already uses in the database.
      *
      * @param trackingNumber a delivery tracking number
