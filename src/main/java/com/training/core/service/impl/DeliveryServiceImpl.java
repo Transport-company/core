@@ -89,8 +89,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     public Boolean isPaid(@NonNull Long id) {
         Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
 
-        Delivery delivery = deliveryRepository.findById(id).orElseThrow(() ->
-                new NotFoundException("Not found the delivery with id " + id));
+        Delivery delivery = getById(id);
 
         log.info("Get information about the payment for delivery with id: {}", id);
         return delivery.getIsPaid();
