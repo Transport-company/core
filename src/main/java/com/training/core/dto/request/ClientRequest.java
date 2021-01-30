@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -51,6 +53,7 @@ public class ClientRequest {
     @Schema(description = "The phone number of the client", required = true)
     @NotBlank(message = "The field is required")
     @Size(max = 11, message = "Max length is 11")
+    @Pattern(regexp = "\\d{11}")
     private String phoneNumber;
 
     /**
@@ -59,6 +62,7 @@ public class ClientRequest {
     @Schema(description = "The email of the clientt", required = true)
     @NotBlank(message = "The field is required")
     @Size(max = 62, message = "Max length is 62")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
 }

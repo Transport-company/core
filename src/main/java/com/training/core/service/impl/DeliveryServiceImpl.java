@@ -88,12 +88,10 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     private void complementAggregated(Delivery delivery) {
         Client sender = delivery.getSender();
-        Optional<Client> optionalSender = clientService.getOptionalByEmail(sender.getEmail());
-        delivery.setSender(optionalSender.orElseGet(() -> clientService.save(sender)));
+        delivery.setSender(refreshClient(sender));
 
         Client recipient = delivery.getRecipient();
-        Optional<Client> optionalRecipient = clientService.getOptionalByEmail(recipient.getEmail());
-        delivery.setRecipient(optionalRecipient.orElseGet(() -> clientService.save(recipient)));
+        delivery.setRecipient(refreshClient(recipient));
 
         Address sendingAddress = delivery.getSendingAddress();
         Optional<Address> optionalSending = addressService.getOptionalByAddress(sendingAddress);
@@ -102,6 +100,18 @@ public class DeliveryServiceImpl implements DeliveryService {
         Address shippingAddress = delivery.getShippingAddress();
         Optional<Address> optionalShipping = addressService.getOptionalByAddress(shippingAddress);
         delivery.setShippingAddress(optionalShipping.orElseGet(() -> addressService.save(shippingAddress)));
+    }
+
+    private Client refreshClient(Client client) {
+        Optional<Client> optionalClient = clientService.getOptionalByEmail(client.getEmail());
+        if (optionalClient.isPresent()) {
+            client.setId(optionalClient.get().getId());
+            client.setCreated(optionalClient.get().getCreated());
+            if (client.equals(optionalClient.get())) {
+                return client;
+            }
+        }
+        return clientService.save(client);
     }
 
     @Transactional
