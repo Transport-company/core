@@ -52,7 +52,7 @@ public interface DeliveryService {
     boolean existsTrackNumber(String trackingNumber);
 
     /**
-     * Method for saving a {@link NotFoundException} in a repository.
+     * Method for saving a {@link Delivery delivery} in a repository.
      * Input arguments should not be null,
      * otherwise will be thrown IllegalArgumentException.
      *
