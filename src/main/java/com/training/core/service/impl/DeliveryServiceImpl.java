@@ -107,6 +107,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         if (optionalClient.isPresent()) {
             client.setId(optionalClient.get().getId());
             client.setCreated(optionalClient.get().getCreated());
+            client.setUpdated(optionalClient.get().getUpdated());
             if (client.equals(optionalClient.get())) {
                 return client;
             }
