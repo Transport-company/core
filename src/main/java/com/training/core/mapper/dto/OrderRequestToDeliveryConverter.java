@@ -1,5 +1,6 @@
 package com.training.core.mapper.dto;
 
+import com.training.core.dto.request.DeliveryRequest;
 import com.training.core.dto.request.OrderRequest;
 import com.training.core.model.Delivery;
 import com.training.core.service.DeliverySumCalculatingService;

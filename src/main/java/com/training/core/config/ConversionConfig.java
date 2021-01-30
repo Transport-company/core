@@ -22,6 +22,9 @@ public class ConversionConfig {
     private final AddressRequestToAddressConverter toAddressConverter;
     private final CargoRequestToCargoConverter toCargoConverter;
     private final ClientRequestToClientConverter toClientConverter;
+    private final AddressToAddressResponceConverter toAddressResponceConverter;
+    private final ClientToClientResponseConverter toClientResponseConverter;
+    private final CargoToCargoResponseConverter toCargoResponseConverter;
 
     @Bean
     ConversionServiceFactoryBean conversionService() {
@@ -37,7 +40,8 @@ public class ConversionConfig {
         converters.add(new AddressToAddressResponceConverter());
         converters.add(new CargoToCargoResponseConverter());
         converters.add(new ClientToClientResponseConverter());
-        converters.add(new DeliveryToOrderResponseConverter());
+        converters.add(new DeliveryToOrderResponseConverter(toAddressResponceConverter,
+                toClientResponseConverter, toCargoResponseConverter));
         converters.add(new PageToOrderPageResponseConverter(deliveryToOrderResponseConverter));
 
         factory.setConverters(converters);

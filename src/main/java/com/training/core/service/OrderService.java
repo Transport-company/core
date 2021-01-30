@@ -29,7 +29,7 @@ public interface OrderService {
      * @throws NotFoundException if there is no {@link Delivery delivery} object
      *                           with unique identifier
      */
-    Delivery getById(@NotNull Long id) throws NotFoundException;
+    Delivery getById(@NotNull Long id);
 
     /**
      * Method for adding new data {@link Delivery delivery} to the DB

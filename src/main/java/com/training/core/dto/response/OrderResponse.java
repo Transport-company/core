@@ -1,10 +1,11 @@
 package com.training.core.dto.response;
 
-import com.training.core.model.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
+
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 /**
@@ -22,6 +23,12 @@ public class OrderResponse {
     private final Long id;
 
     /**
+     * Cargo information
+     */
+    @Schema(description = "a cargo to send")
+    private final CargoResponse cargo;
+
+    /**
      * Cost of delivery
      */
     @Schema(description = "Cost of delivery",
@@ -29,27 +36,39 @@ public class OrderResponse {
     private final BigDecimal sum;
 
     /**
-     *  Cargo information
-     */
-    private final Cargo cargo;
-
-    /**
      * Information about the sender
      */
-    private Client sender;
+    @Schema(description = "the sender of the cargo")
+    private final ClientResponse sender;
 
     /**
      * Information about the recipient
      */
-     private Client recipient;
+    @Schema(description = "the recipient of the cargo")
+    private final ClientResponse recipient;
 
     /**
      * Sending address
      */
-    private final Address sendingAddress;
+    @Schema(description = "an adress from which the cargo is sent")
+    private final AddressResponse sendingAddress;
 
     /**
      * Shipping address
      */
-    private final Address shippingAddress;
+    @Schema(description = "an adress of receipt of the cargo")
+    private final AddressResponse shippingAddress;
+
+    /**
+     * Time of object creation
+     */
+    @Schema(description = "a date of delivery creation (filled in automatically)")
+    private final LocalDateTime created;
+
+    /**
+     * Update time
+     */
+    @Schema(description = "a date of delivery update (filled in automatically)")
+    private final LocalDateTime updated;
+
 }

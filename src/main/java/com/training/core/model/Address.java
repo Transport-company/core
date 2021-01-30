@@ -1,5 +1,6 @@
 package com.training.core.model;
 
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,8 +14,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "address")
-@Getter
-@Setter
+@Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

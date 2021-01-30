@@ -38,7 +38,7 @@ public interface OrderController {
             @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
             @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
-    @GetMapping(params = { "page", "size" })
+    @GetMapping
     ResponseEntity<OrderPageResponse> getList(
             @Parameter(
                     name = "pageable",
@@ -63,7 +63,7 @@ public interface OrderController {
                     name = "id",
                     description = "id  of the order to be obtained. Cannot be null",
                     required = true)
-            @PathVariable Long id) throws NotFoundException;
+            @PathVariable Long id);
 
     @Operation(summary = "add a new order")
     @ApiResponses(value = {

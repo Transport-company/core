@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -16,31 +17,36 @@ public class CargoRequest {
     /**
      * Weight of the cargo
      */
-    @Schema(description = "cargo weight")
+    @Schema(description = "cargo weight", required = true)
+    @NotNull(message = "The field is required")
     private final Float weight;
 
     /**
      * Declared value of the cargo
      */
-    @Schema(description = "declared value of the cargo")
+    @Schema(description = "declared value of the cargo", required = true)
+    @NotNull(message = "The field is required")
     private final BigDecimal declaredValue;
 
     /**
      * Cargo packing length
      */
-    @Schema(description = "cargo length")
+    @Schema(description = "cargo length", required = true)
+    @NotNull(message = "The field is required")
     private final Float length;
 
     /**
      * Cargo packing width
      */
-    @Schema(description = "cargo length")
+    @Schema(description = "cargo length", required = true)
+    @NotNull(message = "The field is required")
     private final Float width;
 
     /**
      * Cargo packing height
      */
-    @Schema(description = "cargo height")
+    @Schema(description = "cargo height", required = true)
+    @NotNull(message = "The field is required")
     private final Float height;
 
 }

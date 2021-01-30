@@ -33,7 +33,7 @@ public class OrderControllerImpl  implements OrderController {
     }
 
     @Override
-    public ResponseEntity<OrderResponse> getById(Long id) throws NotFoundException {
+    public ResponseEntity<OrderResponse> getById(Long id){
         return ResponseEntity.ok(
                 Objects.requireNonNull(conversionService.convert(
                         orderService.getById(id), OrderResponse.class)));
