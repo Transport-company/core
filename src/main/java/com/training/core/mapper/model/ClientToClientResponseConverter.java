@@ -5,7 +5,6 @@ import com.training.core.model.Client;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ClientToClientResponseConverter implements Converter<Client, ClientResponse> {
 
     @Override

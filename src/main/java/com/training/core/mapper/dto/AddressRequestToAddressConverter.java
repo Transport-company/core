@@ -5,7 +5,6 @@ import com.training.core.model.Address;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-@Component
 public class AddressRequestToAddressConverter implements Converter<AddressRequest, Address> {
 
     @Override

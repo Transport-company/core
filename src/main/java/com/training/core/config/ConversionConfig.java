@@ -1,5 +1,6 @@
 package com.training.core.config;
 
+import com.training.core.dto.request.CargoRequest;
 import com.training.core.mapper.dto.AddressRequestToAddressConverter;
 import com.training.core.mapper.dto.CargoRequestToCargoConverter;
 import com.training.core.mapper.dto.ClientRequestToClientConverter;
@@ -18,31 +19,31 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ConversionConfig {
     private final DeliverySumCalculatingService deliverySumCalculatingService;
-    private final DeliveryToOrderResponseConverter deliveryToOrderResponseConverter;
-    private final AddressRequestToAddressConverter toAddressConverter;
-    private final CargoRequestToCargoConverter toCargoConverter;
-    private final ClientRequestToClientConverter toClientConverter;
-    private final AddressToAddressResponceConverter toAddressResponceConverter;
-    private final ClientToClientResponseConverter toClientResponseConverter;
-    private final CargoToCargoResponseConverter toCargoResponseConverter;
 
     @Bean
     ConversionServiceFactoryBean conversionService() {
         ConversionServiceFactoryBean factory = new ConversionServiceFactoryBean();
         Set<Converter<?, ?>> converters = new HashSet<>();
 
-        converters.add(new AddressRequestToAddressConverter());
-        converters.add(new CargoRequestToCargoConverter());
-        converters.add(new ClientRequestToClientConverter());
+        AddressRequestToAddressConverter toAddressConverter = new AddressRequestToAddressConverter();
+        converters.add(toAddressConverter);
+        CargoRequestToCargoConverter toCargoConverter = new CargoRequestToCargoConverter();
+        converters.add(toCargoConverter);
+        ClientRequestToClientConverter toClientConverter = new ClientRequestToClientConverter();
+        converters.add(toClientConverter);
         converters.add(new OrderRequestToDeliveryConverter(deliverySumCalculatingService,
                 toAddressConverter, toCargoConverter, toClientConverter));
 
-        converters.add(new AddressToAddressResponceConverter());
-        converters.add(new CargoToCargoResponseConverter());
-        converters.add(new ClientToClientResponseConverter());
-        converters.add(new DeliveryToOrderResponseConverter(toAddressResponceConverter,
-                toClientResponseConverter, toCargoResponseConverter));
-        converters.add(new PageToOrderPageResponseConverter(deliveryToOrderResponseConverter));
+        AddressToAddressResponceConverter toAddressResponceConverter = new AddressToAddressResponceConverter();
+        converters.add(toAddressResponceConverter);
+        CargoToCargoResponseConverter toCargoResponseConverter = new CargoToCargoResponseConverter();
+        converters.add(toCargoConverter);
+        ClientToClientResponseConverter toClientResponseConverter = new ClientToClientResponseConverter();
+        converters.add(toClientResponseConverter);
+        DeliveryToOrderResponseConverter toOrderResponseConverter = new DeliveryToOrderResponseConverter(toAddressResponceConverter,
+                toClientResponseConverter, toCargoResponseConverter);
+        converters.add(toOrderResponseConverter);
+        converters.add(new PageToOrderPageResponseConverter(toOrderResponseConverter));
 
         factory.setConverters(converters);
         return factory;
