@@ -15,8 +15,8 @@ public class TrackingNumberGeneratingServiceImpl implements TrackingNumberGenera
         String trackingNumber = UUID.randomUUID().toString();
         log.info("Generates a tracking number");
         Random randomTrackingNumber = new Random();
-        boolean b = randomTrackingNumber.equals(trackingNumber);
-        if (b == true) {
+        boolean existsInTheDatabase = randomTrackingNumber.equals(trackingNumber);
+        if (existsInTheDatabase == true) {
             String newTrackingNumber = UUID.randomUUID().toString();
             return newTrackingNumber;
         } else {
