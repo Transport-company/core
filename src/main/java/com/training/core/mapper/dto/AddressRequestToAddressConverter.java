@@ -5,6 +5,7 @@ import com.training.core.model.Address;
 import org.springframework.core.convert.converter.Converter;
 
 public class AddressRequestToAddressConverter implements Converter<AddressRequest, Address> {
+
     @Override
     public Address convert(AddressRequest addressRequest) {
         Address address = Address.builder()
@@ -17,4 +18,5 @@ public class AddressRequestToAddressConverter implements Converter<AddressReques
         address.setCode(address.hashCode());
         return address;
     }
+
 }

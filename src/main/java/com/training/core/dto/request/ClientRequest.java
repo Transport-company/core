@@ -23,7 +23,7 @@ public class ClientRequest {
      */
     @Schema(description = "The last name of the client")
     @Size(max = 50, message = "Max length is 50")
-    private String lastName;
+    private final String lastName;
 
     /**
      * The first name of the client
@@ -31,21 +31,21 @@ public class ClientRequest {
     @Schema(description = "The first name of the client", required = true)
     @NotBlank(message = "The field is required")
     @Size(max = 50, message = "Max length is 50")
-    private String firstName;
+    private final String firstName;
 
     /**
      * The middle name of the client
      */
     @Schema(description = "The middle name of the client")
     @Size(max = 50, message = "Max length is 50")
-    private String middleName;
+    private final String middleName;
 
     /**
      * Date of birth
      */
     @Schema(description = "Date of birth", required = true)
     @NotNull(message = "The field is required")
-    private LocalDate birthday;
+    private final LocalDate birthday;
 
     /**
      * The phone number of the client
@@ -54,7 +54,7 @@ public class ClientRequest {
     @NotBlank(message = "The field is required")
     @Size(max = 11, message = "Max length is 11")
     @Pattern(regexp = "\\d{11}")
-    private String phoneNumber;
+    private final String phoneNumber;
 
     /**
      * The email of the client
@@ -63,6 +63,6 @@ public class ClientRequest {
     @NotBlank(message = "The field is required")
     @Size(max = 62, message = "Max length is 62")
     @Email(message = "Please provide a valid email address")
-    private String email;
+    private final String email;
 
 }

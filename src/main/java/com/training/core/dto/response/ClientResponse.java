@@ -67,4 +67,5 @@ public class ClientResponse {
      */
     @Schema(description = "update time")
     private LocalDateTime updated;
+
 }

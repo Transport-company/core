@@ -72,5 +72,4 @@ public class Cargo {
     @UpdateTimestamp
     @Column(name = "updated")
     private LocalDateTime updated;
-
 }

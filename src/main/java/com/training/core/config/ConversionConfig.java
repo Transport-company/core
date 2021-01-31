@@ -4,11 +4,14 @@ import com.training.core.mapper.dto.AddressRequestToAddressConverter;
 import com.training.core.mapper.dto.CargoRequestToCargoConverter;
 import com.training.core.mapper.dto.ClientRequestToClientConverter;
 import com.training.core.mapper.dto.DeliveryRequestToDeliveryConverter;
+import com.training.core.mapper.dto.OrderRequestToDeliveryConverter;
 import com.training.core.mapper.model.AddressToAddressResponceConverter;
 import com.training.core.mapper.model.CargoToCargoResponseConverter;
 import com.training.core.mapper.model.ClientToClientResponseConverter;
 import com.training.core.mapper.model.DeliveryToDeliveryResponseConverter;
+import com.training.core.mapper.model.DeliveryToOrderResponseConverter;
 import com.training.core.mapper.model.PageToDeliveryPageResponse;
+import com.training.core.mapper.model.PageToOrderPageResponseConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ConversionServiceFactoryBean;
@@ -36,6 +39,8 @@ public class ConversionConfig {
                         toAddressConverter,
                         toCargoConverter,
                         toClientConverter));
+        converters.add(new OrderRequestToDeliveryConverter(
+                toAddressConverter, toCargoConverter, toClientConverter));
 
         AddressToAddressResponceConverter toAddressResponceConverter =
                 new AddressToAddressResponceConverter();
@@ -55,6 +60,12 @@ public class ConversionConfig {
         converters.add(
                 new PageToDeliveryPageResponse(
                         toDeliveryResponseConverter));
+        DeliveryToOrderResponseConverter toOrderResponseConverter = new DeliveryToOrderResponseConverter(
+                toAddressResponceConverter,
+                toClientResponseConverter,
+                toCargoResponseConverter);
+        converters.add(toOrderResponseConverter);
+        converters.add(new PageToOrderPageResponseConverter(toOrderResponseConverter));
 
         factory.setConverters(converters);
 

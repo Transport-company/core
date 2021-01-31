@@ -5,6 +5,7 @@ import com.training.core.model.Client;
 import org.springframework.core.convert.converter.Converter;
 
 public class ClientRequestToClientConverter implements Converter<ClientRequest, Client> {
+
     @Override
     public Client convert(ClientRequest clientRequest) {
         return Client.builder()
@@ -16,4 +17,5 @@ public class ClientRequestToClientConverter implements Converter<ClientRequest, 
                 .email(clientRequest.getEmail())
                 .build();
     }
+
 }
