@@ -33,6 +33,7 @@ import java.util.List;
 @RequestMapping(Urls.Deliveries.FULL)
 public interface DeliveryController {
     String ID_PATH_VARIABLE = "/{id}";
+    String ID_PATH_VARIABLE_STATUS = ID_PATH_VARIABLE + "/" + Urls.Deliveries.Status.PART;
 
     @Operation(summary = "get a page of deliveries")
     @ApiResponses(value = {
@@ -134,7 +135,7 @@ public interface DeliveryController {
             @ApiResponse(responseCode = "404", description = "not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
-    @PatchMapping(ID_PATH_VARIABLE + "/" + Urls.Deliveries.Status.PART)
+    @PatchMapping(ID_PATH_VARIABLE_STATUS)
     ResponseEntity<String> changeStatus(
             @Parameter(
                     name = "id",

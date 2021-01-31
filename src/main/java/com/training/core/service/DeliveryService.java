@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
- * Service for working with {@link Delivery deliviry} entity.
+ * Service for working with {@link Delivery delivery} entity.
  */
 public interface DeliveryService {
 

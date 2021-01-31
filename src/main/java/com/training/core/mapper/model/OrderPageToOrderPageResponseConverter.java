@@ -1,6 +1,6 @@
 package com.training.core.mapper.model;
 
-import com.training.core.dto.response.DeliveryPageResponse;
+import com.training.core.dto.response.OrderPageResponse;
 import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -9,19 +9,19 @@ import org.springframework.data.domain.Page;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class PageToDeliveryPageResponse implements Converter<Page<Delivery>, DeliveryPageResponse> {
-    private final DeliveryToDeliveryResponseConverter toDeliveryResponseConverter;
+public class OrderPageToOrderPageResponseConverter implements Converter<Page<Delivery>, OrderPageResponse> {
+    private final DeliveryToOrderResponseConverter toOrderResponseConverter;
 
     @Override
-    public DeliveryPageResponse convert(Page<Delivery> page) {
-        return DeliveryPageResponse.builder()
+    public OrderPageResponse convert(Page<Delivery> page) {
+        return OrderPageResponse.builder()
                 .content(page.getContent().stream()
-                        .map(toDeliveryResponseConverter::convert)
+                        .map(toOrderResponseConverter::convert)
                         .collect(Collectors.toList()))
-                .size(page.getSize())
                 .number(page.getNumber())
-                .totalPages(page.getTotalPages())
+                .size(page.getSize())
                 .totalElements(page.getTotalElements())
+                .totalPages(page.getTotalPages())
                 .build();
     }
 
