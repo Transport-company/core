@@ -23,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     @NonNull
     public Page<Delivery> getList(Pageable pageable) {
         Page<Delivery>  pagedResult = deliveryService.getList(pageable);
+        log.info("Requested a delivery page");
         return pagedResult;
     }
 
@@ -49,8 +50,7 @@ public class OrderServiceImpl implements OrderService {
     public Delivery update(Long id, Delivery delivery) {
         Boolean isPaid = deliveryService.isPaid(id);
         if (isPaid){
-            new NotUpdateException(String.format("Delivery with id %s can't be updated, because the delivery is paid", id));
-            return null;
+            throw new NotUpdateException(String.format("Delivery with id %s can't be updated, because the delivery is paid", id));
         }
         log.info("Delivery with id {} is updated", id);
         return deliveryService.update(id, delivery);
