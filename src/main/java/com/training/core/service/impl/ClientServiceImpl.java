@@ -31,8 +31,13 @@ public class ClientServiceImpl implements ClientService {
                 .orElseThrow(() -> new NotFoundException("Not found the client with id " + id));
     }
 
+    @Transactional(readOnly = true)
+    @NonNull
     @Override
     public Optional<Client> getOptionalByEmail(String email) {
+        Assert.notNull(email, ErrorMessages.NULL_EMAIL.getErrorMessage());
+
+        log.info("Requested the client with email: {}", email);
         return clientRepository.findByEmail(email);
     }
 
