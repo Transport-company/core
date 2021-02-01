@@ -78,7 +78,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional(readOnly = true)
     @Override
     @NonNull
-    public boolean existsTrackNumber(@NonNull String trackingNumber) {
+    public boolean existsTrackingNumber(@NonNull String trackingNumber) {
         Assert.notNull(trackingNumber, ErrorMessages.NULL_TRACKING_NUMBER.getErrorMessage());
 
         log.info("Requested a check for the tracking number: {}", trackingNumber);

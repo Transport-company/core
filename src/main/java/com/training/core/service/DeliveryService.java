@@ -61,7 +61,7 @@ public interface DeliveryService {
      * @param trackingNumber a delivery tracking number
      * @return true if the tracking number already exists in the database, in the other case false
      */
-    boolean existsTrackNumber(String trackingNumber);
+    boolean existsTrackingNumber(String trackingNumber);
 
     /**
      * Method for saving a {@link Delivery delivery} in a repository.
