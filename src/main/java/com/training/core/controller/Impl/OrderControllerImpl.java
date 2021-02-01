@@ -1,4 +1,4 @@
-package com.training.core.controller.Impl;
+package com.training.core.controller.impl;
 
 import com.training.core.controller.OrderController;
 import com.training.core.dto.request.OrderRequest;
@@ -6,7 +6,6 @@ import com.training.core.dto.response.OrderPageResponse;
 import com.training.core.dto.response.OrderResponse;
 import com.training.core.model.Delivery;
 import com.training.core.service.OrderService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
@@ -14,12 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-public class OrderControllerImpl  implements OrderController {
+public class OrderControllerImpl implements OrderController {
 
     public final OrderService orderService;
     public final ConversionService conversionService;
@@ -33,7 +33,7 @@ public class OrderControllerImpl  implements OrderController {
     }
 
     @Override
-    public ResponseEntity<OrderResponse> getById(Long id){
+    public ResponseEntity<OrderResponse> getById(Long id) {
         return ResponseEntity.ok(
                 Objects.requireNonNull(conversionService.convert(
                         orderService.getById(id), OrderResponse.class)));
