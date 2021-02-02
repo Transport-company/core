@@ -22,8 +22,6 @@ public class OrderRequestToDeliveryConverter implements Converter<OrderRequest, 
                 .recipient(toClientConverter.convert(orderRequest.getRecipient()))
                 .sendingAddress(toAddressConverter.convert(orderRequest.getSendingAddress()))
                 .shippingAddress(toAddressConverter.convert(orderRequest.getShippingAddress()))
-                .enabledNotifications(false)
-                .trackingNumber("")
                 .isPaid(false)
                 .status(REGISTERED)
                 .build();
