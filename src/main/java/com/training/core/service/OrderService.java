@@ -26,8 +26,8 @@ public interface OrderService {
      * @param id - {@link Delivery delivery} unique identifier
      * @return {@link Delivery delivery} object with id like in arguments
      * @throws IllegalArgumentException if input id is null
-     * @throws NotFoundException if there is no {@link Delivery delivery} object
-     *                           with unique identifier
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  with unique identifier
      */
     Delivery getById(@NotNull Long id);
 
@@ -44,12 +44,12 @@ public interface OrderService {
     /**
      * Method for updating a {@link Delivery delivery} in DB
      *
-     * @param id - {@link Delivery delivery} unique identifier
+     * @param id       - {@link Delivery delivery} unique identifier
      * @param delivery -  {@link Delivery delivery} object to update
      * @return updated {@link Delivery delivery} object object
      * @throws IllegalArgumentException if input id or {@link Delivery delivery} object is null
-     * @throws NotFoundException  if there is no {@link Delivery delivery} object
-     *      *                     with unique identifier
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  *                     with unique identifier
      */
     Delivery update(Long id, Delivery delivery);
 
@@ -58,8 +58,8 @@ public interface OrderService {
      *
      * @param id - {@link Delivery delivery} unique identifier
      * @throws IllegalArgumentException if input id is null
-     * @throws NotFoundException if there is no {@link Delivery delivery} object
-     *                           with unique identifier
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  with unique identifier
      */
     void delete(Long id);
 }

@@ -1,16 +1,15 @@
 package com.training.core.service;
 
+import com.training.core.exception.NotFoundException;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
-import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
 /**
- * Service for working with {@link Delivery deliviry} entity.
+ * Service for working with {@link Delivery delivery} entity.
  */
 public interface DeliveryService {
 
@@ -45,16 +44,16 @@ public interface DeliveryService {
     List<Delivery> getByStatus(DeliveryStatus status);
 
     /**
-     * Method for getting information about payment for {@link Delivery delivery} objects
+     * Method for getting information about payment for {@link Delivery delivery} object
      *
      * @param id {@link Delivery delivery} unique identifier
-     * @return information about payment for {@link Delivery delivery} objects
+     * @return information about payment of {@link Delivery delivery} object
      * @throws IllegalArgumentException if an input id is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
      *                                  is not found
      */
-     Boolean isPaid(@NonNull Long id);
+    boolean isPaid(Long id);
 
     /**
      * Checks if a traking number already uses in the database.
@@ -62,10 +61,10 @@ public interface DeliveryService {
      * @param trackingNumber a delivery tracking number
      * @return true if the tracking number already exists in the database, in the other case false
      */
-    boolean existsTrackNumber(String trackingNumber);
+    boolean existsTrackingNumber(String trackingNumber);
 
     /**
-     * Method for saving a  {@link Delivery delivery} in a repository.
+     * Method for saving a {@link Delivery delivery} in a repository.
      * Input arguments should not be null,
      * otherwise will be thrown IllegalArgumentException.
      *
@@ -80,7 +79,7 @@ public interface DeliveryService {
      * Input arguments should not be null,
      * otherwise will be thrown IllegalArgumentException.
      *
-     * @param id {@link Delivery delivery} unique identifier
+     * @param id       {@link Delivery delivery} unique identifier
      * @param delivery {@link Delivery delivery} object to update
      * @return updated {@link Delivery delivery} object
      * @throws IllegalArgumentException if any of input arguments is null
@@ -105,7 +104,7 @@ public interface DeliveryService {
      * The input argument should not be null,
      * otherwise will be thrown IllegalArgumentException.
      *
-     * @param id       {@link Delivery delivery} unique identifier
+     * @param id {@link Delivery delivery} unique identifier
      * @throws IllegalArgumentException if an input id is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument

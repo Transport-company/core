@@ -11,8 +11,9 @@ spring:
 
 springdoc:
   swagger-ui:
-    path: doc/swagger-ui.html
+    path: /doc/swagger-ui.html
 
 server:
+  port: 8080
   servlet:
     context-path: /api/v1/core

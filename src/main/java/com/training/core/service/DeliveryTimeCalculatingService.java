@@ -6,6 +6,7 @@ package com.training.core.service;
 public interface DeliveryTimeCalculatingService {
 
     /**
+     * Method for calculating duration of the delivery
      *
      * @return the time of delivery
      */

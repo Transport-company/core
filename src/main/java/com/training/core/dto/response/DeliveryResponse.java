@@ -1,8 +1,5 @@
 package com.training.core.dto.response;
 
-import com.training.core.dto.response.AddressResponse;
-import com.training.core.dto.response.CargoResponse;
-import com.training.core.dto.response.ClientResponse;
 import com.training.core.model.DeliveryStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

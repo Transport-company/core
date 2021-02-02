@@ -3,7 +3,6 @@ package com.training.core.mapper.dto;
 import com.training.core.dto.request.AddressRequest;
 import com.training.core.model.Address;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
 
 public class AddressRequestToAddressConverter implements Converter<AddressRequest, Address> {
 
@@ -19,4 +18,5 @@ public class AddressRequestToAddressConverter implements Converter<AddressReques
         address.setCode(address.hashCode());
         return address;
     }
+
 }

@@ -6,7 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -30,7 +44,7 @@ public class Delivery {
     private Long id;
 
     /**
-     * Information about the client's desire to enable notifications
+     * Information about the client's desire to receive notifications
      */
     @Column(name = "enabled_notifications")
     private Boolean enabledNotifications;
@@ -50,7 +64,7 @@ public class Delivery {
     /**
      * Tracking number of the cargo
      */
-    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL,  orphanRemoval=true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Tracking> tracking;
 
     /**
@@ -67,37 +81,37 @@ public class Delivery {
     private DeliveryStatus status;
 
     /**
-     *  Cargo information
+     * Cargo information
      */
-    @OneToOne(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargo_id", referencedColumnName = "id")
     private Cargo cargo;
 
     /**
      * Information about the sender
      */
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Client.class)
     @JoinColumn(name = "sender_id")
     private Client sender;
 
     /**
      * Information about the recipient
      */
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Client.class)
     @JoinColumn(name = "recipient_id")
     private Client recipient;
 
     /**
      * Sending address
      */
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Address.class)
     @JoinColumn(name = "sending_address_id")
     private Address sendingAddress;
 
     /**
      * Shipping address
      */
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Address.class)
     @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 

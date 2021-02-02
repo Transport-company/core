@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public interface DeliverySumCalculatingService {
 
     /**
+     * Method for calculating sum of the delivery
      *
      * @return delivery cost for the client
      */

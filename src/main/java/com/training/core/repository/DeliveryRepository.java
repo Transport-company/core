@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
+
     List<Delivery> findByStatus(DeliveryStatus status);
 
     Optional<Delivery> findByTrackingNumber(String trackingNumber);
+
 }

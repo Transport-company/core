@@ -2,7 +2,11 @@ package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
-import com.training.core.model.*;
+import com.training.core.model.Address;
+import com.training.core.model.Cargo;
+import com.training.core.model.Client;
+import com.training.core.model.Delivery;
+import com.training.core.model.DeliveryStatus;
 import com.training.core.repository.DeliveryRepository;
 import com.training.core.service.AddressService;
 import com.training.core.service.CargoService;
@@ -26,8 +30,8 @@ import java.util.Optional;
 public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final AddressService addressService;
-    private final ClientService clientService;
     private final CargoService cargoService;
+    private final ClientService clientService;
 
     @Transactional(readOnly = true)
     @Override
@@ -62,8 +66,20 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional(readOnly = true)
     @Override
     @NonNull
-    public boolean existsTrackNumber(@NonNull String trackingNumber) {
-        Assert.notNull(trackingNumber, "Tracking number can not be null");
+    public boolean isPaid(@NonNull Long id) {
+        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
+
+        Delivery delivery = getById(id);
+
+        log.info("Get information about the payment for delivery with id: {}", id);
+        return delivery.getIsPaid();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    @NonNull
+    public boolean existsTrackingNumber(@NonNull String trackingNumber) {
+        Assert.notNull(trackingNumber, ErrorMessages.NULL_TRACKING_NUMBER.getErrorMessage());
 
         log.info("Requested a check for the tracking number: {}", trackingNumber);
         Optional<Delivery> deliveryOptional = deliveryRepository.findByTrackingNumber(trackingNumber);
@@ -81,18 +97,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery saved = deliveryRepository.save(delivery);
         log.info("Saved a new delivery with id: {}", saved.getId());
         return saved;
-    }
-
-    @Transactional
-    @Override
-    @NonNull
-    public Boolean isPaid(@NonNull Long id) {
-        Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
-
-        Delivery delivery = getById(id);
-
-        log.info("Get information about the payment for delivery with id: {}", id);
-        return delivery.getIsPaid();
     }
 
     private void complementAggregated(Delivery delivery) {
@@ -141,7 +145,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         complementAggregated(delivery);
 
-        delivery.setTracking(getById(id).getTracking());
+        delivery.setTracking(fetched.getTracking());
 
         Delivery updated = deliveryRepository.save(delivery);
         log.info("Updated the delivery with id: {}", updated.getId());
