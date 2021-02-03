@@ -1,21 +1,23 @@
 package com.training.core.service.impl;
 
 import com.training.core.exception.NotFoundException;
+import com.training.core.model.Address;
+import com.training.core.model.Cargo;
+import com.training.core.model.Client;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.repository.DeliveryRepository;
-import org.junit.jupiter.api.AfterEach;
+import com.training.core.service.AddressService;
+import com.training.core.service.ClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoSession;
-import org.mockito.quality.Strictness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,27 +29,26 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
-class DeliveryServiceImplTest {
-
-    private MockitoSession mockitoSession;
+class DeliveryServiceImplTest extends BaseTest {
 
     @InjectMocks
     private DeliveryServiceImpl deliveryService;
 
     @Mock
     private DeliveryRepository deliveryRepository;
+    @Mock
+    private AddressService addressService;
+    @Mock
+    private ClientService clientService;
 
     private List<Delivery> testData;
-    private String exitingTrackingNumber = "1j3dfTy48GaeUI41l0gsBya5FhGTq6";
+    private final String exitingTrackingNumber = "1j3dfTy48GaeUI41l0gsBya5FhGTq6";
 
     @BeforeEach
     void setUp() {
-        mockitoSession = Mockito.mockitoSession()
-                .initMocks(this)
-                .strictness(Strictness.STRICT_STUBS)
-                .startMocking();
         prepareTestData();
     }
 
@@ -64,11 +65,11 @@ class DeliveryServiceImplTest {
                 .isPaid(true)
                 .trackingNumber(exitingTrackingNumber)
                 .build());
-    }
-
-    @AfterEach
-    void tearDown() {
-        mockitoSession.finishMocking();
+        testData.add(Delivery.builder()
+                .id(3L)
+                .status(DeliveryStatus.REGISTERED)
+                .isPaid(false)
+                .build());
     }
 
     @Test
@@ -153,12 +154,12 @@ class DeliveryServiceImplTest {
 
     @Test
     void existsTrackingNumber() {
-        String freeTrackingNumber = "dfrTR6wmp0u7Y6b3fdTa6q1nNhsz57";
+        final String freeTrackingNumber = "dfrTR6wmp0u7Y6b3fdTa6q1nNhsz57";
 
         when(deliveryRepository.findByTrackingNumber(any()))
                 .thenAnswer(invocation -> testData.stream()
-                            .filter(e -> invocation.getArgument(0).equals(e.getTrackingNumber()))
-                            .findAny());
+                        .filter(e -> invocation.getArgument(0).equals(e.getTrackingNumber()))
+                        .findAny());
 
         assertTrue(deliveryService.existsTrackingNumber(exitingTrackingNumber));
         assertFalse(deliveryService.existsTrackingNumber(freeTrackingNumber));
@@ -166,17 +167,169 @@ class DeliveryServiceImplTest {
 
     @Test
     void save() {
+        Client sender = getSender();
+        Client recipient = getRecipient();
+        Address sendingAddress = getSendingAddress();
+        Address shippingAddress = getShippingAddress();
+        Delivery delivery = Delivery.builder()
+                .sender(sender)
+                .recipient(recipient)
+                .sendingAddress(sendingAddress)
+                .shippingAddress(shippingAddress)
+                .build();
+
+        when(clientService.getOptionalByEmail(sender.getEmail()))
+                .thenReturn(Optional.of(sender));
+        when(clientService.getOptionalByEmail(recipient.getEmail()))
+                .thenReturn(Optional.of(recipient));
+        when(addressService.getOptionalByAddress(sendingAddress))
+                .thenReturn(Optional.of(sendingAddress));
+        when(addressService.getOptionalByAddress(shippingAddress))
+                .thenReturn(Optional.of(shippingAddress));
+        when(deliveryRepository.save(delivery))
+                .thenReturn(delivery);
+
+        assertNotNull(deliveryService.save(delivery));
+    }
+
+    private Client getSender() {
+        return Client.builder()
+                .id(1L)
+                .email("sender@gmail.com")
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+    }
+
+    private Client getRecipient() {
+        return Client.builder()
+                .id(2L)
+                .email("recipient@gmail.com")
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+    }
+
+    private Address getSendingAddress() {
+        Address address = Address.builder()
+                .id(1L)
+                .region("Sening region")
+                .city("Sending city")
+                .house("1A")
+                .code(1)
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+        address.setCode(address.hashCode());
+
+        return address;
+    }
+
+    private Address getShippingAddress() {
+        Address address = Address.builder()
+                .id(2L)
+                .region("Shipping region")
+                .city("Shipping city")
+                .house("2B")
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+        address.setCode(address.hashCode());
+
+        return address;
     }
 
     @Test
     void update() {
+        Client sender = getSender();
+        Client recipient = getRecipient();
+        Address sendingAddress = getSendingAddress();
+        Address shippingAddress = getShippingAddress();
+        Cargo fetchedCargo = Cargo.builder()
+                .id(1L)
+                .created(LocalDateTime.now())
+                .build();
+        Long id = 73L;
+        Delivery fetched = Delivery.builder()
+                .id(id)
+                .cargo(fetchedCargo)
+                .sender(sender)
+                .recipient(recipient)
+                .sendingAddress(sendingAddress)
+                .shippingAddress(shippingAddress)
+                .created(LocalDateTime.now())
+                .build();
+        Delivery delivery = Delivery.builder()
+                .cargo(new Cargo())
+                .sender(sender)
+                .recipient(recipient)
+                .sendingAddress(sendingAddress)
+                .shippingAddress(shippingAddress)
+                .build();
+
+        when(clientService.getOptionalByEmail(sender.getEmail()))
+                .thenReturn(Optional.of(sender));
+        when(clientService.getOptionalByEmail(recipient.getEmail()))
+                .thenReturn(Optional.of(recipient));
+        when(addressService.getOptionalByAddress(sendingAddress))
+                .thenReturn(Optional.of(sendingAddress));
+        when(addressService.getOptionalByAddress(shippingAddress))
+                .thenReturn(Optional.of(shippingAddress));
+        when(deliveryRepository.findById(id))
+                .thenReturn(Optional.of(fetched));
+        when(deliveryRepository.save(delivery))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        Delivery saved = deliveryService.update(id, delivery);
+
+        assertNotNull(saved);
+        assertEquals(id, saved.getId());
+        assertEquals(fetched.getCreated(), saved.getCreated());
+        assertEquals(fetched.getCargo().getId(), saved.getCargo().getId());
+        assertEquals(fetched.getCargo().getCreated(), saved.getCargo().getCreated());
     }
 
     @Test
     void changeStatus() {
+        DeliveryStatus oldStatus = DeliveryStatus.REGISTERED;
+        DeliveryStatus newStatus = DeliveryStatus.PAID;
+        Long id = 73L;
+        Delivery delivery = Delivery.builder()
+                .id(id)
+                .status(oldStatus)
+                .build();
+
+        when(deliveryRepository.findById(id))
+                .thenReturn(Optional.of(delivery));
+        when(deliveryRepository.save(delivery))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        deliveryService.changeStatus(id, newStatus);
+
+        assertEquals(newStatus, delivery.getStatus());
     }
 
     @Test
     void delete() {
+        Long id = 103L;
+        Delivery delivery = Delivery.builder()
+                .id(id)
+                .status(DeliveryStatus.REGISTERED)
+                .isPaid(false)
+                .build();
+        testData.add(delivery);
+        int testDataSizeBefore = testData.size();
+        int index = testDataSizeBefore - 1;
+
+        when(deliveryRepository.findById(id))
+                .thenReturn(Optional.of(delivery));
+        doAnswer(invocation -> {
+            testData.remove(index);
+            return null;
+        }).when(deliveryRepository).deleteById(id);
+
+        deliveryService.delete(id);
+
+        assertEquals(testDataSizeBefore - 1, testData.size());
     }
 }

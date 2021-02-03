@@ -139,7 +139,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setId(fetched.getId());
         delivery.setCreated(fetched.getCreated());
 
-        Cargo fetchedCargo = cargoService.getById(fetched.getCargo().getId());
+        Cargo fetchedCargo = fetched.getCargo();
         delivery.getCargo().setId(fetchedCargo.getId());
         delivery.getCargo().setCreated(fetchedCargo.getCreated());
 
