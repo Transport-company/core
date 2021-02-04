@@ -304,9 +304,10 @@ class DeliveryServiceImplTest extends BaseTest {
         when(deliveryRepository.save(delivery))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        deliveryService.changeStatus(id, newStatus);
+        Delivery saved = deliveryService.changeStatus(id, newStatus);
 
-        assertEquals(newStatus, delivery.getStatus());
+        assertNotNull(saved);
+        assertEquals(newStatus, saved.getStatus());
     }
 
     @Test

@@ -130,13 +130,16 @@ public interface DeliveryController {
             @Valid @RequestBody DeliveryRequest deliveryRequest);
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = @Content),
+            @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = DeliveryResponse.class))),
             @ApiResponse(responseCode = "400", description = "bad request", content = @Content),
             @ApiResponse(responseCode = "404", description = "not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "internal server error", content = @Content)
     })
     @PatchMapping(ID_PATH_VARIABLE_STATUS)
-    ResponseEntity<String> changeStatus(
+    ResponseEntity<DeliveryResponse> changeStatus(
             @Parameter(
                     name = "id",
                     description = "id of the delivery to be changed status. Cannot be null.",
