@@ -42,6 +42,7 @@ public class OrderServiceImplTest {
 
     @Mock
     DeliverySumCalculatingService sumCalculatingService;
+
     private static List<Delivery> testList;
     private static Delivery testDelivery;
     private static Set<Tracking> testTracking;
