@@ -1,5 +1,6 @@
 package com.training.core.service;
 
+import com.training.core.exception.NotUpdateException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
 import com.training.core.model.Client;
@@ -27,6 +28,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
@@ -126,7 +128,7 @@ public class OrderServiceImplTest {
 
 
     @Test
-    void getListTest() {
+    void getList() {
         int pageSize = 2;
         int pageNumber = 0;
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
@@ -141,7 +143,7 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    void getByIdTest() {
+    void getById() {
         Long id = 1L;
 
         when(deliveryService.getById(id)).thenReturn(testDelivery);
@@ -152,7 +154,7 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    void createTest() {
+    void create() {
         int size = testList.size();
 
         Delivery delivery = new Delivery();
@@ -171,12 +173,13 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    void updateTest() {
+    void update() {
         long id = 1L;
 
         Delivery delivery = testDelivery;
         delivery.setSum(new BigDecimal(150));
 
+        when(deliveryService.isPaid(id)).thenReturn(false);
         when(deliveryService.update(id, delivery))
                 .thenReturn(delivery);
 
@@ -187,7 +190,19 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    void deleteTest() {
+    void updateIsPaid() {
+        long id = 1L;
+
+        Delivery delivery = testDelivery;
+        delivery.setSum(new BigDecimal(150));
+
+        when(deliveryService.isPaid(id)).thenReturn(true);
+
+        assertThrows(NotUpdateException.class, () -> orderService.update(id, delivery));
+    }
+
+    @Test
+    void delete() {
         Long id = 1L;
         int size = testList.size();
 
