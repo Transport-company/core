@@ -1,4 +1,4 @@
-package com.training.core.service;
+package com.training.core.service.impl;
 
 import com.training.core.exception.NotUpdateException;
 import com.training.core.model.Address;
@@ -7,6 +7,7 @@ import com.training.core.model.Client;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.model.Tracking;
+import com.training.core.service.DeliverySumCalculatingService;
 import com.training.core.service.impl.DeliveryServiceImpl;
 import com.training.core.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +35,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class OrderServiceImplTest {
+public class OrderServiceImplTest extends BaseTest {
 
     @InjectMocks
     OrderServiceImpl orderService;
@@ -55,8 +56,8 @@ public class OrderServiceImplTest {
     private static Address testShippingAddress;
 
     @BeforeEach
-    void init() {
-        initMocks(this);
+    void setUp() {
+        prepareTestData();
     }
 
     @BeforeAll
