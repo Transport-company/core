@@ -9,7 +9,6 @@ import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.repository.DeliveryRepository;
 import com.training.core.service.AddressService;
-import com.training.core.service.CargoService;
 import com.training.core.service.ClientService;
 import com.training.core.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,6 @@ import java.util.Optional;
 public class DeliveryServiceImpl implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final AddressService addressService;
-    private final CargoService cargoService;
     private final ClientService clientService;
 
     @Transactional(readOnly = true)
