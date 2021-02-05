@@ -11,6 +11,7 @@ import java.util.UUID;
 @Slf4j
 public class TrackingNumberGeneratingServiceImpl implements TrackingNumberGeneratingService {
 
+    @Override
     public String generateStringTrackingNumber() {
         String trackingNumber = UUID.randomUUID().toString();
         log.info("Generates a tracking number");

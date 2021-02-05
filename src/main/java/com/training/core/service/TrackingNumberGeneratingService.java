@@ -6,11 +6,10 @@ package com.training.core.service;
  */
 
 public interface TrackingNumberGeneratingService {
-
-     String generateStringTrackingNumber();
      /**
       * method generates a track number
       */
+     String generateStringTrackingNumber();
 }
 
 
