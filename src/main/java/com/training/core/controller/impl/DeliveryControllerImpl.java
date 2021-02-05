@@ -65,9 +65,10 @@ public class DeliveryControllerImpl implements DeliveryController {
     }
 
     @Override
-    public ResponseEntity<String> changeStatus(Long id, @Valid DeliveryStatusRequest status) {
-        deliveryService.changeStatus(id, status.getStatus());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<DeliveryResponse> changeStatus(Long id, @Valid DeliveryStatusRequest status) {
+        Delivery updated = deliveryService.changeStatus(id, status.getStatus());
+        return ResponseEntity.ok(
+                Objects.requireNonNull(conversionService.convert(updated, DeliveryResponse.class)));
     }
 
     @Override

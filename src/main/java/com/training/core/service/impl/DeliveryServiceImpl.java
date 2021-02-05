@@ -151,14 +151,15 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public void changeStatus(@NonNull Long id, @NonNull DeliveryStatus status) {
+    public Delivery changeStatus(@NonNull Long id, @NonNull DeliveryStatus status) {
         Assert.notNull(id, ErrorMessages.NULL_ID.getErrorMessage());
         Assert.notNull(status, ErrorMessages.NULL_STATUS.getErrorMessage());
 
         Delivery fetched = getById(id);
         fetched.setStatus(status);
-        deliveryRepository.save(fetched);
+        Delivery updated = deliveryRepository.save(fetched);
         log.info("The status '{}' for the delivery with id {} is set", status, id);
+        return updated;
     }
 
     @Transactional
