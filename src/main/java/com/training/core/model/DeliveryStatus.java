@@ -2,22 +2,22 @@ package com.training.core.model;
 
 public enum DeliveryStatus {
     /**
-     * Delivery record is open.
+     * The order for delivery is registered.
      */
     REGISTERED,
 
     /**
-     * Delivery is paid.
+     * The delivery is paid.
      */
     PAID,
 
     /**
-     * Cargo in transfer.
+     * The cargo is in transfer.
      */
     IN_TRANSFER,
 
     /**
-     * Cargo is in the destination city. Forwarded to courier delivery.
+     * The cargo is in the destination city. Forwarded to courier delivery.
      */
     ON_COURIER_DELIVERY,
 
@@ -32,12 +32,12 @@ public enum DeliveryStatus {
     DELIVERED,
 
     /**
-     * The cargo was returned to the sender.
+     * The cargo was returned to the sender. Shipping is closed.
      */
     RETURNED,
 
     /**
-     * The cargo was lost
+     * The cargo was lost. Shipping is closed.
      */
     LOST
 }
