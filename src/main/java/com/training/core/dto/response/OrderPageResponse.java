@@ -1,5 +1,7 @@
 package com.training.core.dto.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +15,8 @@ import java.util.List;
  * about a page of orders.
  */
 @Data
-@Builder
+@JsonDeserialize(builder = OrderPageResponse.OrderPageResponseBuilder.class)
+@Builder(builderClassName = "OrderPageResponseBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPageResponse {
@@ -47,4 +50,8 @@ public class OrderPageResponse {
      */
     @Schema(description = "total number of elements")
     private long totalElements;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class OrderPageResponseBuilder {
+    }
 }
