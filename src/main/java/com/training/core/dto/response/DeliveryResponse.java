@@ -1,5 +1,7 @@
 package com.training.core.dto.response;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.training.core.model.DeliveryStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -14,7 +16,8 @@ import java.time.LocalDateTime;
  * An object for trancferring data from a controller to a response about a delivery.
  */
 @Data
-@Builder
+@JsonDeserialize(builder = DeliveryResponse.DeliveryResponseBuilder.class)
+@Builder(builderClassName = "DeliveryResponseBuilder")
 public class DeliveryResponse {
 
     /**
@@ -102,4 +105,7 @@ public class DeliveryResponse {
     @Schema(description = "a date of delivery update (filled in automatically)")
     private final LocalDateTime updated;
 
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class DeliveryResponseBuilder {
+    }
 }
