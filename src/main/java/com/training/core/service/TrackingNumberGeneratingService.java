@@ -7,7 +7,7 @@ package com.training.core.service;
 
 public interface TrackingNumberGeneratingService {
      /**
-      * method generates a track number
+      * Method generates a tracking number.
       */
      String generateStringTrackingNumber();
 }
