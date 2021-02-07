@@ -11,34 +11,34 @@ import com.training.core.dto.request.ClientRequest;
 import com.training.core.dto.request.OrderRequest;
 import com.training.core.dto.response.OrderPageResponse;
 import com.training.core.dto.response.OrderResponse;
-import com.training.core.model.*;
-import com.training.core.service.OrderService;
+import com.training.core.exception.NotFoundException;
 import com.training.core.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.GsonTester;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -85,11 +85,14 @@ public class OrderControllerImplTest {
 
     @Test
     void getById() throws Exception {
-        this.mockMvc.perform(get(Urls.Orders.FULL + "/1"))
+        Long id = 1L;
+
+        this.mockMvc.perform(get(Urls.Orders.FULL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.cargo.weight").value(54.0f));
     }
 
     @Test
@@ -113,23 +116,57 @@ public class OrderControllerImplTest {
 
 
     @Test
-    void update() {
+    void update() throws Exception{
+        Long id = 3L;
+
+        OrderRequest request = getOrderRequestForUpdate();
+
+        this.mockMvc.perform(post(Urls.Orders.FULL)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        this.mockMvc.perform(put(Urls.Orders.FULL + "/" + id)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.cargo.weight").value(10f))
+                .andExpect(jsonPath("$.cargo.length").value(10f))
+                .andExpect(jsonPath("$.cargo.declaredValue").value(100f));
     }
 
     @Test
-    void delete() {
+    void deleteTest() throws Exception{
+        Long id = 1L;
+        mockMvc.perform(delete(Urls.Orders.FULL + "/" + id))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        assertThrows(NotFoundException.class, () -> orderService.getById(id));
     }
 
-    private OrderRequest getOrderRequest(){
-        CargoRequest cargoRequest = CargoRequest.builder()
+    private CargoRequest getCargoRequest() {
+        return CargoRequest.builder()
                 .declaredValue(new BigDecimal(10))
                 .weight(1f)
                 .length(1f)
                 .width(1f)
                 .height(1f)
                 .build();
+    }
 
-        ClientRequest senderRequest = ClientRequest.builder()
+    private CargoRequest getCargoRequestForUpdate() {
+        return CargoRequest.builder()
+                .declaredValue(new BigDecimal(100))
+                .weight(10f)
+                .length(10f)
+                .width(1f)
+                .height(1f)
+                .build();
+    }
+
+    private ClientRequest getSenderRequest() {
+        return ClientRequest.builder()
                 .lastName("Sidorov")
                 .firstName("Ivan")
                 .middleName("Ivanovich")
@@ -137,8 +174,10 @@ public class OrderControllerImplTest {
                 .phoneNumber("89356398565")
                 .email("Sidorov@gmail.com")
                 .build();
+    }
 
-        ClientRequest recipientRequest = ClientRequest.builder()
+    private ClientRequest getRecipientRequest() {
+        return ClientRequest.builder()
                 .lastName("Ivanov")
                 .firstName("Ivan")
                 .middleName("Ivanovich")
@@ -146,30 +185,48 @@ public class OrderControllerImplTest {
                 .phoneNumber("99999999999")
                 .email("Ivan@gmail.com")
                 .build();
+    }
 
-        AddressRequest sendingAddress = AddressRequest.builder()
+    private AddressRequest getSendingAddress(){
+        return AddressRequest.builder()
                 .region("Ulyanovsk region")
                 .city("Ulyanovsk")
                 .street("Goncharova")
                 .house("1")
                 .apartment("1")
                 .build();
+    }
 
-        AddressRequest shippingAddress = AddressRequest.builder()
+
+    private AddressRequest getShippingAddress() {
+        return AddressRequest.builder()
                 .region("Ulyanovsk region")
                 .city("Ulyanovsk")
                 .street("Lenina")
                 .house("1")
                 .apartment("1")
                 .build();
+    }
 
+    private OrderRequest getOrderRequest(){
         return OrderRequest.builder()
                 .enabledNotifications(true)
-                .cargo(cargoRequest)
-                .sender(senderRequest)
-                .recipient(recipientRequest)
-                .sendingAddress(sendingAddress)
-                .shippingAddress(shippingAddress)
+                .cargo(getCargoRequest())
+                .sender(getSenderRequest())
+                .recipient(getRecipientRequest())
+                .sendingAddress(getSendingAddress())
+                .shippingAddress(getShippingAddress())
+                .build();
+    }
+
+    private OrderRequest getOrderRequestForUpdate(){
+        return OrderRequest.builder()
+                .enabledNotifications(true)
+                .cargo(getCargoRequestForUpdate())
+                .sender(getSenderRequest())
+                .recipient(getRecipientRequest())
+                .sendingAddress(getSendingAddress())
+                .shippingAddress(getShippingAddress())
                 .build();
     }
 }
