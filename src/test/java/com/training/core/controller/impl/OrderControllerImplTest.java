@@ -64,23 +64,18 @@ public class OrderControllerImplTest {
 
     @Test
     void getList() throws Exception{
-        MvcResult result =  mockMvc.perform(get(Urls.Orders.FULL))
+        this.mockMvc.perform(get(Urls.Orders.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.content[0].id").value(1))
+                .andExpect(jsonPath("$.content[0].cargo.weight").value(54.0f))
                 .andReturn();
-
-        String content = result.getResponse().getContentAsString();
-        OrderPageResponse response = objectMapper.readValue(content, OrderPageResponse.class);
-
-        assertNotNull(response);
-        assertEquals(1, response.getTotalPages());
-        assertEquals(1, response.getTotalElements());
-
-        List<OrderResponse> list = response.getContent();
-        assertNotNull(list);
-        assertEquals(1, list.size());
     }
+
 
 
     @Test
