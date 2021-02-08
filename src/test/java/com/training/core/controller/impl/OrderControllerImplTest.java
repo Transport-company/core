@@ -64,7 +64,7 @@ public class OrderControllerImplTest {
 
     @Test
     void getList() throws Exception{
-        this.mockMvc.perform(get(Urls.Orders.FULL))
+        mockMvc.perform(get(Urls.Orders.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -82,7 +82,7 @@ public class OrderControllerImplTest {
     void getById() throws Exception {
         Long id = 1L;
 
-        this.mockMvc.perform(get(Urls.Orders.FULL + "/" + id))
+        mockMvc.perform(get(Urls.Orders.FULL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -94,7 +94,7 @@ public class OrderControllerImplTest {
     void create() throws Exception{
         OrderRequest request = getOrderRequest();
 
-        this.mockMvc.perform(post(Urls.Orders.FULL)
+        mockMvc.perform(post(Urls.Orders.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
@@ -116,11 +116,11 @@ public class OrderControllerImplTest {
 
         OrderRequest request = getOrderRequestForUpdate();
 
-        this.mockMvc.perform(post(Urls.Orders.FULL)
+        mockMvc.perform(post(Urls.Orders.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request)));
 
-        this.mockMvc.perform(put(Urls.Orders.FULL + "/" + id)
+        mockMvc.perform(put(Urls.Orders.FULL + "/" + id)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
