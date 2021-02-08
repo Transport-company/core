@@ -9,8 +9,6 @@ import com.training.core.dto.request.AddressRequest;
 import com.training.core.dto.request.CargoRequest;
 import com.training.core.dto.request.ClientRequest;
 import com.training.core.dto.request.OrderRequest;
-import com.training.core.dto.response.OrderPageResponse;
-import com.training.core.dto.response.OrderResponse;
 import com.training.core.exception.NotFoundException;
 import com.training.core.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -22,11 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,8 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application.yml")
-@Sql(value = {"/add-data-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {"/delete-data-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value = {"/order_controller_add_data_before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class OrderControllerImplTest {
 
     @Autowired
