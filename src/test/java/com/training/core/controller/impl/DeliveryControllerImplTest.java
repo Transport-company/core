@@ -34,6 +34,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -95,10 +96,12 @@ class DeliveryControllerImplTest {
         addressCount += 2;
         clientCount += 2;
 
-        assertEquals(deliveryCount, deliveryRepository.findAll().size());
-        assertEquals(deliveryCount, cargoRepository.findAll().size());
-        assertEquals(clientCount, clientRepository.findAll().size());
-        assertEquals(addressCount, addressRepository.findAll().size());
+        assertAll("The number of records in the repositories does not match the expected number",
+                () -> assertEquals(deliveryCount, deliveryRepository.findAll().size()),
+                () -> assertEquals(deliveryCount, cargoRepository.findAll().size()),
+                () -> assertEquals(clientCount, clientRepository.findAll().size()),
+                () -> assertEquals(addressCount, addressRepository.findAll().size())
+        );
 
         String content = result.getResponse().getContentAsString();
         DeliveryResponse response = objectMapper.readValue(content, DeliveryResponse.class);
@@ -108,18 +111,30 @@ class DeliveryControllerImplTest {
 
         deliveryId1 = response.getId();
 
-        assertEquals(request.getEnabledNotifications(), response.getEnabledNotifications());
-        assertEquals(request.getSum(), response.getSum());
-        assertEquals(request.getIsPaid(), response.getIsPaid());
-        assertEquals(request.getSum(), response.getSum());
+        assertAll("The passed values of the delivery fields do not match the values " +
+                        "in the saved object",
+                () -> assertEquals(request.getEnabledNotifications(),
+                        response.getEnabledNotifications()),
+                () -> assertEquals(request.getSum(), response.getSum()),
+                () -> assertEquals(request.getIsPaid(), response.getIsPaid()),
+                () -> assertEquals(request.getStatus(), response.getStatus())
+        );
 
         assertNotNull(response.getCargo());
         assertNotNull(response.getCargo().getId());
-        assertEquals(request.getCargo().getWeight(), response.getCargo().getWeight());
-        assertEquals(request.getCargo().getDeclaredValue(), response.getCargo().getDeclaredValue());
-        assertEquals(request.getCargo().getLength(), response.getCargo().getLength());
-        assertEquals(request.getCargo().getWidth(), response.getCargo().getWidth());
-        assertEquals(request.getCargo().getHeight(), response.getCargo().getHeight());
+        assertAll("The passed values of the cargo fields do not match the values " +
+                        "in the saved object",
+                () -> assertEquals(request.getCargo().getWeight(),
+                        response.getCargo().getWeight()),
+                () -> assertEquals(request.getCargo().getDeclaredValue(),
+                        response.getCargo().getDeclaredValue()),
+                () -> assertEquals(request.getCargo().getLength(),
+                        response.getCargo().getLength()),
+                () -> assertEquals(request.getCargo().getWidth(),
+                        response.getCargo().getWidth()),
+                () -> assertEquals(request.getCargo().getHeight(),
+                        response.getCargo().getHeight())
+        );
 
         assertNotNull(response.getSender());
         assertNotNull(response.getSender().getId());
@@ -130,18 +145,34 @@ class DeliveryControllerImplTest {
 
         assertNotNull(response.getSendingAddress());
         assertNotNull(response.getSendingAddress().getId());
-        assertEquals(request.getSendingAddress().getRegion(), response.getSendingAddress().getRegion());
-        assertEquals(request.getSendingAddress().getCity(), response.getSendingAddress().getCity());
-        assertEquals(request.getSendingAddress().getStreet(), response.getSendingAddress().getStreet());
-        assertEquals(request.getSendingAddress().getHouse(), response.getSendingAddress().getHouse());
-        assertEquals(request.getSendingAddress().getApartment(), response.getSendingAddress().getApartment());
+        assertAll("The passed values of the sending address fields do not match the values " +
+                        "in the saved object",
+                () -> assertEquals(request.getSendingAddress().getRegion(),
+                        response.getSendingAddress().getRegion()),
+                () -> assertEquals(request.getSendingAddress().getCity(),
+                        response.getSendingAddress().getCity()),
+                () -> assertEquals(request.getSendingAddress().getStreet(),
+                        response.getSendingAddress().getStreet()),
+                () -> assertEquals(request.getSendingAddress().getHouse(),
+                        response.getSendingAddress().getHouse()),
+                () -> assertEquals(request.getSendingAddress().getApartment(),
+                        response.getSendingAddress().getApartment())
+        );
         assertNotNull(response.getShippingAddress());
         assertNotNull(response.getShippingAddress().getId());
-        assertEquals(request.getShippingAddress().getRegion(), response.getShippingAddress().getRegion());
-        assertEquals(request.getShippingAddress().getCity(), response.getShippingAddress().getCity());
-        assertEquals(request.getShippingAddress().getStreet(), response.getShippingAddress().getStreet());
-        assertEquals(request.getShippingAddress().getHouse(), response.getShippingAddress().getHouse());
-        assertEquals(request.getShippingAddress().getApartment(), response.getShippingAddress().getApartment());
+        assertAll("The passed values of the shipping address fields do not match the values " +
+                        "in the saved object",
+                () -> assertEquals(request.getShippingAddress().getRegion(),
+                        response.getShippingAddress().getRegion()),
+                () -> assertEquals(request.getShippingAddress().getCity(),
+                        response.getShippingAddress().getCity()),
+                () -> assertEquals(request.getShippingAddress().getStreet(),
+                        response.getShippingAddress().getStreet()),
+                () -> assertEquals(request.getShippingAddress().getHouse(),
+                        response.getShippingAddress().getHouse()),
+                () -> assertEquals(request.getShippingAddress().getApartment(),
+                        response.getShippingAddress().getApartment())
+        );
 
         assertNotNull(response.getCreated());
         assertTrue(start.isBefore(response.getCreated())
@@ -227,10 +258,12 @@ class DeliveryControllerImplTest {
         deliveryCount--;
         deliveryId1 = null;
 
-        assertEquals(deliveryCount, deliveryRepository.findAll().size());
-        assertEquals(deliveryCount, cargoRepository.findAll().size());
-        assertEquals(clientCount, clientRepository.findAll().size());
-        assertEquals(addressCount, addressRepository.findAll().size());
+        assertAll("The number of records in the repositories does not match the expected number",
+                () -> assertEquals(deliveryCount, deliveryRepository.findAll().size()),
+                () -> assertEquals(deliveryCount, cargoRepository.findAll().size()),
+                () -> assertEquals(clientCount, clientRepository.findAll().size()),
+                () -> assertEquals(addressCount, addressRepository.findAll().size())
+        );
     }
 
     @Test
@@ -247,10 +280,12 @@ class DeliveryControllerImplTest {
 
         deliveryCount++;
 
-        assertEquals(deliveryCount, deliveryRepository.findAll().size());
-        assertEquals(deliveryCount, cargoRepository.findAll().size());
-        assertEquals(2, clientRepository.findAll().size());
-        assertEquals(2, addressRepository.findAll().size());
+        assertAll("The number of records in the repositories does not match the expected number",
+                () -> assertEquals(deliveryCount, deliveryRepository.findAll().size()),
+                () -> assertEquals(deliveryCount, cargoRepository.findAll().size()),
+                () -> assertEquals(clientCount, clientRepository.findAll().size()),
+                () -> assertEquals(addressCount, addressRepository.findAll().size())
+        );
 
         String content = result.getResponse().getContentAsString();
         DeliveryResponse response = objectMapper.readValue(content, DeliveryResponse.class);
@@ -277,10 +312,12 @@ class DeliveryControllerImplTest {
         addressCount++;
         clientCount++;
 
-        assertEquals(deliveryCount, deliveryRepository.findAll().size());
-        assertEquals(deliveryCount, cargoRepository.findAll().size());
-        assertEquals(clientCount, clientRepository.findAll().size());
-        assertEquals(addressCount, addressRepository.findAll().size());
+        assertAll("The number of records in the repositories does not match the expected number",
+                () -> assertEquals(deliveryCount, deliveryRepository.findAll().size()),
+                () -> assertEquals(deliveryCount, cargoRepository.findAll().size()),
+                () -> assertEquals(clientCount, clientRepository.findAll().size()),
+                () -> assertEquals(addressCount, addressRepository.findAll().size())
+        );
 
         String content = result.getResponse().getContentAsString();
         DeliveryResponse response = objectMapper.readValue(content, DeliveryResponse.class);
@@ -348,10 +385,12 @@ class DeliveryControllerImplTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        assertEquals(deliveryCount, deliveryRepository.findAll().size());
-        assertEquals(deliveryCount, cargoRepository.findAll().size());
-        assertEquals(clientCount, clientRepository.findAll().size());
-        assertEquals(addressCount, addressRepository.findAll().size());
+        assertAll("The number of records in the repositories does not match the expected number",
+                () -> assertEquals(deliveryCount, deliveryRepository.findAll().size()),
+                () -> assertEquals(deliveryCount, cargoRepository.findAll().size()),
+                () -> assertEquals(clientCount, clientRepository.findAll().size()),
+                () -> assertEquals(addressCount, addressRepository.findAll().size())
+        );
 
         String content = result.getResponse().getContentAsString();
         DeliveryResponse response = objectMapper.readValue(content, DeliveryResponse.class);
@@ -428,14 +467,27 @@ class DeliveryControllerImplTest {
         assertNotNull(response);
 
         DeliveryRequest deliveryRequest1 = getDelivery1(false);
-        assertEquals(deliveryRequest1.getCargo().getWeight(), response.getCargo().getWeight());
-        assertEquals(deliveryRequest1.getCargo().getDeclaredValue(), response.getCargo().getDeclaredValue());
-        assertEquals(deliveryRequest1.getCargo().getWidth(), response.getCargo().getWidth());
-        assertEquals(deliveryRequest1.getCargo().getLength(), response.getCargo().getLength());
-        assertEquals(deliveryRequest1.getCargo().getHeight(), response.getCargo().getHeight());
+        assertAll("The expected values of the delivery fields do not match the values " +
+                        "in the fetched object",
+                () -> assertEquals(deliveryRequest1.getCargo().getWeight(),
+                        response.getCargo().getWeight()),
+                () -> assertEquals(deliveryRequest1.getCargo().getDeclaredValue(),
+                        response.getCargo().getDeclaredValue()),
+                () -> assertEquals(deliveryRequest1.getCargo().getWidth(),
+                        response.getCargo().getWidth()),
+                () -> assertEquals(deliveryRequest1.getCargo().getLength(),
+                        response.getCargo().getLength()),
+                () -> assertEquals(deliveryRequest1.getCargo().getHeight(),
+                        response.getCargo().getHeight())
+        );
 
-        assertEquals(deliveryRequest1.getSender().getEmail(), response.getSender().getEmail());
-        assertEquals(deliveryRequest1.getRecipient().getEmail(), response.getRecipient().getEmail());
+        assertAll("The expected emails of the sender/recipient do not match the values " +
+                        "in the fetched object",
+                () -> assertEquals(deliveryRequest1.getSender().getEmail(),
+                        response.getSender().getEmail()),
+                () -> assertEquals(deliveryRequest1.getRecipient().getEmail(),
+                        response.getRecipient().getEmail())
+        );
     }
 
     @Test
