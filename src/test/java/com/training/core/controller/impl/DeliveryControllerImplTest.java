@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.training.core.Urls;
-import com.training.core.dto.request.AddressRequest;
-import com.training.core.dto.request.CargoRequest;
-import com.training.core.dto.request.ClientRequest;
 import com.training.core.dto.request.DeliveryRequest;
 import com.training.core.dto.request.DeliveryStatusRequest;
 import com.training.core.dto.response.DeliveryPageResponse;
@@ -17,6 +14,7 @@ import com.training.core.repository.AddressRepository;
 import com.training.core.repository.CargoRepository;
 import com.training.core.repository.ClientRepository;
 import com.training.core.repository.DeliveryRepository;
+import com.training.core.util.TestDeliveryRequests;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -29,8 +27,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -80,8 +76,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(1)
-    void create1() throws Exception {
-        DeliveryRequest request = getDelivery1(true);
+    void createFirst() throws Exception {
+        DeliveryRequest request = TestDeliveryRequests.first(true);
 
         LocalDateTime start = LocalDateTime.now();
 
@@ -182,75 +178,9 @@ class DeliveryControllerImplTest {
                 && LocalDateTime.now().isAfter(response.getUpdated()));
     }
 
-    private DeliveryRequest getDelivery1(boolean enabledNotifications) {
-        return DeliveryRequest.builder()
-                .enabledNotifications(enabledNotifications)
-                .sum(new BigDecimal("0.00"))
-                .isPaid(false)
-                .status(DeliveryStatus.REGISTERED)
-                .cargo(getCargo1())
-                .sender(getSender1())
-                .recipient(getRecipient1())
-                .sendingAddress(getSendingAdress1())
-                .shippingAddress(getShippingAdress1())
-                .build();
-    }
-
-    private CargoRequest getCargo1() {
-        return CargoRequest.builder()
-                .weight(0.4f)
-                .declaredValue(new BigDecimal("1000.00"))
-                .length(15f)
-                .width(10f)
-                .height(5f)
-                .build();
-    }
-
-    private ClientRequest getSender1() {
-        return ClientRequest.builder()
-                .lastName("Ivanov")
-                .firstName("Ivan")
-                .middleName("Ivanovich")
-                .birthday(LocalDate.of(1970, 11, 20))
-                .phoneNumber("80123456789")
-                .email("Ivanov_II@gmail.com")
-                .build();
-    }
-
-    private ClientRequest getRecipient1() {
-        return ClientRequest.builder()
-                .lastName("Romashkin")
-                .firstName("Igor")
-                .middleName("Valentinovich")
-                .birthday(LocalDate.of(1972, 9, 12))
-                .phoneNumber("80123450001")
-                .email("Romashkin_IV@gmail.com")
-                .build();
-    }
-
-    private AddressRequest getSendingAdress1() {
-        return AddressRequest.builder()
-                .region("Krasnodarskiy kray")
-                .city("Krrasnodar")
-                .street("Krasnaya")
-                .house("12")
-                .apartment("1")
-                .build();
-    }
-
-    private AddressRequest getShippingAdress1() {
-        return AddressRequest.builder()
-                .region("Nizhegorodskaya oblast")
-                .city("Nizhny Novgorod")
-                .street("Artelnaya")
-                .house("58")
-                .apartment("30")
-                .build();
-    }
-
     @Test
     @Order(2)
-    void delete1() throws Exception {
+    void deleteFirst() throws Exception {
         mockMvc.perform(delete(Urls.Deliveries.FULL + "/" + deliveryId1))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -268,8 +198,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(3)
-    void create1Again() throws Exception {
-        DeliveryRequest request = getDelivery1(true);
+    void createFirstAgain() throws Exception {
+        DeliveryRequest request = TestDeliveryRequests.first(true);
 
         MvcResult result = mockMvc.perform(post(Urls.Deliveries.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -298,8 +228,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(4)
-    void create2() throws Exception {
-        DeliveryRequest request = getDelivery2();
+    void createSecond() throws Exception {
+        DeliveryRequest request = TestDeliveryRequests.second();
 
         MvcResult result = mockMvc.perform(post(Urls.Deliveries.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -326,55 +256,10 @@ class DeliveryControllerImplTest {
         assertNotNull(response.getId());
     }
 
-    private DeliveryRequest getDelivery2() {
-        return DeliveryRequest.builder()
-                .enabledNotifications(true)
-                .sum(new BigDecimal("0.00"))
-                .isPaid(false)
-                .status(DeliveryStatus.REGISTERED)
-                .cargo(getCargo2())
-                .sender(getSender1())
-                .recipient(getRecipient2())
-                .sendingAddress(getSendingAdress1())
-                .shippingAddress(getShippingAdress2())
-                .build();
-    }
-
-    private CargoRequest getCargo2() {
-        return CargoRequest.builder()
-                .weight(1.2f)
-                .declaredValue(new BigDecimal("1500.00"))
-                .length(25f)
-                .width(12f)
-                .height(10f)
-                .build();
-    }
-
-    private ClientRequest getRecipient2() {
-        return ClientRequest.builder()
-                .lastName("Cvetkov")
-                .firstName("Vitaliy")
-                .middleName("Sergeevich")
-                .birthday(LocalDate.of(1980, 4, 27))
-                .phoneNumber("89003450002")
-                .email("Cvetkov_VS@gmail.com")
-                .build();
-    }
-
-    private AddressRequest getShippingAdress2() {
-        return AddressRequest.builder()
-                .region("Kostromskaya oblast")
-                .city("Kostroma")
-                .street("Lesnaya")
-                .house("40")
-                .apartment("3")
-                .build();
-    }
-
     @Test
     @Order(5)
-    void update() throws Exception {
-        DeliveryRequest request = getDelivery1(false);
+    void updateFirst() throws Exception {
+        DeliveryRequest request = TestDeliveryRequests.first(false);
 
         LocalDateTime start = LocalDateTime.now();
 
@@ -405,7 +290,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(6)
-    void changeStatus() throws Exception {
+    void changeStatusFirst() throws Exception {
         DeliveryStatus status = DeliveryStatus.PAID;
         DeliveryStatusRequest statusRequest = new DeliveryStatusRequest(status);
 
@@ -466,7 +351,7 @@ class DeliveryControllerImplTest {
 
         assertNotNull(response);
 
-        DeliveryRequest deliveryRequest1 = getDelivery1(false);
+        DeliveryRequest deliveryRequest1 = TestDeliveryRequests.first(false);
         assertAll("The expected values of the delivery fields do not match the values " +
                         "in the fetched object",
                 () -> assertEquals(deliveryRequest1.getCargo().getWeight(),
@@ -492,7 +377,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(9)
-    void getFilteredList() throws Exception {
+    void getFilteredListWithStatusPaid() throws Exception {
         MvcResult result = mockMvc.perform(
                 get(Urls.Deliveries.Filter.FULL + "?status=PAID"))
                 .andDo(print())
