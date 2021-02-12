@@ -56,6 +56,15 @@ public interface DeliveryService {
     boolean isPaid(Long id);
 
     /**
+     * Method for getting a {@link Delivery delivery} object by tracking number.
+     *
+     * @param trackingNumber tracking number of delivery
+     * @return a {@link Delivery delivery} object by tracking number
+     * @throws IllegalArgumentException if an input status is null
+     */
+    Delivery getByTrackingNumber(String trackingNumber);
+
+    /**
      * Checks if a traking number already uses in the database.
      *
      * @param trackingNumber a delivery tracking number

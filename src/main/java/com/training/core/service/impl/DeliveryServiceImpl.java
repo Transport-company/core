@@ -76,6 +76,18 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional(readOnly = true)
     @Override
     @NonNull
+    public Delivery getByTrackingNumber(@NonNull String trackingNumber) {
+        Assert.notNull(trackingNumber, ErrorMessages.NULL_TRACKING_NUMBER.getErrorMessage());
+
+        log.info("Getting Delivery by tracking number: {}", trackingNumber);
+        return deliveryRepository
+                .findByTrackingNumber(trackingNumber)
+                .orElseThrow(() -> new NotFoundException("Delivery with tracking number {} not found " + trackingNumber));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    @NonNull
     public boolean existsTrackingNumber(@NonNull String trackingNumber) {
         Assert.notNull(trackingNumber, ErrorMessages.NULL_TRACKING_NUMBER.getErrorMessage());
 
