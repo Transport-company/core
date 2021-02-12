@@ -76,7 +76,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(1)
-    void createFirst() throws Exception {
+    void givenNotNullRequest_whenCreateFirstDelivery_thenResponseStatusCreated() throws Exception {
         DeliveryRequest request = TestDeliveryRequests.first(true);
 
         LocalDateTime start = LocalDateTime.now();
@@ -180,7 +180,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(2)
-    void deleteFirst() throws Exception {
+    void givenNotNullId_whenDeleteFirstDelivery_thenResponseStatusOk() throws Exception {
         mockMvc.perform(delete(Urls.Deliveries.FULL + "/" + deliveryId1))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -198,7 +198,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(3)
-    void createFirstAgain() throws Exception {
+    void givenNotNullRequest_whenCreateFirstDeliveryAgain_thenResponseStatusCreated()
+            throws Exception {
         DeliveryRequest request = TestDeliveryRequests.first(true);
 
         MvcResult result = mockMvc.perform(post(Urls.Deliveries.FULL)
@@ -228,7 +229,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(4)
-    void createSecond() throws Exception {
+    void givenNotNullRequest_whenCreateSecondDelivery_thenResponseStatusCreated()
+            throws Exception {
         DeliveryRequest request = TestDeliveryRequests.second();
 
         MvcResult result = mockMvc.perform(post(Urls.Deliveries.FULL)
@@ -258,7 +260,8 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(5)
-    void updateFirst() throws Exception {
+    void givenNotNullIdAndRequest_whenUpdateDelivery_thenResponseStatusOk()
+            throws Exception {
         DeliveryRequest request = TestDeliveryRequests.first(false);
 
         LocalDateTime start = LocalDateTime.now();
@@ -290,7 +293,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(6)
-    void changeStatusFirst() throws Exception {
+    void givenNotNullRequest_whenChangeStatusOfDelivery_thenResponseStatusOk() throws Exception {
         DeliveryStatus status = DeliveryStatus.PAID;
         DeliveryStatusRequest statusRequest = new DeliveryStatusRequest(status);
 
@@ -319,7 +322,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(7)
-    void getList() throws Exception {
+    void givenNoParameters_whenGetList_thenResponseStatusOk() throws Exception {
         MvcResult result = mockMvc.perform(get(Urls.Deliveries.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -339,7 +342,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(8)
-    void getById() throws Exception {
+    void givenNotNullId_whenGetById_thenResponseStatusOk() throws Exception {
         MvcResult result = mockMvc.perform(get(Urls.Deliveries.FULL + "/" + deliveryId1))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -377,7 +380,7 @@ class DeliveryControllerImplTest {
 
     @Test
     @Order(9)
-    void getFilteredListWithStatusPaid() throws Exception {
+    void givenNotNullStatus_whenGetFilteredListWithStatus_thenResponseStatusOk() throws Exception {
         MvcResult result = mockMvc.perform(
                 get(Urls.Deliveries.Filter.FULL + "?status=PAID"))
                 .andDo(print())
