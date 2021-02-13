@@ -15,8 +15,7 @@ import java.util.List;
  * about a page of orders.
  */
 @Data
-@JsonDeserialize(builder = OrderPageResponse.OrderPageResponseBuilder.class)
-@Builder(builderClassName = "OrderPageResponseBuilder")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderPageResponse {
@@ -50,8 +49,4 @@ public class OrderPageResponse {
      */
     @Schema(description = "total number of elements")
     private long totalElements;
-
-    @JsonPOJOBuilder(withPrefix = "")
-    public static class OrderPageResponseBuilder {
-    }
 }

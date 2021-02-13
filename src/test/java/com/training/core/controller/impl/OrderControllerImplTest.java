@@ -11,6 +11,7 @@ import com.training.core.dto.request.ClientRequest;
 import com.training.core.dto.request.OrderRequest;
 import com.training.core.exception.NotFoundException;
 import com.training.core.service.impl.OrderServiceImpl;
+import com.training.core.util.TestOrderRequests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -58,7 +59,7 @@ public class OrderControllerImplTest {
 
 
     @Test
-    void getList() throws Exception{
+    void testGetList_GetList_Delivery_List() throws Exception{
         mockMvc.perform(get(Urls.Orders.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -67,14 +68,11 @@ public class OrderControllerImplTest {
                 .andExpect(jsonPath("$.totalElements").value(1))
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.content[0].id").value(1))
-                .andExpect(jsonPath("$.content[0].cargo.weight").value(54.0f))
-                .andReturn();
+                .andExpect(jsonPath("$.content[0].cargo.weight").value(54.0f));
     }
 
-
-
     @Test
-    void getById() throws Exception {
+    void testGetObject_GetByID_Delivery() throws Exception {
         Long id = 1L;
 
         mockMvc.perform(get(Urls.Orders.FULL + "/" + id))
@@ -86,8 +84,8 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void create() throws Exception{
-        OrderRequest request = getOrderRequest();
+    void testCreateObject_Create_NewDelivery () throws Exception{
+        OrderRequest request = TestOrderRequests.getOrderRequest();
 
         mockMvc.perform(post(Urls.Orders.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -95,21 +93,21 @@ public class OrderControllerImplTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(2))
-                .andExpect(jsonPath("$.cargo.weight").value(1.0f))
-                .andExpect(jsonPath("$.sender.lastName").value("Sidorov"))
-                .andExpect(jsonPath("$.sender.email").value("Sidorov@gmail.com"))
-                .andExpect(jsonPath("$.shippingAddress.region").value("Ulyanovsk region"))
-                .andExpect(jsonPath("$.sendingAddress.street").value("Goncharova"))
-                .andExpect(jsonPath("$.sendingAddress.city").value("Ulyanovsk"))
-                .andReturn();
+                .andExpect(jsonPath("$.cargo.weight").value(0.4f))
+                .andExpect(jsonPath("$.sender.lastName").value("Ivanov"))
+                .andExpect(jsonPath("$.sender.email").value("Ivanov_II@gmail.com"))
+                .andExpect(jsonPath("$.shippingAddress.region").value("Nizhegorodskaya oblast"))
+                .andExpect(jsonPath("$.sendingAddress.city").value("Krrasnodar"))
+                .andExpect(jsonPath("$.sendingAddress.street").value("Krasnaya"));
     }
 
 
     @Test
-    void update() throws Exception{
+    void testUpdateDelivery_Update_UpdateOldDelivery() throws Exception{
         Long id = 3L;
 
-        OrderRequest request = getOrderRequestForUpdate();
+        OrderRequest request = TestOrderRequests.getOrderRequest();
+        OrderRequest updateRequest = TestOrderRequests.getOrderRequestForUpdate();
 
         mockMvc.perform(post(Urls.Orders.FULL)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -117,106 +115,21 @@ public class OrderControllerImplTest {
 
         mockMvc.perform(put(Urls.Orders.FULL + "/" + id)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(objectMapper.writeValueAsString(updateRequest)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cargo.weight").value(10f))
-                .andExpect(jsonPath("$.cargo.length").value(10f))
-                .andExpect(jsonPath("$.cargo.declaredValue").value(100f));
+                .andExpect(jsonPath("$.cargo.weight").value(1.2f))
+                .andExpect(jsonPath("$.cargo.length").value(25f))
+                .andExpect(jsonPath("$.cargo.declaredValue").value(1500.00));
     }
 
     @Test
-    void deleteTest() throws Exception{
+    void testDeleteDeliveryById_Delete_DestroysDelivery() throws Exception{
         Long id = 1L;
         mockMvc.perform(delete(Urls.Orders.FULL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isOk());
 
         assertThrows(NotFoundException.class, () -> orderService.getById(id));
-    }
-
-    private CargoRequest getCargoRequest() {
-        return CargoRequest.builder()
-                .declaredValue(new BigDecimal(10))
-                .weight(1f)
-                .length(1f)
-                .width(1f)
-                .height(1f)
-                .build();
-    }
-
-    private CargoRequest getCargoRequestForUpdate() {
-        return CargoRequest.builder()
-                .declaredValue(new BigDecimal(100))
-                .weight(10f)
-                .length(10f)
-                .width(1f)
-                .height(1f)
-                .build();
-    }
-
-    private ClientRequest getSenderRequest() {
-        return ClientRequest.builder()
-                .lastName("Sidorov")
-                .firstName("Ivan")
-                .middleName("Ivanovich")
-                .birthday(LocalDate.of(2020, 11, 11))
-                .phoneNumber("89356398565")
-                .email("Sidorov@gmail.com")
-                .build();
-    }
-
-    private ClientRequest getRecipientRequest() {
-        return ClientRequest.builder()
-                .lastName("Ivanov")
-                .firstName("Ivan")
-                .middleName("Ivanovich")
-                .birthday(LocalDate.of(2020, 12, 12))
-                .phoneNumber("99999999999")
-                .email("Ivan@gmail.com")
-                .build();
-    }
-
-    private AddressRequest getSendingAddress(){
-        return AddressRequest.builder()
-                .region("Ulyanovsk region")
-                .city("Ulyanovsk")
-                .street("Goncharova")
-                .house("1")
-                .apartment("1")
-                .build();
-    }
-
-
-    private AddressRequest getShippingAddress() {
-        return AddressRequest.builder()
-                .region("Ulyanovsk region")
-                .city("Ulyanovsk")
-                .street("Lenina")
-                .house("1")
-                .apartment("1")
-                .build();
-    }
-
-    private OrderRequest getOrderRequest(){
-        return OrderRequest.builder()
-                .enabledNotifications(true)
-                .cargo(getCargoRequest())
-                .sender(getSenderRequest())
-                .recipient(getRecipientRequest())
-                .sendingAddress(getSendingAddress())
-                .shippingAddress(getShippingAddress())
-                .build();
-    }
-
-    private OrderRequest getOrderRequestForUpdate(){
-        return OrderRequest.builder()
-                .enabledNotifications(true)
-                .cargo(getCargoRequestForUpdate())
-                .sender(getSenderRequest())
-                .recipient(getRecipientRequest())
-                .sendingAddress(getSendingAddress())
-                .shippingAddress(getShippingAddress())
-                .build();
     }
 }

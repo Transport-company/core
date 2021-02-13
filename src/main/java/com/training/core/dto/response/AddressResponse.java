@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
  * An object for trancferring data from a controller to a response about an address.
  */
 @Data
-@JsonDeserialize(builder = AddressResponse.AddressResponseBuilder.class)
-@Builder(builderClassName = "AddressResponseBuilder")
+@Builder
 public class AddressResponse {
 
     /**
@@ -63,8 +62,4 @@ public class AddressResponse {
      */
     @Schema(description = "update time")
     private final LocalDateTime updated;
-
-    @JsonPOJOBuilder(withPrefix = "")
-    public static class AddressResponseBuilder {
-    }
 }

@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
  * An object for trancferring data from a controller to a response about a cargo.
  */
 @Data
-@JsonDeserialize(builder = CargoResponse.CargoResponseBuilder.class)
-@Builder(builderClassName = "CargoResponseBuilder")
+@Builder
 public class CargoResponse {
 
     /**
@@ -64,8 +63,4 @@ public class CargoResponse {
      */
     @Schema(description = "update time")
     private final LocalDateTime updated;
-
-    @JsonPOJOBuilder(withPrefix = "")
-    public static class CargoResponseBuilder {
-    }
 }
