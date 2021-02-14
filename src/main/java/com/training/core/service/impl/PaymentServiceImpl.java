@@ -31,7 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
     public Cheque create(@NonNull Cheque cheque) {
         Assert.notNull(cheque, ErrorMessages.NULL_CHEQUE_OBJECT.getErrorMessage());
 
-        Delivery delivery = deliveryService.getByTrackingNumber(cheque.getDelivery().getTrackingNumber());
+        Delivery delivery = deliveryService.getById(cheque.getDelivery().getId());
         delivery.setIsPaid(true);
         delivery.setStatus(DeliveryStatus.PAID);
         deliveryService.save(delivery);

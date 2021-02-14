@@ -23,9 +23,9 @@ public class PaymentRequest {
     private final BigDecimal sum;
 
     /**
-     * Delivery information
+     * Delivery id
      */
-    @Schema(description = "delivery information", required = true)
+    @Schema(description = "delivery id", required = true)
     @NotNull(message = "The field is required")
-    private final DeliveryRequest deliveryRequest;
+    private final Long deliveryId;
 }

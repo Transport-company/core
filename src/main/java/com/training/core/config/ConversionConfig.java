@@ -31,12 +31,11 @@ public class ConversionConfig implements WebMvcConfigurer {
         ClientRequestToClientConverter toClientConverter = new ClientRequestToClientConverter();
         registry.addConverter(toClientConverter);
 
-        DeliveryRequestToDeliveryConverter toDeliveryConverter = new DeliveryRequestToDeliveryConverter(
-                toAddressConverter,
-                toCargoConverter,
-                toClientConverter);
-
-        registry.addConverter(toDeliveryConverter);
+        registry.addConverter(
+                new DeliveryRequestToDeliveryConverter(
+                        toAddressConverter,
+                        toCargoConverter,
+                        toClientConverter));
 
         registry.addConverter(
                 new OrderRequestToDeliveryConverter(
@@ -72,7 +71,7 @@ public class ConversionConfig implements WebMvcConfigurer {
                 new OrderPageToOrderPageResponseConverter(
                         toOrderResponseConverter));
 
-        registry.addConverter(new PaymentRequestToChequeConverter(toDeliveryConverter));
+        registry.addConverter(new PaymentRequestToChequeConverter());
         ChequeToPaymentResponseConverter toPaymentResponseConverter =
                 new ChequeToPaymentResponseConverter(toDeliveryResponseConverter);
         registry.addConverter(toPaymentResponseConverter);
