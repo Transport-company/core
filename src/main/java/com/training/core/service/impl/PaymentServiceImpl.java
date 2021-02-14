@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
         Delivery delivery = deliveryService.getById(cheque.getDelivery().getId());
         delivery.setIsPaid(true);
         delivery.setStatus(DeliveryStatus.PAID);
-        deliveryService.save(delivery);
+        deliveryService.update(delivery.getId(), delivery);
         cheque.setDelivery(delivery);
 
         Cheque saved = chequeRepository.save(cheque);
