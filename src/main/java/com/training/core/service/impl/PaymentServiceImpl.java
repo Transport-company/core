@@ -36,6 +36,7 @@ public class PaymentServiceImpl implements PaymentService {
         delivery.setStatus(DeliveryStatus.PAID);
         deliveryService.update(delivery.getId(), delivery);
         cheque.setDelivery(delivery);
+        cheque.setChequeFile(new byte[0]);
 
         Cheque saved = chequeRepository.save(cheque);
         log.info("Saved a new cheque with id: {}", saved.getId());

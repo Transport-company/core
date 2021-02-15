@@ -14,7 +14,6 @@ public class PaymentRequestToChequeConverter implements Converter<PaymentRequest
         return Cheque.builder()
                 .sum(paymentRequest.getSum())
                 .delivery(Delivery.builder().id(paymentRequest.getDeliveryId()).build())
-                .chequeFile(new byte[0])
                 .build();
     }
 }

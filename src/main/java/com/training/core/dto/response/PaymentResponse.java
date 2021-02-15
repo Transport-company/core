@@ -24,4 +24,10 @@ public class PaymentResponse {
      */
     @Schema(description = "delivery information")
     private final DeliveryResponse deliveryResponse;
+
+    /**
+     * File with the delivery payment cheque
+     */
+    @Schema(description = "file with the delivery payment cheque")
+    private final byte[] chequeFile;
 }

@@ -48,14 +48,4 @@ public class PaymentControllerImpl implements PaymentController {
                 .status(HttpStatus.CREATED)
                 .body(conversionService.convert(cheque, PaymentResponse.class));
     }
-
-    @Override
-    public ResponseEntity<PaymentResponse> update(Long id, @Valid PaymentRequest paymentRequest) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<String> delete(Long id) {
-        return null;
-    }
 }

@@ -15,6 +15,7 @@ public class ChequeToPaymentResponseConverter implements Converter<Cheque, Payme
         return PaymentResponse.builder()
                 .sum(cheque.getSum())
                 .deliveryResponse(deliveryToDeliveryResponseConverter.convert(cheque.getDelivery()))
+                .chequeFile(cheque.getChequeFile())
                 .build();
     }
 }
