@@ -32,13 +32,15 @@ public class PaymentServiceImpl implements PaymentService {
         Assert.notNull(cheque, ErrorMessages.NULL_CHEQUE_OBJECT.getErrorMessage());
 
         Delivery delivery = deliveryService.getById(cheque.getDelivery().getId());
+
+        cheque.setDelivery(delivery);
+        cheque.setChequeFile(new byte[0]);
+        Cheque saved = chequeRepository.save(cheque);
+
         delivery.setIsPaid(true);
         delivery.setStatus(DeliveryStatus.PAID);
         deliveryService.update(delivery.getId(), delivery);
-        cheque.setDelivery(delivery);
-        cheque.setChequeFile(new byte[0]);
 
-        Cheque saved = chequeRepository.save(cheque);
         log.info("Saved a new cheque with id: {}", saved.getId());
         return saved;
     }
