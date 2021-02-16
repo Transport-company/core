@@ -51,7 +51,7 @@ public class OrderControllerImplTest {
 
 
     @Test
-    void testGetList_GetList_Delivery_List() throws Exception{
+    void givenNotNullPageable_whenGetList_thenResponseStatusOk() throws Exception{
         mockMvc.perform(get(Urls.Orders.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -64,7 +64,7 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void testGetObject_GetByID_Delivery() throws Exception {
+    void givenNotNullId_whenGetById_thenResponseStatusOk() throws Exception {
         Long id = 1L;
 
         mockMvc.perform(get(Urls.Orders.FULL + "/" + id))
@@ -76,7 +76,7 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void testCreateObject_Create_NewDelivery () throws Exception{
+    void givenNotNullRequest_whenCreateOrder_thenResponseStatusCreated() throws Exception{
         OrderRequest request = TestOrderRequests.getOrderRequest();
 
         mockMvc.perform(post(Urls.Orders.FULL)
@@ -95,7 +95,7 @@ public class OrderControllerImplTest {
 
 
     @Test
-    void testUpdateDelivery_Update_UpdateOldDelivery() throws Exception{
+    void givenNotNullIdAndRequest_whenUpdateOrder_thenResponseStatusOk() throws Exception{
         Long id = 3L;
 
         OrderRequest request = TestOrderRequests.getOrderRequest();
@@ -116,7 +116,7 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void testDeleteDeliveryById_Delete_DestroysDelivery() throws Exception{
+    void  givenNotNullId_whenDeleteOrder_thenResponseStatusOk() throws Exception{
         Long id = 1L;
         mockMvc.perform(delete(Urls.Orders.FULL + "/" + id))
                 .andDo(print())
