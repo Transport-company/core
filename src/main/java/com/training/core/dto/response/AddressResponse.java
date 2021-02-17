@@ -60,4 +60,5 @@ public class AddressResponse {
      */
     @Schema(description = "update time")
     private final LocalDateTime updated;
+
 }
