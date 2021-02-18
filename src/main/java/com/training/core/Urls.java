@@ -14,7 +14,7 @@ public interface Urls {
 
         interface Filter {
             String PART = "filter";
-            String FULL = ROOT + "/" + PART;
+            String FULL = Deliveries.FULL + "/" + PART;
         }
 
         interface Status {
