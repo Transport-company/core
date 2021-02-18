@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -41,6 +42,7 @@ class TrackingNumberGeneratingServiceImplTest extends BaseTest {
         String generated = trackingNumberGeneratingService.genarate(TestDelivery.first());
 
         assertNotNull(generated);
+        assertTrue(generated.matches("[A-Z]{4}\\d{8}"));
         verify(deliveryService, times(1)).existsTrackingNumber(any());
         verify(randomGenerator, times(1)).generateCapitalLetterLine(letterNumber);
         verify(randomGenerator, times(1)).generateDigitLine(digitNumber);
@@ -62,6 +64,7 @@ class TrackingNumberGeneratingServiceImplTest extends BaseTest {
         String generated = trackingNumberGeneratingService.genarate(TestDelivery.first());
 
         assertNotNull(generated);
+        assertTrue(generated.matches("[A-Z]{4}\\d{8}"));
         verify(deliveryService, times(2)).existsTrackingNumber(any());
         verify(randomGenerator, times(2)).generateCapitalLetterLine(letterNumber);
         verify(randomGenerator, times(2)).generateDigitLine(digitNumber);
