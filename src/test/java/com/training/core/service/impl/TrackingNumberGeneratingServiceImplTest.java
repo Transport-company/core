@@ -1,8 +1,8 @@
 package com.training.core.service.impl;
 
-import com.training.core.model.Delivery;
 import com.training.core.service.DeliveryService;
 import com.training.core.util.RandomGenerator;
+import com.training.core.util.TestDelivery;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,13 +38,12 @@ class TrackingNumberGeneratingServiceImplTest extends BaseTest {
         when(deliveryService.existsTrackingNumber(any()))
                 .thenReturn(false);
 
-        String generated = trackingNumberGeneratingService.genarate(new Delivery());
+        String generated = trackingNumberGeneratingService.genarate(TestDelivery.first());
 
         assertNotNull(generated);
         verify(deliveryService, times(1)).existsTrackingNumber(any());
         verify(randomGenerator, times(1)).generateCapitalLetterLine(letterNumber);
         verify(randomGenerator, times(1)).generateDigitLine(digitNumber);
-        System.out.println(generated);
     }
 
     @Test
@@ -60,12 +59,11 @@ class TrackingNumberGeneratingServiceImplTest extends BaseTest {
                 .thenReturn(true)
                 .thenReturn(false);
 
-        String generated = trackingNumberGeneratingService.genarate(new Delivery());
+        String generated = trackingNumberGeneratingService.genarate(TestDelivery.first());
 
         assertNotNull(generated);
         verify(deliveryService, times(2)).existsTrackingNumber(any());
         verify(randomGenerator, times(2)).generateCapitalLetterLine(letterNumber);
         verify(randomGenerator, times(2)).generateDigitLine(digitNumber);
-        System.out.println(generated);
     }
 }
