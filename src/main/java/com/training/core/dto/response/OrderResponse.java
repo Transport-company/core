@@ -70,5 +70,4 @@ public class OrderResponse {
      */
     @Schema(description = "a date of delivery update (filled in automatically)")
     private final LocalDateTime updated;
-
 }
