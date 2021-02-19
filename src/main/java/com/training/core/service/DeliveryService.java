@@ -86,6 +86,10 @@ public interface DeliveryService {
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
      *                                  is not found
+     * @throws IllegalArgumentException if any of input arguments is null
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  with unique identifier like in the argument
+     *                                  is not found
      */
     Delivery update(Long id, Delivery delivery);
 
@@ -96,8 +100,13 @@ public interface DeliveryService {
      *
      * @param id     unique identifier of {@link Delivery delivery} which change the status
      * @param status a new {@link DeliveryStatus status}
+     * @return updated {@link Delivery delivery} object
+     * @throws IllegalArgumentException if any of input arguments is null
+     * @throws NotFoundException        if there is no {@link Delivery delivery} object
+     *                                  with unique identifier like in the argument
+     *                                  is not found
      */
-    void changeStatus(Long id, DeliveryStatus status);
+    Delivery changeStatus(Long id, DeliveryStatus status);
 
     /**
      * Method for deleting a {@link Delivery delivery}.

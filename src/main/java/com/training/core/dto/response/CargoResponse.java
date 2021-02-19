@@ -61,4 +61,5 @@ public class CargoResponse {
      */
     @Schema(description = "update time")
     private final LocalDateTime updated;
+
 }
