@@ -129,7 +129,7 @@ public class OrderServiceImplTest extends BaseTest {
 
 
     @Test
-    void getList() {
+    void OrderService_getList_ReturnDeliveryList() {
         int pageSize = 2;
         int pageNumber = 0;
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
@@ -144,7 +144,7 @@ public class OrderServiceImplTest extends BaseTest {
     }
 
     @Test
-    void getById() {
+    void OrderService_getById_ReturnDeliveryById() {
         Long id = 1L;
 
         when(deliveryService.getById(id)).thenReturn(testDelivery);
@@ -155,7 +155,7 @@ public class OrderServiceImplTest extends BaseTest {
     }
 
     @Test
-    void create() {
+    void OrderService_create_CreatedDelivery() {
         int size = testList.size();
 
         Delivery delivery = new Delivery();
@@ -174,7 +174,7 @@ public class OrderServiceImplTest extends BaseTest {
     }
 
     @Test
-    void update() {
+    void OrderService_update_UpdatedDelivery() {
         long id = 1L;
 
         Delivery delivery = testDelivery;
@@ -191,7 +191,7 @@ public class OrderServiceImplTest extends BaseTest {
     }
 
     @Test
-    void updateIsPaid() {
+    void OrderService_updateIsPaid_NotUpdateException() {
         long id = 1L;
 
         Delivery delivery = testDelivery;
@@ -203,7 +203,7 @@ public class OrderServiceImplTest extends BaseTest {
     }
 
     @Test
-    void delete() {
+    void OrderService_delete_DeletedDelivery() {
         Long id = 1L;
         int size = testList.size();
 
