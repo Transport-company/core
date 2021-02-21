@@ -51,7 +51,6 @@ public interface DeliveryService {
      * @throws IllegalArgumentException if an input id is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
-     *                                  is not found
      */
     boolean isPaid(Long id);
 
@@ -85,11 +84,6 @@ public interface DeliveryService {
      * @throws IllegalArgumentException if any of input arguments is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
-     *                                  is not found
-     * @throws IllegalArgumentException if any of input arguments is null
-     * @throws NotFoundException        if there is no {@link Delivery delivery} object
-     *                                  with unique identifier like in the argument
-     *                                  is not found
      */
     Delivery update(Long id, Delivery delivery);
 
@@ -104,7 +98,6 @@ public interface DeliveryService {
      * @throws IllegalArgumentException if any of input arguments is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
-     *                                  is not found
      */
     Delivery changeStatus(Long id, DeliveryStatus status);
 
@@ -117,7 +110,6 @@ public interface DeliveryService {
      * @throws IllegalArgumentException if an input id is null
      * @throws NotFoundException        if there is no {@link Delivery delivery} object
      *                                  with unique identifier like in the argument
-     *                                  is not found
      */
     void delete(Long id);
 }

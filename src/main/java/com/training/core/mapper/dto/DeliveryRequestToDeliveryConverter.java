@@ -13,7 +13,7 @@ public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryReq
 
     @Override
     public Delivery convert(DeliveryRequest deliveryRequest) {
-        Delivery delivery = Delivery.builder()
+        return Delivery.builder()
                 .enabledNotifications(deliveryRequest.getEnabledNotifications())
                 .sum(deliveryRequest.getSum())
                 .trackingNumber(deliveryRequest.getTrackingNumber())
@@ -25,7 +25,6 @@ public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryReq
                 .sendingAddress(toAddressConverter.convert(deliveryRequest.getSendingAddress()))
                 .shippingAddress(toAddressConverter.convert(deliveryRequest.getShippingAddress()))
                 .build();
-        return delivery;
     }
 
 }

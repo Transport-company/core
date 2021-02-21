@@ -16,6 +16,13 @@ import java.time.LocalDateTime;
 public class TariffResponse {
 
     /**
+     * Unique identifier of the tariff
+     */
+    @Schema(description = "an unique identifier",
+            example = "1")
+    private final Long id;
+
+    /**
      * Effective date of the tariff.
      */
     @Schema(description = "effective date of the tariff", required = true,
