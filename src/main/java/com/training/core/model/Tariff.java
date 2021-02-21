@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Tariffs for calculating the sum of delivary.
@@ -73,4 +76,19 @@ public class Tariff {
      */
     @Column(name = "reduction_factor")
     private BigDecimal reductionFactor;
+
+    /**
+     * Time of object creation.
+     */
+    @CreationTimestamp
+    @Column(name = "created")
+    private LocalDateTime created;
+
+    /**
+     * Update time.
+     */
+    @UpdateTimestamp
+    @Column(name = "updated")
+    private LocalDateTime updated;
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * An object for trancferring data from a controller to a response about a tariff.
@@ -63,4 +64,17 @@ public class TariffResponse {
     @Schema(description = "reduction factor for the price of 1 km of delivery over the threshold",
             required = true, example = "0.5")
     private final BigDecimal reductionFactor;
+
+    /**
+     * Time of object creation
+     */
+    @Schema(description = "a date of tariff creation (filled in automatically)")
+    private final LocalDateTime created;
+
+    /**
+     * Update time
+     */
+    @Schema(description = "a date of tariff update (filled in automatically)")
+    private final LocalDateTime updated;
+
 }
