@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,7 +91,7 @@ public interface TariffController {
                     name = "date",
                     description = "date the tariff to be obtained. Cannot be null",
                     required = true)
-            @PathVariable LocalDate date);
+            @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
 
     @Operation(summary = "create a new tariff")
     @ApiResponses(value = {
@@ -124,7 +125,7 @@ public interface TariffController {
             @ApiResponse(responseCode = "500", description = "internal server error",
                     content = @Content)
     })
-    @PutMapping
+    @PutMapping(ID_PATH_VARIABLE)
     ResponseEntity<TariffResponse> update(
             @Parameter(
                     name = "id",
@@ -148,7 +149,7 @@ public interface TariffController {
             @ApiResponse(responseCode = "500", description = "internal server error",
                     content = @Content)
     })
-    @DeleteMapping
+    @DeleteMapping(ID_PATH_VARIABLE)
     ResponseEntity<String> delete(
             @Parameter(
                     name = "id",
