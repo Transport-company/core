@@ -2,6 +2,7 @@ package com.training.core.service.impl;
 
 import com.training.core.exception.NotUpdateException;
 import com.training.core.model.Delivery;
+import com.training.core.service.DeliveryDistanceCalculatingService;
 import com.training.core.service.DeliveryService;
 import com.training.core.service.DeliverySumCalculatingService;
 import com.training.core.service.OrderService;
@@ -13,12 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final DeliveryService deliveryService;
     private final DeliverySumCalculatingService sumCalculatingService;
+    private final DeliveryDistanceCalculatingService distanceCalculatingService;
 
     @Transactional(readOnly = true)
     @Override
@@ -43,7 +47,10 @@ public class OrderServiceImpl implements OrderService {
     public Delivery create(Delivery delivery) {
         log.info("A new order is registering ...");
 
-        delivery.setSum(sumCalculatingService.getSum());
+        delivery.setSum(
+                sumCalculatingService.getSum(
+                        distanceCalculatingService.getDistance(delivery),
+                        LocalDate.now()));
 
         return deliveryService.save(delivery);
     }
