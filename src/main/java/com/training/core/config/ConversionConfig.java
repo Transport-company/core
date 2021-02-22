@@ -5,6 +5,7 @@ import com.training.core.mapper.dto.CargoRequestToCargoConverter;
 import com.training.core.mapper.dto.ClientRequestToClientConverter;
 import com.training.core.mapper.dto.DeliveryRequestToDeliveryConverter;
 import com.training.core.mapper.dto.OrderRequestToDeliveryConverter;
+import com.training.core.mapper.dto.PaymentRequestToChequeConverter;
 import com.training.core.mapper.model.AddressToAddressResponceConverter;
 import com.training.core.mapper.model.CargoToCargoResponseConverter;
 import com.training.core.mapper.model.ClientToClientResponseConverter;
@@ -12,6 +13,8 @@ import com.training.core.mapper.model.DeliveryPageToDeliveryPageResponse;
 import com.training.core.mapper.model.DeliveryToDeliveryResponseConverter;
 import com.training.core.mapper.model.DeliveryToOrderResponseConverter;
 import com.training.core.mapper.model.OrderPageToOrderPageResponseConverter;
+import com.training.core.mapper.model.ChequeToPaymentResponseConverter;
+import com.training.core.mapper.model.ChequePageToPaymentPageResponseConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,11 +30,13 @@ public class ConversionConfig implements WebMvcConfigurer {
         registry.addConverter(toCargoConverter);
         ClientRequestToClientConverter toClientConverter = new ClientRequestToClientConverter();
         registry.addConverter(toClientConverter);
+
         registry.addConverter(
                 new DeliveryRequestToDeliveryConverter(
                         toAddressConverter,
                         toCargoConverter,
                         toClientConverter));
+
         registry.addConverter(
                 new OrderRequestToDeliveryConverter(
                         toAddressConverter,
@@ -65,6 +70,13 @@ public class ConversionConfig implements WebMvcConfigurer {
         registry.addConverter(
                 new OrderPageToOrderPageResponseConverter(
                         toOrderResponseConverter));
-    }
 
+        registry.addConverter(new PaymentRequestToChequeConverter());
+        ChequeToPaymentResponseConverter toPaymentResponseConverter =
+                new ChequeToPaymentResponseConverter(toDeliveryResponseConverter);
+        registry.addConverter(toPaymentResponseConverter);
+        registry.addConverter(
+                new ChequePageToPaymentPageResponseConverter(
+                        toPaymentResponseConverter));
+    }
 }
