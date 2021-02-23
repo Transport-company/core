@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.training.core.Urls;
 import com.training.core.dto.request.OrderRequest;
 import com.training.core.exception.NotFoundException;
-import com.training.core.service.impl.OrderServiceImpl;
+import com.training.core.service.OrderService;
 import com.training.core.util.TestOrderRequests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +39,15 @@ public class OrderControllerImplTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private OrderControllerImpl orderController;
-
-    @Autowired
-    private OrderServiceImpl orderService;
+    private OrderService orderService;
 
     private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-
     @Test
-    void givenNotNullPageable_whenGetList_thenResponseStatusOk() throws Exception{
+    void givenNotNullPageable_whenGetList_thenResponseStatusOk() throws Exception {
         mockMvc.perform(get(Urls.Orders.FULL))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -76,7 +72,7 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void givenNotNullRequest_whenCreateOrder_thenResponseStatusCreated() throws Exception{
+    void givenNotNullRequest_whenCreateOrder_thenResponseStatusCreated() throws Exception {
         OrderRequest request = TestOrderRequests.getOrderRequest();
 
         mockMvc.perform(post(Urls.Orders.FULL)
@@ -93,9 +89,8 @@ public class OrderControllerImplTest {
                 .andExpect(jsonPath("$.sendingAddress.street").value("Krasnaya"));
     }
 
-
     @Test
-    void givenNotNullIdAndRequest_whenUpdateOrder_thenResponseStatusOk() throws Exception{
+    void givenNotNullIdAndRequest_whenUpdateOrder_thenResponseStatusOk() throws Exception {
         Long id = 3L;
 
         OrderRequest request = TestOrderRequests.getOrderRequest();
@@ -116,7 +111,7 @@ public class OrderControllerImplTest {
     }
 
     @Test
-    void  givenNotNullId_whenDeleteOrder_thenResponseStatusOk() throws Exception{
+    void givenNotNullId_whenDeleteOrder_thenResponseStatusOk() throws Exception {
         Long id = 1L;
         mockMvc.perform(delete(Urls.Orders.FULL + "/" + id))
                 .andDo(print())
