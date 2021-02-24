@@ -78,6 +78,42 @@ public class Tariff {
     private BigDecimal reductionFactor;
 
     /**
+     * The value of the weight unit for which an additional payment is set.
+     */
+    @Column(name = "weight_unit")
+    private float weightUnit;
+
+    /**
+     * The maximum weight value above which the additional payment is set.
+     */
+    @Column(name = "weight_Threshold")
+    private float weightThreshold;
+
+    /**
+     * Ratio increase for each additional weight unit.
+     */
+    @Column(name = "weight_ratio_Increase")
+    private float weightRatioIncrease;
+
+    /**
+     * The value of the volume unit for which an additional payment is set.
+     */
+    @Column(name = "volume_unit")
+    private float volumeUnit;
+
+    /**
+     * The maximum volume value above which the additional payment is set.
+     */
+    @Column(name = "volume_threashold")
+    private float volumeThreashold;
+
+    /**
+     * Ratio increase for each additional volume unit.
+     */
+    @Column(name = "volume_ratio_increase")
+    private float volumeRatioIncrease;
+
+    /**
      * Time of object creation.
      */
     @CreationTimestamp

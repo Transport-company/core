@@ -73,6 +73,42 @@ public class TariffResponse {
     private final BigDecimal reductionFactor;
 
     /**
+     * The value of the weight unit for which an additional payment is set.
+     */
+    @Schema(description = "the value of the weight unit for which an additional payment is set")
+    private final float weightUnit;
+
+    /**
+     * The maximum weight value above which the additional payment is set.
+     */
+    @Schema(description = "the maximum weight value above which the additional payment is set")
+    private final float weightThreshold;
+
+    /**
+     * Ratio increase for each additional weight unit.
+     */
+    @Schema(description = "ratio increase for each additional weight unit")
+    private final float weightRatioIncrease;
+
+    /**
+     * The value of the volume unit for which an additional payment is set.
+     */
+    @Schema(description = "the value of the volume unit for which an additional payment is set")
+    private final float volumeUnit;
+
+    /**
+     * The maximum volume value above which the additional payment is set.
+     */
+    @Schema(description = "the maximum volume value above which the additional payment is set")
+    private final float volumeThreashold;
+
+    /**
+     * Ratio increase for each additional volume unit.
+     */
+    @Schema(description = "ratio increase for each additional volume unit")
+    private final float volumeRatioIncrease;
+
+    /**
      * Time of object creation
      */
     @Schema(description = "a date of tariff creation (filled in automatically)")
