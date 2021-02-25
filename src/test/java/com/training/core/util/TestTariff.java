@@ -19,6 +19,12 @@ public class TestTariff {
                 .minDistance(10)
                 .distanceThreshold(800)
                 .reductionFactor(new BigDecimal("0.5"))
+                .weightUnit(1f)
+                .weightThreshold(1f)
+                .weightRatioIncrease(0.1f)
+                .volumeUnit(0.1f)
+                .volumeThreshold(0.125f)
+                .volumeRatioIncrease(0.1f)
                 .build();
     }
 }

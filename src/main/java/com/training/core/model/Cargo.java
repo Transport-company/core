@@ -7,7 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -30,7 +35,7 @@ public class Cargo {
     private Long id;
 
     /**
-     * Weight of the cargo
+     * Weight of the cargo (kg)
      */
     @Column(name = "weight")
     private Float weight;
@@ -42,19 +47,19 @@ public class Cargo {
     private BigDecimal declaredValue;
 
     /**
-     * Cargo packing length
+     * Cargo packing length (cm)
      */
     @Column(name = "length")
     private Float length;
 
     /**
-     * Cargo packing width
+     * Cargo packing width (cm)
      */
     @Column(name = "width")
     private Float width;
 
     /**
-     * Cargo packing height
+     * Cargo packing height (cm)
      */
     @Column(name = "height")
     private Float height;
@@ -72,4 +77,13 @@ public class Cargo {
     @UpdateTimestamp
     @Column(name = "updated")
     private LocalDateTime updated;
+
+    /**
+     * Cargo volume (m3).
+     *
+     * @return cargo volume  (m3)
+     */
+    public float getVolume() {
+        return length * width * height / 1000f;
+    }
 }

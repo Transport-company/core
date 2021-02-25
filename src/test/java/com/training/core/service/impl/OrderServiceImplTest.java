@@ -10,6 +10,7 @@ import com.training.core.model.Tracking;
 import com.training.core.service.DeliveryDistanceCalculatingService;
 import com.training.core.service.DeliveryService;
 import com.training.core.service.DeliverySumCalculatingService;
+import com.training.core.util.TestDelivery;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
@@ -162,11 +164,11 @@ public class OrderServiceImplTest extends BaseTest {
         int distance = 10;
         BigDecimal deliverySum = new BigDecimal("900.00");
 
-        Delivery delivery = new Delivery();
+        Delivery delivery = TestDelivery.withCargo();
 
         when(distanceCalculatingService.getDistance(any()))
                 .thenReturn(distance);
-        when(sumCalculatingService.getSum(anyInt(), any()))
+        when(sumCalculatingService.getSum(anyInt(), anyFloat(), anyFloat(), any()))
                 .thenReturn(deliverySum);
         when(deliveryService.save(any()))
                 .thenAnswer((Answer<Delivery>) i -> {

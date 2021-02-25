@@ -16,6 +16,14 @@ INSERT INTO address (id, region, city, street, house, apartment, created, update
 VALUES (2, 'Ulyanovsk region', 'Ulyanovsk', 'Lenina', '1', '1', '2020-12-12', '2020-12-12', 4321);
 INSERT INTO delivery (id, sum, enabled_notifications, tracking_number, is_paid, status, cargo_id, sender_id, recipient_id,  sending_address_id, shipping_address_id, created, updated)
 VALUES (1, 5.12, true, 'sdf44', true, 'REGISTERED', 1, 1, 2, 1, 2, '2020-12-12', '2020-12-12');
-INSERT INTO tariff (id, effective_date, order_sum, courier_sum, distance_price, min_distance, distance_threshold, reduction_factor, created, updated)
-VALUES (1, '1900-01-01', 100.00, 500.00, 0.50, 10, 800, 0.5, '2020-12-12', '2020-12-12');
+INSERT INTO tariff (id, effective_date, order_sum, courier_sum, distance_price, min_distance,
+                    distance_threshold, reduction_factor,
+                    weight_unit, weight_threshold, weight_ratio_increase,
+                    volume_unit,volume_threshold,volume_ratio_increase,
+                    created, updated)
+VALUES (1, '1900-01-01', 100.00, 500.00, 0.50, 10,
+        800, 0.5,
+        1, 1, 0.1,
+        0.125, 0.125, 0.1,
+        '2020-12-12', '2020-12-12');
 

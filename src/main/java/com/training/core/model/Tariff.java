@@ -86,13 +86,13 @@ public class Tariff {
     /**
      * The maximum weight value above which the additional payment is set.
      */
-    @Column(name = "weight_Threshold")
+    @Column(name = "weight_threshold")
     private float weightThreshold;
 
     /**
      * Ratio increase for each additional weight unit.
      */
-    @Column(name = "weight_ratio_Increase")
+    @Column(name = "weight_ratio_increase")
     private float weightRatioIncrease;
 
     /**
@@ -104,8 +104,8 @@ public class Tariff {
     /**
      * The maximum volume value above which the additional payment is set.
      */
-    @Column(name = "volume_threashold")
-    private float volumeThreashold;
+    @Column(name = "volume_threshold")
+    private float volumeThreshold;
 
     /**
      * Ratio increase for each additional volume unit.

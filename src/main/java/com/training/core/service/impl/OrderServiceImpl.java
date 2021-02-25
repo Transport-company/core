@@ -50,6 +50,8 @@ public class OrderServiceImpl implements OrderService {
         delivery.setSum(
                 sumCalculatingService.getSum(
                         distanceCalculatingService.getDistance(delivery),
+                        delivery.getCargo().getWeight(),
+                        delivery.getCargo().getVolume(),
                         LocalDate.now()));
 
         return deliveryService.save(delivery);

@@ -20,10 +20,25 @@ public class DeliverySumCalculatingServiceImpl implements DeliverySumCalculating
     private final TariffService tariffService;
 
     @Override
-    public BigDecimal getSum(int distance, LocalDate date) {
+    public BigDecimal getSum(int distance, float weight, float volume, LocalDate date) {
         Assert.notNull(date, ErrorMessages.NULL_DATE.getErrorMessage());
 
         Tariff tariff = tariffService.getForDate(date);
+
+        BigDecimal basicSum = getBasicSum(distance, tariff);
+        BigDecimal weightRatioIncreasedSum = getWeightRatioIncreasedSum(basicSum, tariff, weight);
+        BigDecimal volumeRatioIncreasedSum = getVolumeRatioIncreasedSum(basicSum, tariff, volume);
+
+        BigDecimal sum = weightRatioIncreasedSum.max(volumeRatioIncreasedSum)
+                .setScale(0, RoundingMode.HALF_UP)
+                .setScale(2, RoundingMode.CEILING);
+        log.info("The calculated sum of the delivery for a distance {} " +
+                        "and the cargo with weight {} and volume {}  is {}",
+                distance, weight, volume, sum);
+        return sum;
+    }
+
+    private BigDecimal getBasicSum(int distance, Tariff tariff) {
         BigDecimal sum = tariff.getOrderSum()
                 .add(tariff.getCourierSum())
                 .add(BigDecimal.valueOf(distance < tariff.getMinDistance() ?
@@ -39,7 +54,37 @@ public class DeliverySumCalculatingServiceImpl implements DeliverySumCalculating
                         .multiply(tariff.getDistancePrice())
                         .multiply(tariff.getReductionFactor())
                         .setScale(2, RoundingMode.CEILING));
-        log.info("The calculated sum of delivery for a distance {} is {}", distance, sum);
+
+        log.info("The calculated bacic sum of the delivery for a distance {} is {}",
+                distance, sum);
+        return sum;
+    }
+
+    private BigDecimal getWeightRatioIncreasedSum(
+            BigDecimal basicSum, Tariff tariff, float weight) {
+        if (weight <= tariff.getWeightThreshold()) {
+            return basicSum;
+        }
+
+        double adds = Math.ceil((weight - tariff.getWeightThreshold()) / tariff.getWeightUnit());
+        BigDecimal sum = basicSum
+                .multiply(BigDecimal.valueOf(1.0 + adds * tariff.getWeightRatioIncrease()))
+                .setScale(2, RoundingMode.CEILING);
+        log.info("The sum increased due to the weight is {}", sum);
+        return sum;
+    }
+
+    private BigDecimal getVolumeRatioIncreasedSum(
+            BigDecimal basicSum, Tariff tariff, float volume) {
+        if (volume <= tariff.getVolumeThreshold()) {
+            return basicSum;
+        }
+
+        double adds = Math.ceil((volume - tariff.getVolumeThreshold()) / tariff.getVolumeUnit());
+        BigDecimal sum = basicSum
+                .multiply(BigDecimal.valueOf(1.0 + adds * tariff.getVolumeRatioIncrease()))
+                .setScale(2, RoundingMode.CEILING);
+        log.info("The sum increased due to the volume is {}", sum);
         return sum;
     }
 }
