@@ -13,6 +13,7 @@ public enum ErrorMessages {
     NULL_STATUS("Status can not be null"),
     NULL_TRACKING_NUMBER("Tracking number can not be null"),
     NULL_EMAIL("Email can not be null"),
+    NULL_CHEQUE_OBJECT("Cheque can not be null"),
     NULL_DATE("Date can not be null"),
     NULL_TARIFF_OBJECT("Tariff can not be null");
 

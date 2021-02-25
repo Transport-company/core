@@ -5,9 +5,12 @@ import com.training.core.mapper.dto.CargoRequestToCargoConverter;
 import com.training.core.mapper.dto.ClientRequestToClientConverter;
 import com.training.core.mapper.dto.DeliveryRequestToDeliveryConverter;
 import com.training.core.mapper.dto.OrderRequestToDeliveryConverter;
+import com.training.core.mapper.dto.PaymentRequestToChequeConverter;
 import com.training.core.mapper.dto.TariffRequestToTariffConverter;
 import com.training.core.mapper.model.AddressToAddressResponceConverter;
 import com.training.core.mapper.model.CargoToCargoResponseConverter;
+import com.training.core.mapper.model.ChequePageToPaymentPageResponseConverter;
+import com.training.core.mapper.model.ChequeToPaymentResponseConverter;
 import com.training.core.mapper.model.ClientToClientResponseConverter;
 import com.training.core.mapper.model.DeliveryPageToDeliveryPageResponse;
 import com.training.core.mapper.model.DeliveryToDeliveryResponseConverter;
@@ -41,6 +44,7 @@ public class ConversionConfig implements WebMvcConfigurer {
                         toCargoConverter,
                         toClientConverter));
         registry.addConverter(new TariffRequestToTariffConverter());
+        registry.addConverter(new PaymentRequestToChequeConverter());
 
         AddressToAddressResponceConverter toAddressResponceConverter =
                 new AddressToAddressResponceConverter();
@@ -75,6 +79,11 @@ public class ConversionConfig implements WebMvcConfigurer {
         registry.addConverter(
                 new TariffPageToTariffPageResponse(
                         toTariffResponseConverter));
+        ChequeToPaymentResponseConverter toPaymentResponseConverter =
+                new ChequeToPaymentResponseConverter(toDeliveryResponseConverter);
+        registry.addConverter(toPaymentResponseConverter);
+        registry.addConverter(
+                new ChequePageToPaymentPageResponseConverter(
+                        toPaymentResponseConverter));
     }
-
 }
