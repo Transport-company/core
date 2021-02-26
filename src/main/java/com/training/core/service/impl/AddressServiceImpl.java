@@ -1,7 +1,7 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.AddressNotFoundException;
 import com.training.core.exception.ErrorMessages;
-import com.training.core.exception.NotFoundException;
 import com.training.core.model.Address;
 import com.training.core.repository.AddressRepository;
 import com.training.core.service.AddressService;
@@ -29,7 +29,8 @@ public class AddressServiceImpl implements AddressService {
 
         log.info("Requested the address with id: {}", id);
         return addressRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the address with id " + id));
+                .orElseThrow(() -> new AddressNotFoundException(
+                        "Not found the address with id " + id));
     }
 
     @Transactional(readOnly = true)

@@ -1,7 +1,7 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.DeliveryNotFoundException;
 import com.training.core.exception.ErrorMessages;
-import com.training.core.exception.NotFoundException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
 import com.training.core.model.Client;
@@ -48,7 +48,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         log.info("Requested the delivery with id: {}", id);
         return deliveryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the delivery with id " + id));
+                .orElseThrow(() -> new DeliveryNotFoundException(
+                        "Not found the delivery with id " + id));
     }
 
     @Transactional(readOnly = true)

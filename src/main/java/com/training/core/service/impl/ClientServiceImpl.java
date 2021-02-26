@@ -1,7 +1,7 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.ClientNotFoundException;
 import com.training.core.exception.ErrorMessages;
-import com.training.core.exception.NotFoundException;
 import com.training.core.model.Client;
 import com.training.core.repository.ClientRepository;
 import com.training.core.service.ClientService;
@@ -28,7 +28,8 @@ public class ClientServiceImpl implements ClientService {
 
         log.info("Requested the client with id: {}", id);
         return clientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the client with id " + id));
+                .orElseThrow(() -> new ClientNotFoundException(
+                        "Not found the client with id " + id));
     }
 
     @Transactional(readOnly = true)

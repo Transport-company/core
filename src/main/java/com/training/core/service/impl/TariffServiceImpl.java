@@ -2,6 +2,7 @@ package com.training.core.service.impl;
 
 import com.training.core.exception.ErrorMessages;
 import com.training.core.exception.NotFoundException;
+import com.training.core.exception.TariffNotFoundException;
 import com.training.core.model.Tariff;
 import com.training.core.repository.TariffRepository;
 import com.training.core.service.TariffService;
@@ -39,7 +40,8 @@ public class TariffServiceImpl implements TariffService {
 
         log.info("Requested the tariff with id: {}", id);
         return tariffRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the tariff with id " + id));
+                .orElseThrow(() -> new TariffNotFoundException(
+                        "Not found the tariff with id " + id));
     }
 
     @Transactional(readOnly = true)

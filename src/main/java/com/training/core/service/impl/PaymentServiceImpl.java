@@ -1,7 +1,7 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.ChequeNotFoundException;
 import com.training.core.exception.ErrorMessages;
-import com.training.core.exception.NotFoundException;
 import com.training.core.model.Cheque;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
@@ -62,6 +62,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         log.info("Requested the cheque with id: {}", id);
         return chequeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the cheque with id " + id));
+                .orElseThrow(() -> new ChequeNotFoundException(
+                        "Not found the cheque with id " + id));
     }
 }

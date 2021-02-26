@@ -1,6 +1,6 @@
 package com.training.core.service.impl;
 
-import com.training.core.exception.NotUpdateException;
+import com.training.core.exception.DeliveryNotUpdateException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
 import com.training.core.model.Client;
@@ -208,7 +208,7 @@ public class OrderServiceImplTest extends BaseTest {
 
         when(deliveryService.isPaid(id)).thenReturn(true);
 
-        assertThrows(NotUpdateException.class, () -> orderService.update(id, delivery));
+        assertThrows(DeliveryNotUpdateException.class, () -> orderService.update(id, delivery));
     }
 
     @Test
