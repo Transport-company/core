@@ -15,7 +15,10 @@ public enum ErrorMessages {
     NULL_EMAIL("Email can not be null"),
     NULL_CHEQUE_OBJECT("Cheque can not be null"),
     NULL_DATE("Date can not be null"),
-    NULL_TARIFF_OBJECT("Tariff can not be null");
+    NULL_TARIFF_OBJECT("Tariff can not be null"),
+    NOT_GREATER_ZERO_DISTANCE("Distance must be greater than zero"),
+    NOT_GREATER_ZERO_WEIGHT("Weight must be greater than zero"),
+    NOT_GREATER_ZERO_VOLUME("Volume must be greater than zero");
 
     private final String errorMessage;
 

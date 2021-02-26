@@ -5,9 +5,11 @@ import com.training.core.model.Tariff;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class TariffPageToTariffPageResponse
         implements Converter<Page<Tariff>, TariffPageResponse> {

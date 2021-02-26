@@ -3,7 +3,9 @@ package com.training.core.mapper.dto;
 import com.training.core.dto.request.TariffRequest;
 import com.training.core.model.Tariff;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TariffRequestToTariffConverter implements Converter<TariffRequest, Tariff> {
 
     @Override

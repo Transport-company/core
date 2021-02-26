@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -54,7 +55,7 @@ public class TariffRequest {
     @Schema(description = "the minimum distance (km) accepted for payment", required = true,
             example = "10")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Integer minDistance;
 
     /**
@@ -64,7 +65,7 @@ public class TariffRequest {
             "the distance (km) from which the reduction factor is applied for the price of 1 km",
             required = true, example = "1000")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Integer distanceThreshold;
 
     /**
@@ -82,7 +83,7 @@ public class TariffRequest {
             "the value of the weight unit (kg) for which an additional payment is set",
             required = true, example = "1")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Float weightUnit;
 
     /**
@@ -92,7 +93,7 @@ public class TariffRequest {
             "the maximum weight value (kg) above which the additional payment is set",
             required = true, example = "1")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Float weightThreshold;
 
     /**
@@ -101,7 +102,7 @@ public class TariffRequest {
     @Schema(description = "ratio increase for each additional weight unit",
             required = true, example = "0.1")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @PositiveOrZero
     private final Float weightRatioIncrease;
 
     /**
@@ -111,7 +112,7 @@ public class TariffRequest {
             "the value of the volume unit (m3) for which an additional payment is set",
             required = true, example = "0.125")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Float volumeUnit;
 
     /**
@@ -121,7 +122,7 @@ public class TariffRequest {
             "the maximum volume value (m3) above which the additional payment is set",
             required = true, example = "0.125")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @Positive
     private final Float volumeThreashold;
 
     /**
@@ -130,7 +131,7 @@ public class TariffRequest {
     @Schema(description = "ratio increase for each additional volume unit",
             required = true, example = "0.1")
     @NotNull(message = "The field is required")
-    @Min(value = 0)
+    @PositiveOrZero
     private final Float volumeRatioIncrease;
 
 }

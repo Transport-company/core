@@ -4,7 +4,9 @@ import com.training.core.dto.request.DeliveryRequest;
 import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryRequest, Delivery> {
     private final AddressRequestToAddressConverter toAddressConverter;

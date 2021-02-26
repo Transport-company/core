@@ -5,7 +5,9 @@ import com.training.core.model.Cheque;
 import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class PaymentRequestToChequeConverter implements Converter<PaymentRequest, Cheque> {
 

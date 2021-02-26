@@ -3,7 +3,9 @@ package com.training.core.mapper.dto;
 import com.training.core.dto.request.ClientRequest;
 import com.training.core.model.Client;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ClientRequestToClientConverter implements Converter<ClientRequest, Client> {
 
     @Override

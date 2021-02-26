@@ -21,6 +21,9 @@ public class DeliverySumCalculatingServiceImpl implements DeliverySumCalculating
 
     @Override
     public BigDecimal getSum(int distance, float weight, float volume, LocalDate date) {
+        Assert.isTrue(distance > 0, ErrorMessages.NOT_GREATER_ZERO_DISTANCE.getErrorMessage());
+        Assert.isTrue(weight > 0, ErrorMessages.NOT_GREATER_ZERO_WEIGHT.getErrorMessage());
+        Assert.isTrue(volume > 0, ErrorMessages.NOT_GREATER_ZERO_VOLUME.getErrorMessage());
         Assert.notNull(date, ErrorMessages.NULL_DATE.getErrorMessage());
 
         Tariff tariff = tariffService.getForDate(date);
