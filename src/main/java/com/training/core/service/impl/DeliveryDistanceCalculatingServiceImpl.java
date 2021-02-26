@@ -20,8 +20,7 @@ public class DeliveryDistanceCalculatingServiceImpl implements DeliveryDistanceC
                         delivery.getShippingAddress().getCity()));
         int min = 1;
         int max = 5000;
-        max -= min;
-        return (int) (Math.random() * ++max) + min;
+        return (int) (Math.random() * (max - min + 1)) + min;
     }
 
 }

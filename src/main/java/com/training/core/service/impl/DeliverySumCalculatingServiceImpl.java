@@ -66,6 +66,10 @@ public class DeliverySumCalculatingServiceImpl implements DeliverySumCalculating
             return basicSum;
         }
 
+        if (tariff.getWeightUnit() == 0) {
+            return basicSum;
+        }
+
         double adds = Math.ceil((weight - tariff.getWeightThreshold()) / tariff.getWeightUnit());
         BigDecimal sum = basicSum
                 .multiply(BigDecimal.valueOf(1.0 + adds * tariff.getWeightRatioIncrease()))
@@ -77,6 +81,10 @@ public class DeliverySumCalculatingServiceImpl implements DeliverySumCalculating
     private BigDecimal getVolumeRatioIncreasedSum(
             BigDecimal basicSum, Tariff tariff, float volume) {
         if (volume <= tariff.getVolumeThreshold()) {
+            return basicSum;
+        }
+
+        if (tariff.getVolumeUnit() == 0) {
             return basicSum;
         }
 

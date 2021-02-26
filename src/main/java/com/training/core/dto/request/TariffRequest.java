@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -53,7 +54,8 @@ public class TariffRequest {
     @Schema(description = "the minimum distance accepted for payment", required = true,
             example = "10")
     @NotNull(message = "The field is required")
-    private final int minDistance;
+    @Min(value = 0)
+    private final Integer minDistance;
 
     /**
      * The distance from which the reduction factor is applied for the price of 1 km.
@@ -62,7 +64,8 @@ public class TariffRequest {
             "the distance from which the reduction factor is applied for the price of 1 km",
             required = true, example = "1000")
     @NotNull(message = "The field is required")
-    private final int distanceThreshold;
+    @Min(value = 0)
+    private final Integer distanceThreshold;
 
     /**
      * Reduction factor for the price of 1 km of delivery over the threshold.
@@ -76,36 +79,42 @@ public class TariffRequest {
      * The value of the weight unit for which an additional payment is set.
      */
     @Schema(description = "the value of the weight unit for which an additional payment is set")
+    @Min(value = 0)
     private final float weightUnit;
 
     /**
      * The maximum weight value above which the additional payment is set.
      */
     @Schema(description = "the maximum weight value above which the additional payment is set")
+    @Min(value = 0)
     private final float weightThreshold;
 
     /**
      * Ratio increase for each additional weight unit.
      */
     @Schema(description = "ratio increase for each additional weight unit")
+    @Min(value = 0)
     private final float weightRatioIncrease;
 
     /**
      * The value of the volume unit for which an additional payment is set.
      */
     @Schema(description = "the value of the volume unit for which an additional payment is set")
+    @Min(value = 0)
     private final float volumeUnit;
 
     /**
      * The maximum volume value above which the additional payment is set.
      */
     @Schema(description = "the maximum volume value above which the additional payment is set")
+    @Min(value = 0)
     private final float volumeThreashold;
 
     /**
      * Ratio increase for each additional volume unit.
      */
     @Schema(description = "ratio increase for each additional volume unit")
+    @Min(value = 0)
     private final float volumeRatioIncrease;
 
 }
