@@ -2,7 +2,7 @@ package com.training.core.service.impl;
 
 import com.training.core.model.Tariff;
 import com.training.core.service.TariffService;
-import com.training.core.util.TestTariff;
+import com.training.core.util.TestTariffs;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenDistanceLessThanMin_whenGetSum_thenCalculateSum() {
 
         int distance = 1;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 1f;
         float volume = 0.1f;
 
@@ -53,7 +53,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenNormalDistance_whenGetSum_thenCalculateSum() {
 
         int distance = 200;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 1f;
         float volume = 0.1f;
 
@@ -78,7 +78,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenDistanceMoreThanThreshold_whenGetSum_thenCalculateSum() {
 
         int distance = 2000;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 1f;
         float volume = 0.1f;
 
@@ -107,7 +107,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenNormalDistanceAndExcessWeight_whenGetSum_thenCalculateSum() {
 
         int distance = 200;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 2f;
         float volume = 0.1f;
 
@@ -136,7 +136,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenNormalDistanceAndExcessVolume_whenGetSum_thenCalculateSum() {
 
         int distance = 200;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 1f;
         float volume = 0.2f;
 
@@ -165,7 +165,7 @@ class DeliverySumCalculatingServiceImplTest extends BaseTest {
     void givenNormalDistanceAndExcessWeightAndExcessVolume_whenGetSum_thenCalculateSum() {
 
         int distance = 200;
-        Tariff tariff = TestTariff.first();
+        Tariff tariff = TestTariffs.first();
         float weight = 2.5f;
         float volume = 0.2f;
 
