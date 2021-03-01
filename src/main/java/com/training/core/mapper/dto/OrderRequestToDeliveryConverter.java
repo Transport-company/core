@@ -4,9 +4,11 @@ import com.training.core.dto.request.OrderRequest;
 import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import static com.training.core.model.DeliveryStatus.REGISTERED;
 
+@Component
 @RequiredArgsConstructor
 public class OrderRequestToDeliveryConverter implements Converter<OrderRequest, Delivery> {
     private final AddressRequestToAddressConverter toAddressConverter;

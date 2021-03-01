@@ -5,9 +5,11 @@ import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class OrderPageToOrderPageResponseConverter implements Converter<Page<Delivery>, OrderPageResponse> {
     private final DeliveryToOrderResponseConverter toOrderResponseConverter;

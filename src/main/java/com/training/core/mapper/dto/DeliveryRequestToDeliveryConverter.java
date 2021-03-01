@@ -4,7 +4,9 @@ import com.training.core.dto.request.DeliveryRequest;
 import com.training.core.model.Delivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryRequest, Delivery> {
     private final AddressRequestToAddressConverter toAddressConverter;
@@ -13,7 +15,7 @@ public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryReq
 
     @Override
     public Delivery convert(DeliveryRequest deliveryRequest) {
-        Delivery delivery = Delivery.builder()
+        return Delivery.builder()
                 .enabledNotifications(deliveryRequest.getEnabledNotifications())
                 .sum(deliveryRequest.getSum())
                 .trackingNumber(deliveryRequest.getTrackingNumber())
@@ -25,7 +27,6 @@ public class DeliveryRequestToDeliveryConverter implements Converter<DeliveryReq
                 .sendingAddress(toAddressConverter.convert(deliveryRequest.getSendingAddress()))
                 .shippingAddress(toAddressConverter.convert(deliveryRequest.getShippingAddress()))
                 .build();
-        return delivery;
     }
 
 }

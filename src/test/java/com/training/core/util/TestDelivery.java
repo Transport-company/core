@@ -12,4 +12,10 @@ public class TestDelivery {
                 .build();
     }
 
+    public static Delivery withCargo() {
+        return Delivery.builder()
+                .cargo(TestCargo.first())
+                .build();
+    }
+
 }

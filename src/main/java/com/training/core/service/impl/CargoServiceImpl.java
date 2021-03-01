@@ -1,7 +1,7 @@
 package com.training.core.service.impl;
 
+import com.training.core.exception.CargoNotFoundException;
 import com.training.core.exception.ErrorMessages;
-import com.training.core.exception.NotFoundException;
 import com.training.core.model.Cargo;
 import com.training.core.repository.CargoRepository;
 import com.training.core.service.CargoService;
@@ -26,7 +26,8 @@ public class CargoServiceImpl implements CargoService {
 
         log.info("Requested the cargo with id: {}", id);
         return cargoRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found the cargo with id " + id));
+                .orElseThrow(() -> new CargoNotFoundException(
+                        "Not found the cargo with id " + id));
     }
 
     @Transactional

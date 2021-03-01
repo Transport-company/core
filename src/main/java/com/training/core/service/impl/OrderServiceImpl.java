@@ -1,7 +1,8 @@
 package com.training.core.service.impl;
 
-import com.training.core.exception.NotUpdateException;
+import com.training.core.exception.DeliveryNotUpdateException;
 import com.training.core.model.Delivery;
+import com.training.core.service.DeliveryDistanceCalculatingService;
 import com.training.core.service.DeliveryService;
 import com.training.core.service.DeliverySumCalculatingService;
 import com.training.core.service.OrderService;
@@ -13,12 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final DeliveryService deliveryService;
     private final DeliverySumCalculatingService sumCalculatingService;
+    private final DeliveryDistanceCalculatingService distanceCalculatingService;
 
     @Transactional(readOnly = true)
     @Override
@@ -43,7 +47,12 @@ public class OrderServiceImpl implements OrderService {
     public Delivery create(Delivery delivery) {
         log.info("A new order is registering ...");
 
-        delivery.setSum(sumCalculatingService.getSum());
+        delivery.setSum(
+                sumCalculatingService.getSum(
+                        distanceCalculatingService.getDistance(delivery),
+                        delivery.getCargo().getWeight(),
+                        delivery.getCargo().getVolume(),
+                        LocalDate.now()));
 
         return deliveryService.save(delivery);
     }
@@ -54,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
     public Delivery update(Long id, Delivery delivery) {
         boolean isPaid = deliveryService.isPaid(id);
         if (isPaid) {
-            throw new NotUpdateException(String.format("Delivery with id %s can't be updated, because the delivery is paid", id));
+            throw new DeliveryNotUpdateException(String.format("Delivery with id %s can't be updated, because the delivery is paid", id));
         }
         log.info("Delivery with id {} is updated", id);
         return deliveryService.update(id, delivery);

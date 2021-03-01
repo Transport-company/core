@@ -52,6 +52,12 @@ public class CoreExceptionHandler extends ResponseEntityExceptionHandler {
         return getExceptionResponseEntity(ex, HttpStatus.NOT_FOUND, request, List.of());
     }
 
+    @ExceptionHandler(value = DeliveryNotUpdateException.class)
+    public ResponseEntity<Object> handlerDeliveryNotUpdateException(NotFoundException ex,
+                                                                    WebRequest request) {
+        return getExceptionResponseEntity(ex, HttpStatus.BAD_REQUEST, request, List.of());
+    }
+
     private ResponseEntity<Object> getExceptionResponseEntity(
             final Exception ex,
             final HttpStatus status,

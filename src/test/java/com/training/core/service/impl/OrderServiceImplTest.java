@@ -1,15 +1,16 @@
 package com.training.core.service.impl;
 
-import com.training.core.exception.NotUpdateException;
+import com.training.core.exception.DeliveryNotUpdateException;
 import com.training.core.model.Address;
 import com.training.core.model.Cargo;
 import com.training.core.model.Client;
 import com.training.core.model.Delivery;
 import com.training.core.model.DeliveryStatus;
 import com.training.core.model.Tracking;
+import com.training.core.service.DeliveryDistanceCalculatingService;
+import com.training.core.service.DeliveryService;
 import com.training.core.service.DeliverySumCalculatingService;
-import com.training.core.service.impl.DeliveryServiceImpl;
-import com.training.core.service.impl.OrderServiceImpl;
+import com.training.core.util.TestDelivery;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,9 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyFloat;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 public class OrderServiceImplTest extends BaseTest {
 
@@ -41,10 +43,13 @@ public class OrderServiceImplTest extends BaseTest {
     OrderServiceImpl orderService;
 
     @Mock
-    DeliveryServiceImpl deliveryService;
+    DeliveryService deliveryService;
 
     @Mock
     DeliverySumCalculatingService sumCalculatingService;
+
+    @Mock
+    DeliveryDistanceCalculatingService distanceCalculatingService;
 
     private static List<Delivery> testList;
     private static Delivery testDelivery;
@@ -78,7 +83,7 @@ public class OrderServiceImplTest extends BaseTest {
         testSender.setLastName("Ivanov");
         testSender.setFirstName("Ivan");
         testSender.setMiddleName("Ivanovich");
-        testSender.setBirthday(LocalDate.of(2020,12,12));
+        testSender.setBirthday(LocalDate.of(2020, 12, 12));
         testSender.setEmail("Ivanov@gmail.com");
         testSender.setPhoneNumber("99999999999");
 
@@ -87,7 +92,7 @@ public class OrderServiceImplTest extends BaseTest {
         testRecipient.setLastName("Sidorov");
         testRecipient.setFirstName("Ivan");
         testRecipient.setMiddleName("Ivanovich");
-        testRecipient.setBirthday(LocalDate.of(2019,11,11));
+        testRecipient.setBirthday(LocalDate.of(2019, 11, 11));
         testRecipient.setEmail("Sidorov@gmail.com");
         testRecipient.setPhoneNumber("88888888888");
 
@@ -127,7 +132,6 @@ public class OrderServiceImplTest extends BaseTest {
         testList.add(testDelivery);
     }
 
-
     @Test
     void OrderService_getList_ReturnDeliveryList() {
         int pageSize = 2;
@@ -157,12 +161,17 @@ public class OrderServiceImplTest extends BaseTest {
     @Test
     void OrderService_create_CreatedDelivery() {
         int size = testList.size();
+        int distance = 10;
+        BigDecimal deliverySum = new BigDecimal("900.00");
 
-        Delivery delivery = new Delivery();
-        delivery.setSum(new BigDecimal(15));
+        Delivery delivery = TestDelivery.withCargo();
 
+        when(distanceCalculatingService.getDistance(any()))
+                .thenReturn(distance);
+        when(sumCalculatingService.getSum(anyInt(), anyFloat(), anyFloat(), any()))
+                .thenReturn(deliverySum);
         when(deliveryService.save(any()))
-                .thenAnswer((Answer<Delivery>) i ->{
+                .thenAnswer((Answer<Delivery>) i -> {
                     testList.add(i.getArgument(0));
                     return i.getArgument(0);
                 });
@@ -170,7 +179,7 @@ public class OrderServiceImplTest extends BaseTest {
         orderService.create(delivery);
 
         assertEquals(size + 1, testList.size());
-        assertEquals(delivery.getSum(), testList.get(testList.size() - 1).getSum());
+        assertEquals(deliverySum, testList.get(testList.size() - 1).getSum());
     }
 
     @Test
@@ -199,7 +208,7 @@ public class OrderServiceImplTest extends BaseTest {
 
         when(deliveryService.isPaid(id)).thenReturn(true);
 
-        assertThrows(NotUpdateException.class, () -> orderService.update(id, delivery));
+        assertThrows(DeliveryNotUpdateException.class, () -> orderService.update(id, delivery));
     }
 
     @Test

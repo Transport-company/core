@@ -41,4 +41,14 @@ public interface Urls {
         String PART = "feedbacks";
         String FULL = ROOT + "/" + PART;
     }
+
+    interface Tariffs {
+        String PART = "tariffs";
+        String FULL = ROOT + "/" + PART;
+
+        interface Dates {
+            String PART = "dates";
+            String FULL = Tariffs.FULL + "/" + PART;
+        }
+    }
 }
