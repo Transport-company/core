@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class TariffServiceImplTest extends BaseTest {
@@ -134,10 +135,10 @@ class TariffServiceImplTest extends BaseTest {
 
         when(tariffRepository.findById(id))
                 .thenReturn(Optional.of(tariff));
-        doAnswer(invocation -> null)
-                .when(tariffRepository).deleteById(id);
 
         tariffService.delete(id);
+
+        verify(tariffRepository, times(1)).deleteById(id);
     }
 
     @Test
