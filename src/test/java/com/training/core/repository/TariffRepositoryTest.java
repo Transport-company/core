@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class TariffRepositoryTest {
@@ -30,17 +31,21 @@ class TariffRepositoryTest {
 
         assertTrue(optionalTariff.isPresent());
         Tariff tariff = optionalTariff.get();
-        assertEquals(first.getOrderSum(), tariff.getOrderSum());
-        assertEquals(first.getCourierSum(), tariff.getCourierSum());
-        assertEquals(first.getDistancePrice(), tariff.getDistancePrice());
-        assertEquals(first.getMinDistance(), tariff.getMinDistance());
-        assertEquals(first.getDistanceThreshold(), tariff.getDistanceThreshold());
-        assertEquals(first.getReductionFactor(), tariff.getReductionFactor());
-        assertEquals(first.getWeightUnit(), tariff.getWeightUnit());
-        assertEquals(first.getWeightThreshold(), tariff.getWeightThreshold());
-        assertEquals(first.getWeightRatioIncrease(), tariff.getWeightRatioIncrease());
-        assertEquals(first.getVolumeUnit(), tariff.getVolumeUnit());
-        assertEquals(first.getVolumeThreshold(), tariff.getVolumeThreshold());
-        assertEquals(first.getVolumeRatioIncrease(), tariff.getVolumeRatioIncrease());
+        assertAll("The fetched tariff does not match the expected one",
+                () -> assertEquals(first.getOrderSum(), tariff.getOrderSum()),
+                () -> assertEquals(first.getCourierSum(), tariff.getCourierSum()),
+                () -> assertEquals(first.getDistancePrice(), tariff.getDistancePrice()),
+                () -> assertEquals(first.getMinDistance(), tariff.getMinDistance()),
+                () -> assertEquals(first.getDistanceThreshold(), tariff.getDistanceThreshold()),
+                () -> assertEquals(first.getReductionFactor(), tariff.getReductionFactor()),
+                () -> assertEquals(first.getWeightUnit(), tariff.getWeightUnit()),
+                () -> assertEquals(first.getWeightThreshold(), tariff.getWeightThreshold()),
+                () -> assertEquals(first.getWeightRatioIncrease(),
+                        tariff.getWeightRatioIncrease()),
+                () -> assertEquals(first.getVolumeUnit(), tariff.getVolumeUnit()),
+                () -> assertEquals(first.getVolumeThreshold(), tariff.getVolumeThreshold()),
+                () -> assertEquals(first.getVolumeRatioIncrease(),
+                        tariff.getVolumeRatioIncrease())
+        );
     }
 }
