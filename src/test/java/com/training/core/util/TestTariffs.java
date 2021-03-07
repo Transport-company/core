@@ -20,7 +20,7 @@ public class TestTariffs {
                 .distancePrice(new BigDecimal("0.50"))
                 .minDistance(10)
                 .distanceThreshold(800)
-                .reductionFactor(new BigDecimal("0.5"))
+                .reductionFactor(new BigDecimal("0.50"))
                 .weightUnit(1f)
                 .weightThreshold(1f)
                 .weightRatioIncrease(0.1f)
@@ -32,7 +32,7 @@ public class TestTariffs {
 
     public static Tariff from2020() {
         return Tariff.builder()
-                .id(1L)
+                .id(2L)
                 .effectiveDate(LocalDate.of(2020, 1, 1))
                 .orderSum(new BigDecimal("110.00"))
                 .courierSum(new BigDecimal("490.00"))
