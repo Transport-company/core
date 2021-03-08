@@ -100,7 +100,7 @@ public class TariffResponse {
      * The maximum volume value above which the additional payment is set.
      */
     @Schema(description = "the maximum volume value above which the additional payment is set")
-    private final float volumeThreashold;
+    private final float volumeThreshold;
 
     /**
      * Ratio increase for each additional volume unit.

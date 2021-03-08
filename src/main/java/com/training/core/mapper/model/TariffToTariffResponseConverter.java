@@ -18,6 +18,12 @@ public class TariffToTariffResponseConverter implements Converter<Tariff, Tariff
                 .minDistance(tariff.getMinDistance())
                 .distanceThreshold(tariff.getDistanceThreshold())
                 .reductionFactor(tariff.getReductionFactor())
+                .weightUnit(tariff.getWeightUnit())
+                .weightThreshold(tariff.getWeightThreshold())
+                .weightRatioIncrease(tariff.getWeightRatioIncrease())
+                .volumeUnit(tariff.getVolumeUnit())
+                .volumeThreshold(tariff.getVolumeThreshold())
+                .volumeRatioIncrease(tariff.getVolumeRatioIncrease())
                 .created(tariff.getCreated())
                 .updated(tariff.getUpdated())
                 .build();
