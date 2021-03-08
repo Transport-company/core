@@ -287,8 +287,10 @@ class DeliveryControllerImplTest {
         assertEquals(request.getEnabledNotifications(), response.getEnabledNotifications());
 
         assertNotNull(response.getUpdated());
-        assertTrue(start.isBefore(response.getUpdated())
-                && LocalDateTime.now().isAfter(response.getUpdated()));
+        assertTrue((start.isBefore(response.getUpdated())
+                || start.isEqual(response.getUpdated()))
+                && (LocalDateTime.now().isAfter(response.getUpdated())
+                || LocalDateTime.now().isEqual(response.getUpdated())));
     }
 
     @Test
@@ -316,8 +318,10 @@ class DeliveryControllerImplTest {
         assertEquals(status, response.getStatus());
 
         assertNotNull(response.getUpdated());
-        assertTrue(start.isBefore(response.getUpdated())
-                && LocalDateTime.now().isAfter(response.getUpdated()));
+        assertTrue((start.isBefore(response.getUpdated())
+                || start.isEqual(response.getUpdated()))
+                && (LocalDateTime.now().isAfter(response.getUpdated())
+                || LocalDateTime.now().isEqual(response.getUpdated())));
     }
 
     @Test

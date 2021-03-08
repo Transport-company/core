@@ -39,7 +39,7 @@ public class TestTariffs {
                 .distancePrice(new BigDecimal("0.50"))
                 .minDistance(12)
                 .distanceThreshold(1000)
-                .reductionFactor(new BigDecimal("0.5"))
+                .reductionFactor(new BigDecimal("0.50"))
                 .weightUnit(1f)
                 .weightThreshold(1f)
                 .weightRatioIncrease(0.1f)

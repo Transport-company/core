@@ -123,7 +123,7 @@ public class TariffRequest {
             required = true, example = "0.125")
     @NotNull(message = "The field is required")
     @Positive
-    private final Float volumeThreashold;
+    private final Float volumeThreshold;
 
     /**
      * Ratio increase for each additional volume unit.
